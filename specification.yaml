@@ -1,0 +1,1061 @@
+openapi: 3.0.0
+info:
+  title: Blockchain.com Exchange REST API
+  description: |
+    ## Introduction
+    Welcome to Blockchain.com's Exchange API and developer documentation. These documents detail and give examples of various functionality offered by the API such as receiving real time market data, requesting balance information and performing trades.
+    ## To Get Started
+    Create or log into your existing Blockchain.com Exchange account
+    Select API from the drop down menu
+    Fill out form and click “Create New API Key Now”
+    Once generated you can view your keys under API Settings
+  version: 1.0.0
+servers:
+  - url: 'https://api.blockchain.com/v3/exchange'
+
+security:
+  - ApiKeyAuth: []
+
+tags:
+  - name: unauthenticated
+    description: "Retrieve current prices and markets"
+  - name: trading
+    description: "Post orders and get information about historical trades"
+  - name: payments
+    description: "Get account status and initiate deposits and withdrawals"
+
+paths:
+  ############################################# Unauthenticated channels
+  /l2/{symbol}:
+    get:
+      summary: "L2 Order Book"
+      description: "Level 2 Order Book data is available through the l2 channel. This channel returns the volume available at each price. All the price levels are retrieved with this channel. Each entry in bids and asks arrays is a price level, along with its price (px), quantity (qty) and number of orders (num) attributes."
+      operationId: getL2OrderBook
+      tags:
+        - unauthenticated
+      security:
+        - ApiKeyAuth: []
+        - {}
+      parameters:
+        - $ref: '#/components/parameters/symbolParam'
+      responses:
+        '200':
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderBook'
+
+  /l3/{symbol}:
+    get:
+      summary: "L3 Order Book"
+      description: "Level 3 Order Book data is available through the l3 channel. This channel returns all the order updates reaching the exchange; by applying the updates to the snapshot you can recreate the full state of the orderbook. Each entry in bids and asks arrays is an order, along with its id (id), price (px) and quantity (qty) attributes."
+      operationId: getL3OrderBook
+      tags:
+        - unauthenticated
+      security:
+        - ApiKeyAuth: []
+        - {}
+      parameters:
+        - $ref: '#/components/parameters/symbolParam'
+      responses:
+        '200':
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderBook'
+
+  /tickers:
+    get:
+      summary: "Price"
+      description: "" #TODO
+      operationId: getTickers
+      tags:
+        - unauthenticated
+      security:
+        - ApiKeyAuth: []
+        - {}
+      responses:
+        '200':
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PriceEvent'
+  /tickers/{symbol}:
+    get:
+      summary: "Price"
+      description: "" #TODO
+      operationId: getTickerBySymbol
+      tags:
+        - unauthenticated
+      security:
+        - ApiKeyAuth: []
+        - {}
+      parameters:
+        - $ref: '#/components/parameters/symbolParam'
+      responses:
+        '200':
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceEvent'
+
+  /symbols:
+    get:
+      summary: "Symbols"
+      description: "When the symbol is not halted the auction data in the message may be blank.
+
+                    When a symbol is in a halt state the auction data will populate as the book builds. When an opening time has been chosen, the auction-time field will show the opening time. Subsequent updates will be sent only if the symbol status changes in any way."
+      operationId: getSymbols
+      tags:
+        - unauthenticated
+      security:
+        - ApiKeyAuth: []
+        - {}
+      responses:
+        '200':
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/SymbolStatus'
+  /symbols/{symbol}:
+    get:
+      summary: "Symbols"
+      description: "When the symbol is not halted the auction data in the message may be blank.
+
+                    When a symbol is in a halt state the auction data will populate as the book builds. When an opening time has been chosen, the auction-time field will show the opening time. Subsequent updates will be sent only if the symbol status changes in any way."
+      operationId: getSymbolByName
+      tags:
+        - unauthenticated
+      security:
+        - ApiKeyAuth: []
+        - {}
+      parameters:
+        - $ref: '#/components/parameters/symbolParam'
+      responses:
+        '200':
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SymbolStatus'
+
+ ############################################# Authenticated channels
+  /accounts:
+    get:
+      summary: "Receive current account balances"
+      description: "" #TODO
+      operationId: getAccounts
+      tags:
+        - payments
+      responses:
+        '200':
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceMap'
+  /accounts/{account}/{currency}:
+    get:
+      summary: "Receive current account balances"
+      description: "" #TODO
+      operationId: getAccountByTypeAndCurrency
+      tags:
+        - payments
+      parameters:
+        - in: path
+          name: account
+          description: "Account"
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/currencyParam'
+      responses:
+        '200':
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Balance'
+
+  /fees:
+    get:
+      summary: "Get current fee level"
+      description: ""
+      operationId: getFees
+      tags:
+        - trading
+      responses:
+        '200':
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fees'
+
+  /orders:
+    get:
+      summary: "Get a list orders"
+      description: "Returns live and historic orders, defaulting to live orders. Returns at most 50 results, use pagination to return further results"
+      operationId: getOrders
+      tags:
+        - trading
+      parameters:
+        - $ref: '#/components/parameters/symbolFilter'
+        - $ref: '#/components/parameters/timeFromFilter'
+        - $ref: '#/components/parameters/timeToFilter'
+        - $ref: '#/components/parameters/orderStatusFilter'
+        - $ref: '#/components/parameters/pageFilter'
+      responses:
+        '200':
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                 $ref: '#/components/schemas/OrderSummary'
+    post:
+      summary: "Add an order"
+      description: "" # TODO add table
+      operationId: createOrder
+      tags:
+        - trading
+      requestBody:
+        description: "Trade"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BaseOrder'
+      responses:
+        '200':
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderSummary'
+    delete:
+      summary: "Delete all open orders (of a symbol, if specified)"
+      description: ""
+      operationId: deleteAllOrders
+      tags:
+        - trading
+      parameters:
+        - in: query
+          name: symbol
+          required: false
+          schema:
+            $ref: '#/components/schemas/symbol'
+      responses:
+        '200':
+          description: "Success"
+          # TODO is there any good response we should give?
+
+  /orders/{orderId}:
+    get:
+      summary: "Get a specific order"
+      description: ""
+      operationId: getOrderById
+      tags:
+        - trading
+      parameters:
+        - $ref: '#/components/parameters/orderIdParam'
+      responses:
+        '200':
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderSummary'
+        '404':
+          description: "Not found"
+    delete:
+      summary: "Cancel a trade"
+      description: ""
+      operationId: deleteOrder
+      tags:
+        - trading
+      parameters:
+        - $ref: '#/components/parameters/orderIdParam'
+      responses:
+        '200':
+          description: "Success"
+          # TODO is there any good response we should give?
+
+  /deposits/{currency}:
+    post:
+      summary: "Get a deposit address. Currently only crypto currencies are supported"
+      description: ""
+      operationId: getDepositAddress
+      tags:
+        - payments
+      parameters:
+        - $ref: '#/components/parameters/currencyParam'
+      responses:
+        '200':
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositAddressCrypto'
+  /deposits:
+    get:
+      summary: "Get a list of deposits"
+      description: ""
+      operationId: getDeposits
+      tags:
+        - payments
+      parameters:
+        - $ref: '#/components/parameters/timeFromFilter'
+        - $ref: '#/components/parameters/timeToFilter'
+      responses:
+        '200':
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DepositInfo'
+  /deposits/{depositId}:
+    get:
+      summary: "Get status about a deposit"
+      description: ""
+      operationId: getDepositById
+      tags:
+        - payments
+      parameters:
+        - name: depositId
+          in: path
+          description: "Deposit ID"
+          required: true
+          schema:
+            type: string
+            # TODO uuid pattern
+      responses:
+        '200':
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositInfo'
+        '404':
+          description: "Not found"
+
+  /whitelist:
+    get:
+      summary: "Get a list of all whitelisted withdrawal accounts"
+      description: ""
+      operationId: getWhitelist
+      tags:
+        - payments
+      responses:
+        '200':
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WhitelistEntry'
+  /whitelist/{currency}:
+    get:
+      summary: "Get a list of all whitelisted withdrawal accounts"
+      description: ""
+      operationId: getWhitelistByCurrency
+      tags:
+        - payments
+      parameters:
+        - $ref: '#/components/parameters/currencyParam'
+      responses:
+        '200':
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WhitelistEntry'
+
+  /withdrawals:
+    get:
+      summary: "Get a list of withdrawals"
+      description: ""
+      operationId: getWithdrawals
+      tags:
+        - payments
+      parameters:
+        - $ref: '#/components/parameters/timeFromFilter'
+        - $ref: '#/components/parameters/timeToFilter'
+      responses:
+        '200':
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                 $ref: '#/components/schemas/WithdrawalInfo'
+    post:
+      summary: "Request a withdrawal"
+      description: ""
+      operationId: createWithdrawal
+      tags:
+        - payments
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWithdrawalRequest'
+      responses:
+        '200':
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WithdrawalInfo'
+  /withdrawals/{withdrawalId}:
+    get:
+      summary: "Get status about a withdrawal"
+      description: ""
+      operationId: getWithdrawalById
+      tags:
+        - payments
+      parameters:
+        - name: withdrawalId
+          in: path
+          description: "Withdrawal ID"
+          required: true
+          schema:
+            type: string
+            # TODO uuid pattern
+      responses:
+        '200':
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WithdrawalInfo'
+        '404':
+          description: "Not found"
+
+
+components:
+  schemas:
+    # Basic Types
+    TimestampEpoch:
+      type: integer
+      format: int64
+      description: "Time in ms since 01/01/1970 (epoch)"
+      example: "1592830770594"
+    symbol:
+      type: string
+      pattern: "^[A-Z]{3,5}-[A-Z]{3,5}$"
+      description: "Blockchain symbol identifier"
+      example: "BTC-USD"
+    currency:
+      type: string
+      pattern: "^[A-Z]{3,5}$"
+      description: "" #TODO
+      example: "BTC"
+
+    ExchangeOrderId:
+      type: integer
+      format: int64
+      description: "The unique order id assigned by the exchange"
+      example: "11111111"
+    ClientOrderId:
+      type: string
+      maxLength: 20
+      description: "Reference field provided by client and cannot exceed 20 characters"
+      example: "ABC"
+
+    WithdrawalId:
+      type: string
+      # TODO pattern for uuid
+      description: "Unique ID for this withdrawal"
+
+    WithdrawalStatus:
+      type: string
+      enum:
+        - "REJECTED"
+        - "PENDING"
+        - "REFUNDED"
+        - "FAILED"
+        - "COMPLETED"
+
+    WithdrawalAmount:
+      type: number
+      format: double
+      example: "12.23"
+      description: "The amount to withdraw in the currency specified"
+
+    WithdrawalFee:
+      type: number
+      format: double
+      example: "0.0005"
+      description: "The amount charged in fees for this withdrawal"
+
+    WithdrawalBeneficiary:
+      type: string
+
+    WithdrawalInfo:
+      type: object
+      required:
+        - amount
+        - currency
+        - beneficiary
+      properties:
+        withdrawalId:
+          $ref: '#/components/schemas/WithdrawalId'
+        amount:
+          $ref: '#/components/schemas/WithdrawalAmount'
+        fee:
+          $ref: '#/components/schemas/WithdrawalFee'
+        currency:
+          $ref: '#/components/schemas/currency'
+        beneficiary:
+          $ref: '#/components/schemas/WithdrawalBeneficiary'
+        state:
+          $ref: '#/components/schemas/WithdrawalStatus'
+        timestamp:
+          $ref: '#/components/schemas/TimestampEpoch'
+
+    DepositId:
+      type: string
+      # TODO pattern for uuid
+      description: "Unique ID for this withdrawal"
+
+    CryptoAddress:
+      type: string
+      description: "Address to deposit to. If a tag or memo must be used, it is separated by a colon."
+
+    DepositAmount:
+      type: number
+      format: double
+      example: "12.23"
+      description: "The amount that is credited in the currency specified"
+
+    DepositInfo:
+      type: object
+      required:
+        - depositId
+        - amount
+        - currency
+        - address
+        - state
+      properties:
+        depositId:
+          $ref: '#/components/schemas/DepositId'
+        amount:
+          type: number
+          format: double
+          example: "12.23"
+          description: "The amount that is credited in the currency specified"
+        currency:
+          $ref: '#/components/schemas/currency'
+        address:
+          $ref: '#/components/schemas/CryptoAddress'
+        txHash:
+          type: string
+          description: "The transaction hash of the transaction that deposited funds"
+        state:
+          type: string
+          enum:
+            - "REJECTED"
+            - "UNCONFIRMED"
+            - "COMPLETED"
+        timestamp:
+          $ref: '#/components/schemas/TimestampEpoch'
+
+    OrderStatus:
+      type: string
+      example: "FILLED"
+      enum:
+        - "OPEN"
+        - "REJECTED"
+        - "CANCELED"
+        - "FILLED"
+        - "EXPIRED"
+    # Basic Order Creation Types
+    TimeInForce:
+      type: string
+      enum:
+        - "GTC"
+        - "IOC"
+        - "FOK"
+        - "GTD"
+      description: "\"GTC\" for Good Till Cancel, \"IOC\" for Immediate or Cancel, \"FOK\" for Fill or Kill, \"GTD\" Good Till Date"
+      example: "GTC"
+    timeInForceStop:
+      type: string
+      enum:
+        - "GTC"
+        - "GTD"
+      description: "\"GTC\" for Good Till Cancel, \"GTD\" Good Till Date"
+      example: "GTC"
+    side:
+      type: string
+      enum:
+        - "BUY"
+        - "SELL"
+      description: "\"buy\" for Buy, \"sell\" for Sell"
+      example: "BUY"
+    orderQty:
+      type: number
+      format: double
+      description: "The order size in the terms of the base currency"
+      example: "10.23"
+    price:
+      type: number
+      format: double
+      description: "The limit price for the order"
+      example: 0.12345
+    expireDate:
+      type: integer
+      minimum: 20200101
+      maximum: 20501231
+      description: "expiry date in the format YYYYMMDD"
+      example: "20200103"
+    stopPx:
+      type: number
+      format: double
+      description: "Price to trigger the stop order"
+      example: "3500.12"
+    minQty:
+      type: number
+      format: double
+      description: "The minimum quantity required for an IOC fill"
+      example: "10.0"
+    execInst:
+      type: string
+      # TODO enum with allowed values
+      description: "The order is placed with Add Liquidity Only (aka Post Only): it will not match liquidity immediately. It will be rejected instead of matching liquidity in the market."
+      example: "ALO"
+
+    # Different Order types
+    BaseOrder:
+      type: object
+      required:
+        - clOrdId
+        - symbol
+        - side
+        - orderQty
+      properties:
+        ordType:
+          type: string
+          title: "Order type"
+          enum:
+            - "MARKET"
+            - "LIMIT"
+            - "STOP"
+            - "STOPLIMIT"
+        clOrdId:
+          $ref: '#/components/schemas/ClientOrderId'
+        symbol:
+          $ref: '#/components/schemas/symbol'
+        side:
+          $ref: '#/components/schemas/side'
+        orderQty:
+          $ref: '#/components/schemas/orderQty'
+        timeInForce:
+          $ref: '#/components/schemas/TimeInForce'
+        price:
+          $ref: '#/components/schemas/price'
+        expireDate:
+          $ref: '#/components/schemas/expireDate'
+        minQty:
+          $ref: '#/components/schemas/minQty'
+        stopPx:
+          $ref: '#/components/schemas/price'
+
+    OrderSummary:
+      type: object
+      properties:
+        exOrdId:
+          $ref: '#/components/schemas/ExchangeOrderId'
+        clOrdId:
+          $ref: '#/components/schemas/ClientOrderId'
+        ordStatus:
+          $ref: '#/components/schemas/OrderStatus'
+        text:
+          type: string
+          description: "The reason for rejecting the order, if applicable"
+        symbol:
+          $ref: '#/components/schemas/symbol'
+        lastShares:
+          type: number
+          format: double
+          description: "The executed quantity for the order's last fill"
+          example: "0.5678"
+        lastPx:
+          type: number
+          format: double
+          description: "The executed price for the last fill"
+          example: "3500.12"
+        leavesQty:
+          # TODO documentation says this should be a string?
+          type: number
+          format: double
+          description: "For Open and Partially Filled orders this is the remaining quantity open for execution. For Canceled and Expired orders this is the quantity than was still open before cancellation/expiration. For Rejected order this is equal to orderQty. For other states this is always zero."
+          example: "10.0"
+        cumQty:
+          type: number
+          format: double
+          description: "The quantity of the order which has been filled"
+          example: "0.123345"
+        avgPx:
+          type: number
+          format: double
+          description: "Calculated the Volume Weighted Average Price of all fills for this order"
+          example: "345.33"
+        timestamp:
+          $ref: '#/components/schemas/TimestampEpoch'
+
+
+    CancelOrderRequest:
+      type: object
+      required:
+        - action
+        - orderID
+      properties:
+        action:
+          type: string
+          enum:
+            - "CancelOrderRequest"
+        orderID:
+          $ref: '#/components/schemas/ExchangeOrderId'
+
+    BalanceMap:
+      type: object
+      properties:
+        primary:
+          $ref: '#/components/schemas/BalanceList'
+      required:
+        - primary
+      additionalProperties:
+        $ref: '#/components/schemas/BalanceList'
+
+    BalanceList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Balance'
+
+    Balance:
+      type: object
+      required:
+        - currency
+        - balance
+        - available
+        - balance_local
+        - available_local
+        - rate
+      properties:
+        currency:
+          $ref: '#/components/schemas/currency'
+        balance:
+          type: number
+          format: double
+          example: "0.00366963"
+        available:
+          type: number
+          format: double
+          example: "0.00266963"
+        balance_local:
+          type: number
+          format: double
+          example: "38.746779155"
+        available_local:
+          type: number
+          format: double
+          example: "28.188009155"
+        rate:
+          type: number
+          format: double
+          example: "10558.77"
+
+    Fees:
+      type: object
+      required:
+        - makerRate
+        - takerRate
+        - volumeInUSD
+      properties:
+        tier:
+          type: integer
+          example: "1"
+          description: "" #TODO
+        makerRate:
+          type: number
+          format: double
+          example: "0.0014"
+          description: "" #TODO
+        takerRate:
+          type: number
+          format: double
+          example: "0.0024"
+          description: "" #TODO
+        volumeInUSD:
+          type: number
+          format: double
+          example: "1500.00"
+          description: "" #TODO
+
+
+    WhitelistEntry:
+      type: object
+      properties:
+        whitelistId:
+          type: string
+          description: "Unique ID for each whitelist entry"
+        name:
+          type: string
+          description: "User specified name for this entry"
+        currency:
+          $ref: '#/components/schemas/currency'
+
+    CreateWithdrawalRequest:
+      type: object
+      required:
+        - currency
+        - beneficiary
+      properties:
+        amount:
+          $ref: '#/components/schemas/WithdrawalAmount'
+        currency:
+          $ref: '#/components/schemas/currency'
+        beneficiary:
+          $ref: '#/components/schemas/WithdrawalBeneficiary'
+        sendMax:
+          type: boolean
+          description: "If set, sends the full available amount, minus fees. Amount may not be specified in that case. "
+
+    DepositAddressCrypto:
+      type: object
+      required:
+        - type
+        - address
+      properties:
+        type:
+          type: string
+        address:
+          type: string
+          description: "Address to deposit to. If a tag or memo must be used, it is separated by a colon."
+
+    PriceEvent:
+      type: object
+      properties:
+        symbol:
+          $ref: '#/components/schemas/symbol'
+        price_24h:
+          type: number
+          format: double
+          example: "4998.0"
+        volume_24h:
+          type: number
+          format: double
+          example: "0.3015"
+        last_trade_price:
+          type: number
+          format: double
+          example: "5000.0"
+    PriceEventList:
+      type: object
+      properties:
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceEvent'
+
+    SymbolStatus:
+      type: object
+      properties:
+        base_currency:
+          $ref: '#/components/schemas/symbol'
+        base_currency_scale:
+          type: integer
+          description: "The number of decimals the currency can be split in"
+          example: 8
+        counter_currency:
+          $ref: '#/components/schemas/symbol'
+        counter_currency_scale:
+          type: integer
+          description: "The number of decimals the currency can be split in"
+          example: 2
+        min_price_increment:
+          type: integer
+          format: int64
+          description: "The price of the instrument must be a multiple of min_price_increment * (10^-min_price_increment_scale)"
+          example: 10
+        min_price_increment_scale:
+          type: integer
+          example: 0
+        min_order_size:
+          type: integer
+          format: int64
+          description: "The minimum quantity for an order for this instrument must be min_order_size*(10^-min_order_size_scale)"
+          example: 10
+        min_order_size_scale:
+          type: integer
+          example: 2
+        max_order_size:
+          type: integer
+          format: int64
+          description: "The maximum quantity for an order for this instrument is max_order_size*(10^-max_order_size_scale). If this equal to zero, there is no limit"
+          example: 0
+        max_order_size_scale:
+          type: integer
+          example: 8
+        lot_size:
+          type: integer
+          format: int64
+          example: 5
+        lot_size_scale:
+          type: integer
+          example: 2
+        status:
+          type: string
+          enum:
+            - "open"
+            - "close"
+            - "suspend"
+            - "halt"
+            - "halt-freeze"
+          description: "Symbol status; open, close, suspend, halt, halt-freeze."
+        id:
+          type: integer
+          format: int64
+          example: 1
+        auction_price:
+          type: number
+          format: double
+          description: "If the symbol is halted and will open on an auction, this will be the opening price."
+          example: 0.0
+        auction_size:
+          type: number
+          format: double
+          description: "Opening size"
+          example: 0.0
+        auction_time:
+          type: integer
+          description: "Opening time in HHMM format"
+          example: 1530
+        imbalance:
+          type: number
+          format: double
+          description: "Auction imbalance. If > 0 then there will be buy orders left over at the auction price. If < 0 then there will be sell orders left over at the auction price."
+          example: 0.0
+
+
+    OrderBookEntry:
+      type: object
+      properties:
+        px:
+          type: number
+          format: double
+          example: "8723.45"
+        qty:
+          type: number
+          format: double
+          example: "1.45"
+        num:
+          type: integer
+          example: "1"
+
+    OrderBook:
+      type: object
+      properties:
+        symbol:
+          $ref: '#/components/schemas/symbol'
+        bids:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderBookEntry'
+        asks:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderBookEntry'
+
+    UnauthorizedError:
+      description: API key is missing or invalid
+      properties:
+        error:
+          type: string
+
+
+
+  parameters:
+    symbolParam:
+      name: symbol
+      in: path
+      description: "Symbol"
+      required: true
+      schema:
+        $ref: '#/components/schemas/symbol'
+    currencyParam:
+      name: currency
+      in: path
+      description: "Currency"
+      required: true
+      schema:
+        $ref: '#/components/schemas/currency'
+    orderIdParam:
+      name: orderId
+      in: path
+      description: "Order ID"
+      required: true
+      schema:
+        $ref: '#/components/schemas/ExchangeOrderId'
+    orderStatusFilter:
+      name: status
+      in: query
+      description: "Order Status"
+      required: false
+      schema:
+        $ref: '#/components/schemas/OrderStatus'
+    symbolFilter:
+      name: symbol
+      in: query
+      description: "Only return results for this symbol"
+      required: false
+      schema:
+        $ref: '#/components/schemas/symbol'
+    timeFromFilter:
+      name: from
+      in: query
+      description: "Epoch timestamp in ms"
+      required: false
+      schema:
+        $ref: '#/components/schemas/TimestampEpoch'
+    timeToFilter:
+      name: to
+      in: query
+      description: "Epoch timestamp in ms"
+      required: false
+      schema:
+        $ref: '#/components/schemas/TimestampEpoch'
+    pageFilter:
+      name: page
+      in: query
+      description: "Page number, starting at 0, for paginated responses"
+      required: false
+      schema:
+        type: integer
+        format: int64
+
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Token # TODO we could also use cookie?

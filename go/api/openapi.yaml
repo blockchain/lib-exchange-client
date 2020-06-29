@@ -1,0 +1,1352 @@
+openapi: 3.0.0
+info:
+  description: |
+    ## Introduction
+    Welcome to Blockchain.com's Exchange API and developer documentation. These documents detail and give examples of various functionality offered by the API such as receiving real time market data, requesting balance information and performing trades.
+    ## To Get Started
+    Create or log into your existing Blockchain.com Exchange account
+    Select API from the drop down menu
+    Fill out form and click “Create New API Key Now”
+    Once generated you can view your keys under API Settings
+  title: Blockchain.com Exchange REST API
+  version: 1.0.0
+servers:
+- url: https://api.blockchain.com/v3/exchange
+security:
+- ApiKeyAuth: []
+tags:
+- description: Retrieve current prices and markets
+  name: unauthenticated
+- description: Post orders and get information about historical trades
+  name: trading
+- description: Get account status and initiate deposits and withdrawals
+  name: payments
+paths:
+  /l2/{symbol}:
+    get:
+      description: Level 2 Order Book data is available through the l2 channel. This
+        channel returns the volume available at each price. All the price levels are
+        retrieved with this channel. Each entry in bids and asks arrays is a price
+        level, along with its price (px), quantity (qty) and number of orders (num)
+        attributes.
+      operationId: getL2OrderBook
+      parameters:
+      - description: Symbol
+        explode: false
+        in: path
+        name: symbol
+        required: true
+        schema:
+          $ref: '#/components/schemas/symbol'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderBook'
+          description: Success
+      security:
+      - ApiKeyAuth: []
+      - {}
+      summary: L2 Order Book
+      tags:
+      - unauthenticated
+  /l3/{symbol}:
+    get:
+      description: Level 3 Order Book data is available through the l3 channel. This
+        channel returns all the order updates reaching the exchange; by applying the
+        updates to the snapshot you can recreate the full state of the orderbook.
+        Each entry in bids and asks arrays is an order, along with its id (id), price
+        (px) and quantity (qty) attributes.
+      operationId: getL3OrderBook
+      parameters:
+      - description: Symbol
+        explode: false
+        in: path
+        name: symbol
+        required: true
+        schema:
+          $ref: '#/components/schemas/symbol'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderBook'
+          description: Success
+      security:
+      - ApiKeyAuth: []
+      - {}
+      summary: L3 Order Book
+      tags:
+      - unauthenticated
+  /tickers:
+    get:
+      operationId: getTickers
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/PriceEvent'
+                type: array
+          description: Success
+      security:
+      - ApiKeyAuth: []
+      - {}
+      summary: Price
+      tags:
+      - unauthenticated
+  /tickers/{symbol}:
+    get:
+      operationId: getTickerBySymbol
+      parameters:
+      - description: Symbol
+        explode: false
+        in: path
+        name: symbol
+        required: true
+        schema:
+          $ref: '#/components/schemas/symbol'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceEvent'
+          description: Success
+      security:
+      - ApiKeyAuth: []
+      - {}
+      summary: Price
+      tags:
+      - unauthenticated
+  /symbols:
+    get:
+      description: |-
+        When the symbol is not halted the auction data in the message may be blank.
+        When a symbol is in a halt state the auction data will populate as the book builds. When an opening time has been chosen, the auction-time field will show the opening time. Subsequent updates will be sent only if the symbol status changes in any way.
+      operationId: getSymbols
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  $ref: '#/components/schemas/SymbolStatus'
+                type: object
+          description: Success
+      security:
+      - ApiKeyAuth: []
+      - {}
+      summary: Symbols
+      tags:
+      - unauthenticated
+  /symbols/{symbol}:
+    get:
+      description: |-
+        When the symbol is not halted the auction data in the message may be blank.
+        When a symbol is in a halt state the auction data will populate as the book builds. When an opening time has been chosen, the auction-time field will show the opening time. Subsequent updates will be sent only if the symbol status changes in any way.
+      operationId: getSymbolByName
+      parameters:
+      - description: Symbol
+        explode: false
+        in: path
+        name: symbol
+        required: true
+        schema:
+          $ref: '#/components/schemas/symbol'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SymbolStatus'
+          description: Success
+      security:
+      - ApiKeyAuth: []
+      - {}
+      summary: Symbols
+      tags:
+      - unauthenticated
+  /accounts:
+    get:
+      operationId: getAccounts
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceMap'
+          description: Success
+      summary: Receive current account balances
+      tags:
+      - payments
+  /accounts/{account}/{currency}:
+    get:
+      operationId: getAccountByTypeAndCurrency
+      parameters:
+      - description: Account
+        explode: false
+        in: path
+        name: account
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Currency
+        explode: false
+        in: path
+        name: currency
+        required: true
+        schema:
+          $ref: '#/components/schemas/currency'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Balance'
+          description: Success
+      summary: Receive current account balances
+      tags:
+      - payments
+  /fees:
+    get:
+      operationId: getFees
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fees'
+          description: Success
+      summary: Get current fee level
+      tags:
+      - trading
+  /orders:
+    delete:
+      operationId: deleteAllOrders
+      parameters:
+      - explode: true
+        in: query
+        name: symbol
+        required: false
+        schema:
+          $ref: '#/components/schemas/symbol'
+        style: form
+      responses:
+        "200":
+          description: Success
+      summary: Delete all open orders (of a symbol, if specified)
+      tags:
+      - trading
+    get:
+      description: Returns live and historic orders, defaulting to live orders. Returns
+        at most 50 results, use pagination to return further results
+      operationId: getOrders
+      parameters:
+      - description: Only return results for this symbol
+        explode: true
+        in: query
+        name: symbol
+        required: false
+        schema:
+          $ref: '#/components/schemas/symbol'
+        style: form
+      - description: Epoch timestamp in ms
+        explode: true
+        in: query
+        name: from
+        required: false
+        schema:
+          $ref: '#/components/schemas/TimestampEpoch'
+        style: form
+      - description: Epoch timestamp in ms
+        explode: true
+        in: query
+        name: to
+        required: false
+        schema:
+          $ref: '#/components/schemas/TimestampEpoch'
+        style: form
+      - description: Order Status
+        explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          $ref: '#/components/schemas/OrderStatus'
+        style: form
+      - description: Page number, starting at 0, for paginated responses
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/OrderSummary'
+                type: array
+          description: Success
+      summary: Get a list orders
+      tags:
+      - trading
+    post:
+      operationId: createOrder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BaseOrder'
+        description: Trade
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderSummary'
+          description: Success
+      summary: Add an order
+      tags:
+      - trading
+  /orders/{orderId}:
+    delete:
+      operationId: deleteOrder
+      parameters:
+      - description: Order ID
+        explode: false
+        in: path
+        name: orderId
+        required: true
+        schema:
+          $ref: '#/components/schemas/ExchangeOrderId'
+        style: simple
+      responses:
+        "200":
+          description: Success
+      summary: Cancel a trade
+      tags:
+      - trading
+    get:
+      operationId: getOrderById
+      parameters:
+      - description: Order ID
+        explode: false
+        in: path
+        name: orderId
+        required: true
+        schema:
+          $ref: '#/components/schemas/ExchangeOrderId'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderSummary'
+          description: Success
+        "404":
+          description: Not found
+      summary: Get a specific order
+      tags:
+      - trading
+  /deposits/{currency}:
+    post:
+      operationId: getDepositAddress
+      parameters:
+      - description: Currency
+        explode: false
+        in: path
+        name: currency
+        required: true
+        schema:
+          $ref: '#/components/schemas/currency'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositAddressCrypto'
+          description: Success
+      summary: Get a deposit address. Currently only crypto currencies are supported
+      tags:
+      - payments
+  /deposits:
+    get:
+      operationId: getDeposits
+      parameters:
+      - description: Epoch timestamp in ms
+        explode: true
+        in: query
+        name: from
+        required: false
+        schema:
+          $ref: '#/components/schemas/TimestampEpoch'
+        style: form
+      - description: Epoch timestamp in ms
+        explode: true
+        in: query
+        name: to
+        required: false
+        schema:
+          $ref: '#/components/schemas/TimestampEpoch'
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/DepositInfo'
+                type: array
+          description: Success
+      summary: Get a list of deposits
+      tags:
+      - payments
+  /deposits/{depositId}:
+    get:
+      operationId: getDepositById
+      parameters:
+      - description: Deposit ID
+        explode: false
+        in: path
+        name: depositId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositInfo'
+          description: Success
+        "404":
+          description: Not found
+      summary: Get status about a deposit
+      tags:
+      - payments
+  /whitelist:
+    get:
+      operationId: getWhitelist
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/WhitelistEntry'
+                type: array
+          description: Success
+      summary: Get a list of all whitelisted withdrawal accounts
+      tags:
+      - payments
+  /whitelist/{currency}:
+    get:
+      operationId: getWhitelistByCurrency
+      parameters:
+      - description: Currency
+        explode: false
+        in: path
+        name: currency
+        required: true
+        schema:
+          $ref: '#/components/schemas/currency'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/WhitelistEntry'
+                type: array
+          description: Success
+      summary: Get a list of all whitelisted withdrawal accounts
+      tags:
+      - payments
+  /withdrawals:
+    get:
+      operationId: getWithdrawals
+      parameters:
+      - description: Epoch timestamp in ms
+        explode: true
+        in: query
+        name: from
+        required: false
+        schema:
+          $ref: '#/components/schemas/TimestampEpoch'
+        style: form
+      - description: Epoch timestamp in ms
+        explode: true
+        in: query
+        name: to
+        required: false
+        schema:
+          $ref: '#/components/schemas/TimestampEpoch'
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/WithdrawalInfo'
+                type: array
+          description: Success
+      summary: Get a list of withdrawals
+      tags:
+      - payments
+    post:
+      operationId: createWithdrawal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWithdrawalRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WithdrawalInfo'
+          description: Success
+      summary: Request a withdrawal
+      tags:
+      - payments
+  /withdrawals/{withdrawalId}:
+    get:
+      operationId: getWithdrawalById
+      parameters:
+      - description: Withdrawal ID
+        explode: false
+        in: path
+        name: withdrawalId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WithdrawalInfo'
+          description: Success
+        "404":
+          description: Not found
+      summary: Get status about a withdrawal
+      tags:
+      - payments
+components:
+  parameters:
+    symbolParam:
+      description: Symbol
+      explode: false
+      in: path
+      name: symbol
+      required: true
+      schema:
+        $ref: '#/components/schemas/symbol'
+      style: simple
+    currencyParam:
+      description: Currency
+      explode: false
+      in: path
+      name: currency
+      required: true
+      schema:
+        $ref: '#/components/schemas/currency'
+      style: simple
+    orderIdParam:
+      description: Order ID
+      explode: false
+      in: path
+      name: orderId
+      required: true
+      schema:
+        $ref: '#/components/schemas/ExchangeOrderId'
+      style: simple
+    orderStatusFilter:
+      description: Order Status
+      explode: true
+      in: query
+      name: status
+      required: false
+      schema:
+        $ref: '#/components/schemas/OrderStatus'
+      style: form
+    symbolFilter:
+      description: Only return results for this symbol
+      explode: true
+      in: query
+      name: symbol
+      required: false
+      schema:
+        $ref: '#/components/schemas/symbol'
+      style: form
+    timeFromFilter:
+      description: Epoch timestamp in ms
+      explode: true
+      in: query
+      name: from
+      required: false
+      schema:
+        $ref: '#/components/schemas/TimestampEpoch'
+      style: form
+    timeToFilter:
+      description: Epoch timestamp in ms
+      explode: true
+      in: query
+      name: to
+      required: false
+      schema:
+        $ref: '#/components/schemas/TimestampEpoch'
+      style: form
+    pageFilter:
+      description: Page number, starting at 0, for paginated responses
+      explode: true
+      in: query
+      name: page
+      required: false
+      schema:
+        format: int64
+        type: integer
+      style: form
+  schemas:
+    TimestampEpoch:
+      description: Time in ms since 01/01/1970 (epoch)
+      example: 1592830770594
+      format: int64
+      type: integer
+    symbol:
+      description: Blockchain symbol identifier
+      example: BTC-USD
+      pattern: ^[A-Z]{3,5}-[A-Z]{3,5}$
+      type: string
+    currency:
+      example: BTC
+      pattern: ^[A-Z]{3,5}$
+      type: string
+    ExchangeOrderId:
+      description: The unique order id assigned by the exchange
+      example: 11111111
+      format: int64
+      type: integer
+    ClientOrderId:
+      description: Reference field provided by client and cannot exceed 20 characters
+      example: ABC
+      maxLength: 20
+      type: string
+    WithdrawalId:
+      description: Unique ID for this withdrawal
+      type: string
+    WithdrawalStatus:
+      enum:
+      - REJECTED
+      - PENDING
+      - REFUNDED
+      - FAILED
+      - COMPLETED
+      type: string
+    WithdrawalAmount:
+      description: The amount to withdraw in the currency specified
+      example: 12.23
+      format: double
+      type: number
+    WithdrawalFee:
+      description: The amount charged in fees for this withdrawal
+      example: 0.0005
+      format: double
+      type: number
+    WithdrawalBeneficiary:
+      type: string
+    WithdrawalInfo:
+      example:
+        withdrawalId: withdrawalId
+        amount: 12.23
+        beneficiary: beneficiary
+        fee: 0.0005
+        currency: BTC
+        timestamp: 1592830770594
+      properties:
+        withdrawalId:
+          description: Unique ID for this withdrawal
+          type: string
+        amount:
+          description: The amount to withdraw in the currency specified
+          example: 12.23
+          format: double
+          type: number
+        fee:
+          description: The amount charged in fees for this withdrawal
+          example: 0.0005
+          format: double
+          type: number
+        currency:
+          example: BTC
+          pattern: ^[A-Z]{3,5}$
+          type: string
+        beneficiary:
+          type: string
+        state:
+          $ref: '#/components/schemas/WithdrawalStatus'
+        timestamp:
+          description: Time in ms since 01/01/1970 (epoch)
+          example: 1592830770594
+          format: int64
+          type: integer
+      required:
+      - amount
+      - beneficiary
+      - currency
+      type: object
+    DepositId:
+      description: Unique ID for this withdrawal
+      type: string
+    CryptoAddress:
+      description: Address to deposit to. If a tag or memo must be used, it is separated
+        by a colon.
+      type: string
+    DepositAmount:
+      description: The amount that is credited in the currency specified
+      example: 12.23
+      format: double
+      type: number
+    DepositInfo:
+      example:
+        depositId: depositId
+        amount: 12.23
+        address: address
+        currency: BTC
+        state: REJECTED
+        txHash: txHash
+        timestamp: 1592830770594
+      properties:
+        depositId:
+          description: Unique ID for this withdrawal
+          type: string
+        amount:
+          description: The amount that is credited in the currency specified
+          example: 12.23
+          format: double
+          type: number
+        currency:
+          example: BTC
+          pattern: ^[A-Z]{3,5}$
+          type: string
+        address:
+          description: Address to deposit to. If a tag or memo must be used, it is
+            separated by a colon.
+          type: string
+        txHash:
+          description: The transaction hash of the transaction that deposited funds
+          type: string
+        state:
+          enum:
+          - REJECTED
+          - UNCONFIRMED
+          - COMPLETED
+          type: string
+        timestamp:
+          description: Time in ms since 01/01/1970 (epoch)
+          example: 1592830770594
+          format: int64
+          type: integer
+      required:
+      - address
+      - amount
+      - currency
+      - depositId
+      - state
+      type: object
+    OrderStatus:
+      enum:
+      - OPEN
+      - REJECTED
+      - CANCELED
+      - FILLED
+      - EXPIRED
+      example: FILLED
+      type: string
+    TimeInForce:
+      description: '"GTC" for Good Till Cancel, "IOC" for Immediate or Cancel, "FOK"
+        for Fill or Kill, "GTD" Good Till Date'
+      enum:
+      - GTC
+      - IOC
+      - FOK
+      - GTD
+      example: GTC
+      type: string
+    timeInForceStop:
+      description: '"GTC" for Good Till Cancel, "GTD" Good Till Date'
+      enum:
+      - GTC
+      - GTD
+      example: GTC
+      type: string
+    side:
+      description: '"buy" for Buy, "sell" for Sell'
+      enum:
+      - BUY
+      - SELL
+      example: BUY
+      type: string
+    orderQty:
+      description: The order size in the terms of the base currency
+      example: 10.23
+      format: double
+      type: number
+    price:
+      description: The limit price for the order
+      example: 0.12345
+      format: double
+      type: number
+    expireDate:
+      description: expiry date in the format YYYYMMDD
+      example: 20200103
+      maximum: 20501231
+      minimum: 20200101
+      type: integer
+    stopPx:
+      description: Price to trigger the stop order
+      example: 3500.12
+      format: double
+      type: number
+    minQty:
+      description: The minimum quantity required for an IOC fill
+      example: 10.0
+      format: double
+      type: number
+    execInst:
+      description: 'The order is placed with Add Liquidity Only (aka Post Only): it
+        will not match liquidity immediately. It will be rejected instead of matching
+        liquidity in the market.'
+      example: ALO
+      type: string
+    BaseOrder:
+      example:
+        clOrdId: ABC
+        symbol: BTC-USD
+        side: BUY
+        price: 0.12345
+        orderQty: 10.23
+        expireDate: 20200103
+        timeInForce: GTC
+        ordType: MARKET
+        stopPx: 0.12345
+        minQty: 10.0
+      properties:
+        ordType:
+          enum:
+          - MARKET
+          - LIMIT
+          - STOP
+          - STOPLIMIT
+          title: Order type
+          type: string
+        clOrdId:
+          description: Reference field provided by client and cannot exceed 20 characters
+          example: ABC
+          maxLength: 20
+          type: string
+        symbol:
+          description: Blockchain symbol identifier
+          example: BTC-USD
+          pattern: ^[A-Z]{3,5}-[A-Z]{3,5}$
+          type: string
+        side:
+          $ref: '#/components/schemas/side'
+        orderQty:
+          description: The order size in the terms of the base currency
+          example: 10.23
+          format: double
+          type: number
+        timeInForce:
+          $ref: '#/components/schemas/TimeInForce'
+        price:
+          description: The limit price for the order
+          example: 0.12345
+          format: double
+          type: number
+        expireDate:
+          description: expiry date in the format YYYYMMDD
+          example: 20200103
+          maximum: 20501231
+          minimum: 20200101
+          type: integer
+        minQty:
+          description: The minimum quantity required for an IOC fill
+          example: 10.0
+          format: double
+          type: number
+        stopPx:
+          description: The limit price for the order
+          example: 0.12345
+          format: double
+          type: number
+      required:
+      - clOrdId
+      - orderQty
+      - side
+      - symbol
+      type: object
+    OrderSummary:
+      example:
+        exOrdId: 11111111
+        ordStatus: FILLED
+        clOrdId: ABC
+        symbol: BTC-USD
+        avgPx: 345.33
+        lastPx: 3500.12
+        lastShares: 0.5678
+        leavesQty: 10.0
+        cumQty: 0.123345
+        text: text
+        timestamp: 1592830770594
+      properties:
+        exOrdId:
+          description: The unique order id assigned by the exchange
+          example: 11111111
+          format: int64
+          type: integer
+        clOrdId:
+          description: Reference field provided by client and cannot exceed 20 characters
+          example: ABC
+          maxLength: 20
+          type: string
+        ordStatus:
+          $ref: '#/components/schemas/OrderStatus'
+        text:
+          description: The reason for rejecting the order, if applicable
+          type: string
+        symbol:
+          description: Blockchain symbol identifier
+          example: BTC-USD
+          pattern: ^[A-Z]{3,5}-[A-Z]{3,5}$
+          type: string
+        lastShares:
+          description: The executed quantity for the order's last fill
+          example: 0.5678
+          format: double
+          type: number
+        lastPx:
+          description: The executed price for the last fill
+          example: 3500.12
+          format: double
+          type: number
+        leavesQty:
+          description: For Open and Partially Filled orders this is the remaining
+            quantity open for execution. For Canceled and Expired orders this is the
+            quantity than was still open before cancellation/expiration. For Rejected
+            order this is equal to orderQty. For other states this is always zero.
+          example: 10.0
+          format: double
+          type: number
+        cumQty:
+          description: The quantity of the order which has been filled
+          example: 0.123345
+          format: double
+          type: number
+        avgPx:
+          description: Calculated the Volume Weighted Average Price of all fills for
+            this order
+          example: 345.33
+          format: double
+          type: number
+        timestamp:
+          description: Time in ms since 01/01/1970 (epoch)
+          example: 1592830770594
+          format: int64
+          type: integer
+      type: object
+    CancelOrderRequest:
+      properties:
+        action:
+          enum:
+          - CancelOrderRequest
+          type: string
+        orderID:
+          description: The unique order id assigned by the exchange
+          example: 11111111
+          format: int64
+          type: integer
+      required:
+      - action
+      - orderID
+      type: object
+    BalanceMap:
+      additionalProperties:
+        $ref: '#/components/schemas/BalanceList'
+      example:
+        primary:
+        - balance_local: 38.746779155
+          balance: 0.00366963
+          rate: 10558.77
+          available: 0.00266963
+          currency: BTC
+          available_local: 28.188009155
+        - balance_local: 38.746779155
+          balance: 0.00366963
+          rate: 10558.77
+          available: 0.00266963
+          currency: BTC
+          available_local: 28.188009155
+      properties:
+        primary:
+          items:
+            $ref: '#/components/schemas/Balance'
+          type: array
+      required:
+      - primary
+      type: object
+    BalanceList:
+      items:
+        $ref: '#/components/schemas/Balance'
+      type: array
+    Balance:
+      example:
+        balance_local: 38.746779155
+        balance: 0.00366963
+        rate: 10558.77
+        available: 0.00266963
+        currency: BTC
+        available_local: 28.188009155
+      properties:
+        currency:
+          example: BTC
+          pattern: ^[A-Z]{3,5}$
+          type: string
+        balance:
+          example: 0.00366963
+          format: double
+          type: number
+        available:
+          example: 0.00266963
+          format: double
+          type: number
+        balance_local:
+          example: 38.746779155
+          format: double
+          type: number
+        available_local:
+          example: 28.188009155
+          format: double
+          type: number
+        rate:
+          example: 10558.77
+          format: double
+          type: number
+      required:
+      - available
+      - available_local
+      - balance
+      - balance_local
+      - currency
+      - rate
+      type: object
+    Fees:
+      example:
+        makerRate: 0.0014
+        tier: 1
+        volumeInUSD: 1500.00
+        takerRate: 0.0024
+      properties:
+        tier:
+          example: 1
+          type: integer
+        makerRate:
+          example: 0.0014
+          format: double
+          type: number
+        takerRate:
+          example: 0.0024
+          format: double
+          type: number
+        volumeInUSD:
+          example: 1500.00
+          format: double
+          type: number
+      required:
+      - makerRate
+      - takerRate
+      - volumeInUSD
+      type: object
+    WhitelistEntry:
+      example:
+        name: name
+        currency: BTC
+        whitelistId: whitelistId
+      properties:
+        whitelistId:
+          description: Unique ID for each whitelist entry
+          type: string
+        name:
+          description: User specified name for this entry
+          type: string
+        currency:
+          example: BTC
+          pattern: ^[A-Z]{3,5}$
+          type: string
+      type: object
+    CreateWithdrawalRequest:
+      example:
+        amount: 12.23
+        beneficiary: beneficiary
+        currency: BTC
+        sendMax: true
+      properties:
+        amount:
+          description: The amount to withdraw in the currency specified
+          example: 12.23
+          format: double
+          type: number
+        currency:
+          example: BTC
+          pattern: ^[A-Z]{3,5}$
+          type: string
+        beneficiary:
+          type: string
+        sendMax:
+          description: 'If set, sends the full available amount, minus fees. Amount
+            may not be specified in that case. '
+          type: boolean
+      required:
+      - beneficiary
+      - currency
+      type: object
+    DepositAddressCrypto:
+      example:
+        address: address
+        type: type
+      properties:
+        type:
+          type: string
+        address:
+          description: Address to deposit to. If a tag or memo must be used, it is
+            separated by a colon.
+          type: string
+      required:
+      - address
+      - type
+      type: object
+    PriceEvent:
+      example:
+        symbol: BTC-USD
+        last_trade_price: 5000.0
+        volume_24h: 0.3015
+        price_24h: 4998.0
+      properties:
+        symbol:
+          description: Blockchain symbol identifier
+          example: BTC-USD
+          pattern: ^[A-Z]{3,5}-[A-Z]{3,5}$
+          type: string
+        price_24h:
+          example: 4998.0
+          format: double
+          type: number
+        volume_24h:
+          example: 0.3015
+          format: double
+          type: number
+        last_trade_price:
+          example: 5000.0
+          format: double
+          type: number
+      type: object
+    PriceEventList:
+      properties:
+        orders:
+          items:
+            $ref: '#/components/schemas/PriceEvent'
+          type: array
+      type: object
+    SymbolStatus:
+      example:
+        base_currency: BTC-USD
+        counter_currency: BTC-USD
+        max_order_size: 0
+        max_order_size_scale: 8
+        imbalance: 0.0
+        base_currency_scale: 8
+        auction_price: 0.0
+        counter_currency_scale: 2
+        min_order_size: 10
+        lot_size_scale: 2
+        min_price_increment_scale: 0
+        auction_size: 0.0
+        min_order_size_scale: 2
+        min_price_increment: 10
+        lot_size: 5
+        auction_time: 1530
+        id: 1
+        status: open
+      properties:
+        base_currency:
+          description: Blockchain symbol identifier
+          example: BTC-USD
+          pattern: ^[A-Z]{3,5}-[A-Z]{3,5}$
+          type: string
+        base_currency_scale:
+          description: The number of decimals the currency can be split in
+          example: 8
+          type: integer
+        counter_currency:
+          description: Blockchain symbol identifier
+          example: BTC-USD
+          pattern: ^[A-Z]{3,5}-[A-Z]{3,5}$
+          type: string
+        counter_currency_scale:
+          description: The number of decimals the currency can be split in
+          example: 2
+          type: integer
+        min_price_increment:
+          description: The price of the instrument must be a multiple of min_price_increment
+            * (10^-min_price_increment_scale)
+          example: 10
+          format: int64
+          type: integer
+        min_price_increment_scale:
+          example: 0
+          type: integer
+        min_order_size:
+          description: The minimum quantity for an order for this instrument must
+            be min_order_size*(10^-min_order_size_scale)
+          example: 10
+          format: int64
+          type: integer
+        min_order_size_scale:
+          example: 2
+          type: integer
+        max_order_size:
+          description: The maximum quantity for an order for this instrument is max_order_size*(10^-max_order_size_scale).
+            If this equal to zero, there is no limit
+          example: 0
+          format: int64
+          type: integer
+        max_order_size_scale:
+          example: 8
+          type: integer
+        lot_size:
+          example: 5
+          format: int64
+          type: integer
+        lot_size_scale:
+          example: 2
+          type: integer
+        status:
+          description: Symbol status; open, close, suspend, halt, halt-freeze.
+          enum:
+          - open
+          - close
+          - suspend
+          - halt
+          - halt-freeze
+          type: string
+        id:
+          example: 1
+          format: int64
+          type: integer
+        auction_price:
+          description: If the symbol is halted and will open on an auction, this will
+            be the opening price.
+          example: 0.0
+          format: double
+          type: number
+        auction_size:
+          description: Opening size
+          example: 0.0
+          format: double
+          type: number
+        auction_time:
+          description: Opening time in HHMM format
+          example: 1530
+          type: integer
+        imbalance:
+          description: Auction imbalance. If > 0 then there will be buy orders left
+            over at the auction price. If < 0 then there will be sell orders left
+            over at the auction price.
+          example: 0.0
+          format: double
+          type: number
+      type: object
+    OrderBookEntry:
+      example:
+        qty: 1.45
+        num: 1
+        px: 8723.45
+      properties:
+        px:
+          example: 8723.45
+          format: double
+          type: number
+        qty:
+          example: 1.45
+          format: double
+          type: number
+        num:
+          example: 1
+          type: integer
+      type: object
+    OrderBook:
+      example:
+        symbol: BTC-USD
+        asks:
+        - qty: 1.45
+          num: 1
+          px: 8723.45
+        - qty: 1.45
+          num: 1
+          px: 8723.45
+        bids:
+        - qty: 1.45
+          num: 1
+          px: 8723.45
+        - qty: 1.45
+          num: 1
+          px: 8723.45
+      properties:
+        symbol:
+          description: Blockchain symbol identifier
+          example: BTC-USD
+          pattern: ^[A-Z]{3,5}-[A-Z]{3,5}$
+          type: string
+        bids:
+          items:
+            $ref: '#/components/schemas/OrderBookEntry'
+          type: array
+        asks:
+          items:
+            $ref: '#/components/schemas/OrderBookEntry'
+          type: array
+      type: object
+    UnauthorizedError:
+      description: API key is missing or invalid
+      properties:
+        error:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      in: header
+      name: X-API-Token
+      type: apiKey
