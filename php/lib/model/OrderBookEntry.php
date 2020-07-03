@@ -70,7 +70,7 @@ class OrderBookEntry implements ModelInterface, ArrayAccess
     protected static $openAPIFormats = [
         'px' => 'double',
         'qty' => 'double',
-        'num' => null
+        'num' => 'int64'
     ];
 
     /**
@@ -277,7 +277,7 @@ class OrderBookEntry implements ModelInterface, ArrayAccess
     /**
      * Sets num
      *
-     * @param int|null $num num
+     * @param int|null $num Either the quantity of orders on this price level for L2, or the individual order id for L3
      *
      * @return $this
      */

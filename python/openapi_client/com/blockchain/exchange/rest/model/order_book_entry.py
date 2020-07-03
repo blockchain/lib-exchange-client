@@ -108,6 +108,7 @@ class OrderBookEntry(object):
     def num(self):
         """Gets the num of this OrderBookEntry.  # noqa: E501
 
+        Either the quantity of orders on this price level for L2, or the individual order id for L3  # noqa: E501
 
         :return: The num of this OrderBookEntry.  # noqa: E501
         :rtype: int
@@ -118,6 +119,7 @@ class OrderBookEntry(object):
     def num(self, num):
         """Sets the num of this OrderBookEntry.
 
+        Either the quantity of orders on this price level for L2, or the individual order id for L3  # noqa: E501
 
         :param num: The num of this OrderBookEntry.  # noqa: E501
         :type: int

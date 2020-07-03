@@ -41,6 +41,7 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
         /// <param name="exOrdId">The unique order id assigned by the exchange.</param>
         /// <param name="clOrdId">Reference field provided by client and cannot exceed 20 characters.</param>
         /// <param name="ordStatus">ordStatus.</param>
+        /// <param name="side">side.</param>
         /// <param name="text">The reason for rejecting the order, if applicable.</param>
         /// <param name="symbol">Blockchain symbol identifier.</param>
         /// <param name="lastShares">The executed quantity for the order&#39;s last fill.</param>
@@ -49,11 +50,12 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
         /// <param name="cumQty">The quantity of the order which has been filled.</param>
         /// <param name="avgPx">Calculated the Volume Weighted Average Price of all fills for this order.</param>
         /// <param name="timestamp">Time in ms since 01/01/1970 (epoch).</param>
-        public OrderSummary(long exOrdId = default(long), string clOrdId = default(string), OrderStatus? ordStatus = default(OrderStatus?), string text = default(string), string symbol = default(string), double lastShares = default(double), double lastPx = default(double), double leavesQty = default(double), double cumQty = default(double), double avgPx = default(double), long timestamp = default(long))
+        public OrderSummary(long exOrdId = default(long), string clOrdId = default(string), OrderStatus? ordStatus = default(OrderStatus?), Side side = default(Side), string text = default(string), string symbol = default(string), double lastShares = default(double), double lastPx = default(double), double leavesQty = default(double), double cumQty = default(double), double avgPx = default(double), long timestamp = default(long))
         {
             this.ExOrdId = exOrdId;
             this.ClOrdId = clOrdId;
             this.OrdStatus = ordStatus;
+            this.Side = side;
             this.Text = text;
             this.Symbol = symbol;
             this.LastShares = lastShares;
@@ -78,6 +80,12 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
         [DataMember(Name="clOrdId", EmitDefaultValue=false)]
         public string ClOrdId { get; set; }
 
+
+        /// <summary>
+        /// Gets or Sets Side
+        /// </summary>
+        [DataMember(Name="side", EmitDefaultValue=false)]
+        public Side Side { get; set; }
 
         /// <summary>
         /// The reason for rejecting the order, if applicable
@@ -146,6 +154,7 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
             sb.Append("  ExOrdId: ").Append(ExOrdId).Append("\n");
             sb.Append("  ClOrdId: ").Append(ClOrdId).Append("\n");
             sb.Append("  OrdStatus: ").Append(OrdStatus).Append("\n");
+            sb.Append("  Side: ").Append(Side).Append("\n");
             sb.Append("  Text: ").Append(Text).Append("\n");
             sb.Append("  Symbol: ").Append(Symbol).Append("\n");
             sb.Append("  LastShares: ").Append(LastShares).Append("\n");
@@ -204,6 +213,11 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
                     this.OrdStatus.Equals(input.OrdStatus))
                 ) && 
                 (
+                    this.Side == input.Side ||
+                    (this.Side != null &&
+                    this.Side.Equals(input.Side))
+                ) && 
+                (
                     this.Text == input.Text ||
                     (this.Text != null &&
                     this.Text.Equals(input.Text))
@@ -260,6 +274,8 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
                     hashCode = hashCode * 59 + this.ClOrdId.GetHashCode();
                 if (this.OrdStatus != null)
                     hashCode = hashCode * 59 + this.OrdStatus.GetHashCode();
+                if (this.Side != null)
+                    hashCode = hashCode * 59 + this.Side.GetHashCode();
                 if (this.Text != null)
                     hashCode = hashCode * 59 + this.Text.GetHashCode();
                 if (this.Symbol != null)

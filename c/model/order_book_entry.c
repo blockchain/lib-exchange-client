@@ -8,7 +8,7 @@
 order_book_entry_t *order_book_entry_create(
     double px,
     double qty,
-    int num
+    long num
     ) {
     order_book_entry_t *order_book_entry_local_var = malloc(sizeof(order_book_entry_t));
     if (!order_book_entry_local_var) {

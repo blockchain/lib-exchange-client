@@ -74,6 +74,7 @@ OrderBookEntry.prototype['px'] = undefined;
 OrderBookEntry.prototype['qty'] = undefined;
 
 /**
+ * Either the quantity of orders on this price level for L2, or the individual order id for L3
  * @member {Number} num
  */
 OrderBookEntry.prototype['num'] = undefined;

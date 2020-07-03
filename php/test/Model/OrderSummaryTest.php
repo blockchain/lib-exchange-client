@@ -100,6 +100,13 @@ class OrderSummaryTest extends TestCase
     }
 
     /**
+     * Test attribute "side"
+     */
+    public function testPropertySide()
+    {
+    }
+
+    /**
      * Test attribute "text"
      */
     public function testPropertyText()

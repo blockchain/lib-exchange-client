@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 **ex_ord_id** | **int** | The unique order id assigned by the exchange | [optional] 
 **cl_ord_id** | **str** | Reference field provided by client and cannot exceed 20 characters | [optional] 
 **ord_status** | [**OrderStatus**](OrderStatus.md) |  | [optional] 
+**side** | [**Side**](Side.md) |  | [optional] 
 **text** | **str** | The reason for rejecting the order, if applicable | [optional] 
 **symbol** | **str** | Blockchain symbol identifier | [optional] 
 **last_shares** | **float** | The executed quantity for the order&#39;s last fill | [optional] 

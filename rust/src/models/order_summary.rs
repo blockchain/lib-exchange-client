@@ -21,6 +21,8 @@ pub struct OrderSummary {
     pub cl_ord_id: Option<String>,
     #[serde(rename = "ordStatus", skip_serializing_if = "Option::is_none")]
     pub ord_status: Option<crate::models::OrderStatus>,
+    #[serde(rename = "side", skip_serializing_if = "Option::is_none")]
+    pub side: Option<crate::models::Side>,
     /// The reason for rejecting the order, if applicable
     #[serde(rename = "text", skip_serializing_if = "Option::is_none")]
     pub text: Option<String>,
@@ -53,6 +55,7 @@ impl OrderSummary {
             ex_ord_id: None,
             cl_ord_id: None,
             ord_status: None,
+            side: None,
             text: None,
             symbol: None,
             last_shares: None,

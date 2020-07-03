@@ -13,6 +13,7 @@
 module Data.OrderSummary exposing (OrderSummary, decoder, encode, encodeWithTag, toString)
 
 import Data.OrderStatus as OrderStatus exposing (OrderStatus)
+import Data.Side as Side exposing (Side)
 import Dict exposing (Dict)
 import Json.Decode as Decode exposing (Decoder)
 import Json.Decode.Pipeline exposing (optional, required)
@@ -23,6 +24,7 @@ type alias OrderSummary =
     { exOrdId : Maybe (Int)
     , clOrdId : Maybe (String)
     , ordStatus : Maybe (OrderStatus)
+    , side : Maybe (Side)
     , text : Maybe (String)
     , symbol : Maybe (String)
     , lastShares : Maybe (Float)
@@ -40,6 +42,7 @@ decoder =
         |> optional "exOrdId" (Decode.nullable Decode.int) Nothing
         |> optional "clOrdId" (Decode.nullable Decode.string) Nothing
         |> optional "ordStatus" (Decode.nullable OrderStatus.decoder) Nothing
+        |> optional "side" (Decode.nullable Side.decoder) Nothing
         |> optional "text" (Decode.nullable Decode.string) Nothing
         |> optional "symbol" (Decode.nullable Decode.string) Nothing
         |> optional "lastShares" (Decode.nullable Decode.float) Nothing
@@ -66,6 +69,7 @@ encodePairs model =
     [ ( "exOrdId", Maybe.withDefault Encode.null (Maybe.map Encode.int model.exOrdId) )
     , ( "clOrdId", Maybe.withDefault Encode.null (Maybe.map Encode.string model.clOrdId) )
     , ( "ordStatus", Maybe.withDefault Encode.null (Maybe.map OrderStatus.encode model.ordStatus) )
+    , ( "side", Maybe.withDefault Encode.null (Maybe.map Side.encode model.side) )
     , ( "text", Maybe.withDefault Encode.null (Maybe.map Encode.string model.text) )
     , ( "symbol", Maybe.withDefault Encode.null (Maybe.map Encode.string model.symbol) )
     , ( "lastShares", Maybe.withDefault Encode.null (Maybe.map Encode.float model.lastShares) )

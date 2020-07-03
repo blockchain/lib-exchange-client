@@ -39,6 +39,7 @@ class TestOrderSummary(unittest.TestCase):
                 ex_ord_id = 11111111, 
                 cl_ord_id = 'ABC', 
                 ord_status = 'FILLED', 
+                side = 'BUY', 
                 text = '0', 
                 symbol = 'BTC-USD', 
                 last_shares = 0.5678, 

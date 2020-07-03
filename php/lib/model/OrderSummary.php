@@ -60,6 +60,7 @@ class OrderSummary implements ModelInterface, ArrayAccess
         'ex_ord_id' => 'int',
         'cl_ord_id' => 'string',
         'ord_status' => '\com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\OrderStatus',
+        'side' => '\com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\Side',
         'text' => 'string',
         'symbol' => 'string',
         'last_shares' => 'double',
@@ -79,6 +80,7 @@ class OrderSummary implements ModelInterface, ArrayAccess
         'ex_ord_id' => 'int64',
         'cl_ord_id' => null,
         'ord_status' => null,
+        'side' => null,
         'text' => null,
         'symbol' => null,
         'last_shares' => 'double',
@@ -119,6 +121,7 @@ class OrderSummary implements ModelInterface, ArrayAccess
         'ex_ord_id' => 'exOrdId',
         'cl_ord_id' => 'clOrdId',
         'ord_status' => 'ordStatus',
+        'side' => 'side',
         'text' => 'text',
         'symbol' => 'symbol',
         'last_shares' => 'lastShares',
@@ -138,6 +141,7 @@ class OrderSummary implements ModelInterface, ArrayAccess
         'ex_ord_id' => 'setExOrdId',
         'cl_ord_id' => 'setClOrdId',
         'ord_status' => 'setOrdStatus',
+        'side' => 'setSide',
         'text' => 'setText',
         'symbol' => 'setSymbol',
         'last_shares' => 'setLastShares',
@@ -157,6 +161,7 @@ class OrderSummary implements ModelInterface, ArrayAccess
         'ex_ord_id' => 'getExOrdId',
         'cl_ord_id' => 'getClOrdId',
         'ord_status' => 'getOrdStatus',
+        'side' => 'getSide',
         'text' => 'getText',
         'symbol' => 'getSymbol',
         'last_shares' => 'getLastShares',
@@ -230,6 +235,7 @@ class OrderSummary implements ModelInterface, ArrayAccess
         $this->container['ex_ord_id'] = isset($data['ex_ord_id']) ? $data['ex_ord_id'] : null;
         $this->container['cl_ord_id'] = isset($data['cl_ord_id']) ? $data['cl_ord_id'] : null;
         $this->container['ord_status'] = isset($data['ord_status']) ? $data['ord_status'] : null;
+        $this->container['side'] = isset($data['side']) ? $data['side'] : null;
         $this->container['text'] = isset($data['text']) ? $data['text'] : null;
         $this->container['symbol'] = isset($data['symbol']) ? $data['symbol'] : null;
         $this->container['last_shares'] = isset($data['last_shares']) ? $data['last_shares'] : null;
@@ -344,6 +350,30 @@ class OrderSummary implements ModelInterface, ArrayAccess
     public function setOrdStatus($ord_status)
     {
         $this->container['ord_status'] = $ord_status;
+
+        return $this;
+    }
+
+    /**
+     * Gets side
+     *
+     * @return \com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\Side|null
+     */
+    public function getSide()
+    {
+        return $this->container['side'];
+    }
+
+    /**
+     * Sets side
+     *
+     * @param \com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\Side|null $side side
+     *
+     * @return $this
+     */
+    public function setSide($side)
+    {
+        $this->container['side'] = $side;
 
         return $this;
     }

@@ -90,6 +90,14 @@ namespace Org.OpenAPITools.Test
             // TODO unit test for the property 'OrdStatus'
         }
         /// <summary>
+        /// Test the property 'Side'
+        /// </summary>
+        [Test]
+        public void SideTest()
+        {
+            // TODO unit test for the property 'Side'
+        }
+        /// <summary>
         /// Test the property 'Text'
         /// </summary>
         [Test]

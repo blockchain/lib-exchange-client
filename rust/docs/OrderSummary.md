@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **ex_ord_id** | Option<**i64**> | The unique order id assigned by the exchange | [optional]
 **cl_ord_id** | Option<**String**> | Reference field provided by client and cannot exceed 20 characters | [optional]
 **ord_status** | Option<[**crate::models::OrderStatus**](OrderStatus.md)> |  | [optional]
+**side** | Option<[**crate::models::Side**](side.md)> |  | [optional]
 **text** | Option<**String**> | The reason for rejecting the order, if applicable | [optional]
 **symbol** | Option<**String**> | Blockchain symbol identifier | [optional]
 **last_shares** | Option<**f64**> | The executed quantity for the order's last fill | [optional]

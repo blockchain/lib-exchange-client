@@ -130,7 +130,7 @@ configuration = openapi_client.Configuration(
 with openapi_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = openapi_client.PaymentsApi(api_client)
-    account = 'account_example' # str | Account
+    account = 'primary' # str | Account
 currency = 'currency_example' # str | Currency
 
     try:

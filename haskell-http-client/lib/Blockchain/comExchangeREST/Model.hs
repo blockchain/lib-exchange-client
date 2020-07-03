@@ -498,7 +498,7 @@ mkOrderBook =
 data OrderBookEntry = OrderBookEntry
   { orderBookEntryPx :: !(Maybe Double) -- ^ "px"
   , orderBookEntryQty :: !(Maybe Double) -- ^ "qty"
-  , orderBookEntryNum :: !(Maybe Int) -- ^ "num"
+  , orderBookEntryNum :: !(Maybe Integer) -- ^ "num" - Either the quantity of orders on this price level for L2, or the individual order id for L3
   } deriving (P.Show, P.Eq, P.Typeable)
 
 -- | FromJSON OrderBookEntry
@@ -535,6 +535,7 @@ data OrderSummary = OrderSummary
   { orderSummaryExOrdId :: !(Maybe Integer) -- ^ "exOrdId" - The unique order id assigned by the exchange
   , orderSummaryClOrdId :: !(Maybe Text) -- ^ "clOrdId" - Reference field provided by client and cannot exceed 20 characters
   , orderSummaryOrdStatus :: !(Maybe OrderStatus) -- ^ "ordStatus"
+  , orderSummarySide :: !(Maybe Side) -- ^ "side"
   , orderSummaryText :: !(Maybe Text) -- ^ "text" - The reason for rejecting the order, if applicable
   , orderSummarySymbol :: !(Maybe Text) -- ^ "symbol" - Blockchain symbol identifier
   , orderSummaryLastShares :: !(Maybe Double) -- ^ "lastShares" - The executed quantity for the order&#39;s last fill
@@ -552,6 +553,7 @@ instance A.FromJSON OrderSummary where
       <$> (o .:? "exOrdId")
       <*> (o .:? "clOrdId")
       <*> (o .:? "ordStatus")
+      <*> (o .:? "side")
       <*> (o .:? "text")
       <*> (o .:? "symbol")
       <*> (o .:? "lastShares")
@@ -568,6 +570,7 @@ instance A.ToJSON OrderSummary where
       [ "exOrdId" .= orderSummaryExOrdId
       , "clOrdId" .= orderSummaryClOrdId
       , "ordStatus" .= orderSummaryOrdStatus
+      , "side" .= orderSummarySide
       , "text" .= orderSummaryText
       , "symbol" .= orderSummarySymbol
       , "lastShares" .= orderSummaryLastShares
@@ -587,6 +590,7 @@ mkOrderSummary =
   { orderSummaryExOrdId = Nothing
   , orderSummaryClOrdId = Nothing
   , orderSummaryOrdStatus = Nothing
+  , orderSummarySide = Nothing
   , orderSummaryText = Nothing
   , orderSummarySymbol = Nothing
   , orderSummaryLastShares = Nothing

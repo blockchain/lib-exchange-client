@@ -15,6 +15,7 @@ type OrderSummary struct {
 	// Reference field provided by client and cannot exceed 20 characters
 	ClOrdId string `json:"clOrdId,omitempty"`
 	OrdStatus OrderStatus `json:"ordStatus,omitempty"`
+	Side Side `json:"side,omitempty"`
 	// The reason for rejecting the order, if applicable
 	Text string `json:"text,omitempty"`
 	// Blockchain symbol identifier

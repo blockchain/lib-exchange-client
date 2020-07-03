@@ -21,14 +21,14 @@ typedef struct order_book_entry_t order_book_entry_t;
 typedef struct order_book_entry_t {
     double px; //numeric
     double qty; //numeric
-    int num; //numeric
+    long num; //numeric
 
 } order_book_entry_t;
 
 order_book_entry_t *order_book_entry_create(
     double px,
     double qty,
-    int num
+    long num
 );
 
 void order_book_entry_free(order_book_entry_t *order_book_entry);

@@ -369,7 +369,7 @@ export interface OrderBookEntry {
      */
     qty?: number;
     /**
-     * 
+     * Either the quantity of orders on this price level for L2, or the individual order id for L3
      * @type {number}
      * @memberof OrderBookEntry
      */
@@ -412,6 +412,12 @@ export interface OrderSummary {
      * @memberof OrderSummary
      */
     ordStatus?: OrderStatus;
+    /**
+     * 
+     * @type {Side}
+     * @memberof OrderSummary
+     */
+    side?: Side;
     /**
      * The reason for rejecting the order, if applicable
      * @type {string}

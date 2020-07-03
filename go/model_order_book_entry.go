@@ -12,5 +12,6 @@ package openapi
 type OrderBookEntry struct {
 	Px float64 `json:"px,omitempty"`
 	Qty float64 `json:"qty,omitempty"`
-	Num int32 `json:"num,omitempty"`
+	// Either the quantity of orders on this price level for L2, or the individual order id for L3
+	Num int64 `json:"num,omitempty"`
 }

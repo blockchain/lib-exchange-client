@@ -23,7 +23,7 @@ public class OrderBookEntry {
   @SerializedName("qty")
   private Double qty = null;
   @SerializedName("num")
-  private Integer num = null;
+  private Long num = null;
 
   /**
    **/
@@ -46,12 +46,13 @@ public class OrderBookEntry {
   }
 
   /**
+   * Either the quantity of orders on this price level for L2, or the individual order id for L3
    **/
-  @ApiModelProperty(value = "")
-  public Integer getNum() {
+  @ApiModelProperty(value = "Either the quantity of orders on this price level for L2, or the individual order id for L3")
+  public Long getNum() {
     return num;
   }
-  public void setNum(Integer num) {
+  public void setNum(Long num) {
     this.num = num;
   }
 

@@ -74,7 +74,7 @@ Receive current account balances
 //import com.blockchain.exchange.rest.api.PaymentsApi;
 
 PaymentsApi apiInstance = new PaymentsApi();
-String account = null; // String | Account
+String account = primary; // String | Account
 String currency = null; // String | Currency
 try {
     Balance result = apiInstance.getAccountByTypeAndCurrency(account, currency);

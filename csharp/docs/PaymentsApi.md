@@ -123,7 +123,7 @@ namespace Example
             // Configuration.Default.AddApiKeyPrefix("X-API-Token", "Bearer");
 
             var apiInstance = new PaymentsApi(Configuration.Default);
-            var account = account_example;  // string | Account
+            var account = primary;  // string | Account
             var currency = currency_example;  // string | Currency
 
             try

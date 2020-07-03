@@ -177,6 +177,7 @@ paths:
           required: true
           schema:
             type: string
+          example: "primary"
         - $ref: '#/components/parameters/currencyParam'
       responses:
         '200':
@@ -689,6 +690,8 @@ components:
           $ref: '#/components/schemas/ClientOrderId'
         ordStatus:
           $ref: '#/components/schemas/OrderStatus'
+        side:
+          $ref: '#/components/schemas/side'
         text:
           type: string
           description: "The reason for rejecting the order, if applicable"
@@ -971,6 +974,8 @@ components:
           example: "1.45"
         num:
           type: integer
+          format: int64
+          description: "Either the quantity of orders on this price level for L2, or the individual order id for L3"
           example: "1"
 
     OrderBook:

@@ -192,6 +192,7 @@ paths:
       operationId: getAccountByTypeAndCurrency
       parameters:
       - description: Account
+        example: primary
         explode: false
         in: path
         name: account
@@ -916,6 +917,7 @@ components:
         ordStatus: FILLED
         clOrdId: ABC
         symbol: BTC-USD
+        side: BUY
         avgPx: 345.33
         lastPx: 3500.12
         lastShares: 0.5678
@@ -936,6 +938,8 @@ components:
           type: string
         ordStatus:
           $ref: '#/components/schemas/OrderStatus'
+        side:
+          $ref: '#/components/schemas/side'
         text:
           description: The reason for rejecting the order, if applicable
           type: string
@@ -1305,7 +1309,10 @@ components:
           format: double
           type: number
         num:
+          description: Either the quantity of orders on this price level for L2, or
+            the individual order id for L3
           example: 1
+          format: int64
           type: integer
       type: object
     OrderBook:

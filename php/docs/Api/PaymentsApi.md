@@ -103,7 +103,7 @@ $apiInstance = new com.blockchain.exchange.rest\Api\PaymentsApi(
     new GuzzleHttp\Client(),
     $config
 );
-$account = 'account_example'; // string | Account
+$account = primary; // string | Account
 $currency = 'currency_example'; // string | Currency
 
 try {

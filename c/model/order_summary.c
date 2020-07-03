@@ -21,6 +21,23 @@ blockchain_com_exchange_rest_api_order_summary__e ord_statusorder_summary_FromSt
     }
     return 0;
 }
+char* sideorder_summary_ToString(blockchain_com_exchange_rest_api_order_summary__e side) {
+    char* sideArray[] =  { "NULL", "BUY", "SELL" };
+	return sideArray[side];
+}
+
+blockchain_com_exchange_rest_api_order_summary__e sideorder_summary_FromString(char* side){
+    int stringToReturn = 0;
+    char *sideArray[] =  { "NULL", "BUY", "SELL" };
+    size_t sizeofArray = sizeof(sideArray) / sizeof(sideArray[0]);
+    while(stringToReturn < sizeofArray) {
+        if(strcmp(side, sideArray[stringToReturn]) == 0) {
+            return stringToReturn;
+        }
+        stringToReturn++;
+    }
+    return 0;
+}
 
 order_summary_t *order_summary_create(
     long ex_ord_id,
@@ -41,6 +58,7 @@ order_summary_t *order_summary_create(
     order_summary_local_var->ex_ord_id = ex_ord_id;
     order_summary_local_var->cl_ord_id = cl_ord_id;
     order_summary_local_var->ord_status = ord_status;
+    order_summary_local_var->side = side;
     order_summary_local_var->text = text;
     order_summary_local_var->symbol = symbol;
     order_summary_local_var->last_shares = last_shares;
@@ -85,6 +103,11 @@ cJSON *order_summary_convertToJSON(order_summary_t *order_summary) {
 
 
     // order_summary->ord_status
+    
+    
+
+
+    // order_summary->side
     
     
 
@@ -184,6 +207,10 @@ order_summary_t *order_summary_parseFromJSON(cJSON *order_summaryJSON){
 
     // order_summary->ord_status
     cJSON *ord_status = cJSON_GetObjectItemCaseSensitive(order_summaryJSON, "ordStatus");
+    }
+
+    // order_summary->side
+    cJSON *side = cJSON_GetObjectItemCaseSensitive(order_summaryJSON, "side");
     }
 
     // order_summary->text

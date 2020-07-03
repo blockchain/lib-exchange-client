@@ -214,7 +214,7 @@ genOrderBookEntry n =
   OrderBookEntry
     <$> arbitraryReducedMaybe n -- orderBookEntryPx :: Maybe Double
     <*> arbitraryReducedMaybe n -- orderBookEntryQty :: Maybe Double
-    <*> arbitraryReducedMaybe n -- orderBookEntryNum :: Maybe Int
+    <*> arbitraryReducedMaybe n -- orderBookEntryNum :: Maybe Integer
   
 instance Arbitrary OrderSummary where
   arbitrary = sized genOrderSummary
@@ -225,6 +225,7 @@ genOrderSummary n =
     <$> arbitraryReducedMaybe n -- orderSummaryExOrdId :: Maybe Integer
     <*> arbitraryReducedMaybe n -- orderSummaryClOrdId :: Maybe Text
     <*> arbitraryReducedMaybe n -- orderSummaryOrdStatus :: Maybe OrderStatus
+    <*> arbitraryReducedMaybe n -- orderSummarySide :: Maybe Side
     <*> arbitraryReducedMaybe n -- orderSummaryText :: Maybe Text
     <*> arbitraryReducedMaybe n -- orderSummarySymbol :: Maybe Text
     <*> arbitraryReducedMaybe n -- orderSummaryLastShares :: Maybe Double

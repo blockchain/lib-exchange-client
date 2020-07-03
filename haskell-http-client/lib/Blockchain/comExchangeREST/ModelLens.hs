@@ -280,7 +280,7 @@ orderBookEntryQtyL f OrderBookEntry{..} = (\orderBookEntryQty -> OrderBookEntry 
 {-# INLINE orderBookEntryQtyL #-}
 
 -- | 'orderBookEntryNum' Lens
-orderBookEntryNumL :: Lens_' OrderBookEntry (Maybe Int)
+orderBookEntryNumL :: Lens_' OrderBookEntry (Maybe Integer)
 orderBookEntryNumL f OrderBookEntry{..} = (\orderBookEntryNum -> OrderBookEntry { orderBookEntryNum, ..} ) <$> f orderBookEntryNum
 {-# INLINE orderBookEntryNumL #-}
 
@@ -306,6 +306,11 @@ orderSummaryClOrdIdL f OrderSummary{..} = (\orderSummaryClOrdId -> OrderSummary 
 orderSummaryOrdStatusL :: Lens_' OrderSummary (Maybe OrderStatus)
 orderSummaryOrdStatusL f OrderSummary{..} = (\orderSummaryOrdStatus -> OrderSummary { orderSummaryOrdStatus, ..} ) <$> f orderSummaryOrdStatus
 {-# INLINE orderSummaryOrdStatusL #-}
+
+-- | 'orderSummarySide' Lens
+orderSummarySideL :: Lens_' OrderSummary (Maybe Side)
+orderSummarySideL f OrderSummary{..} = (\orderSummarySide -> OrderSummary { orderSummarySide, ..} ) <$> f orderSummarySide
+{-# INLINE orderSummarySideL #-}
 
 -- | 'orderSummaryText' Lens
 orderSummaryTextL :: Lens_' OrderSummary (Maybe Text)

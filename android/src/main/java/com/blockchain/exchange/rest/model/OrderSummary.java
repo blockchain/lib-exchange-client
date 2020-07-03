@@ -13,6 +13,7 @@
 package com.blockchain.exchange.rest.model;
 
 import com.blockchain.exchange.rest.model.OrderStatus;
+import com.blockchain.exchange.rest.model.Side;
 import io.swagger.annotations.*;
 import com.google.gson.annotations.SerializedName;
 
@@ -25,6 +26,8 @@ public class OrderSummary {
   private String clOrdId = null;
   @SerializedName("ordStatus")
   private OrderStatus ordStatus = null;
+  @SerializedName("side")
+  private Side side = null;
   @SerializedName("text")
   private String text = null;
   @SerializedName("symbol")
@@ -72,6 +75,16 @@ public class OrderSummary {
   }
   public void setOrdStatus(OrderStatus ordStatus) {
     this.ordStatus = ordStatus;
+  }
+
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  public Side getSide() {
+    return side;
+  }
+  public void setSide(Side side) {
+    this.side = side;
   }
 
   /**
@@ -175,6 +188,7 @@ public class OrderSummary {
     return (this.exOrdId == null ? orderSummary.exOrdId == null : this.exOrdId.equals(orderSummary.exOrdId)) &&
         (this.clOrdId == null ? orderSummary.clOrdId == null : this.clOrdId.equals(orderSummary.clOrdId)) &&
         (this.ordStatus == null ? orderSummary.ordStatus == null : this.ordStatus.equals(orderSummary.ordStatus)) &&
+        (this.side == null ? orderSummary.side == null : this.side.equals(orderSummary.side)) &&
         (this.text == null ? orderSummary.text == null : this.text.equals(orderSummary.text)) &&
         (this.symbol == null ? orderSummary.symbol == null : this.symbol.equals(orderSummary.symbol)) &&
         (this.lastShares == null ? orderSummary.lastShares == null : this.lastShares.equals(orderSummary.lastShares)) &&
@@ -191,6 +205,7 @@ public class OrderSummary {
     result = 31 * result + (this.exOrdId == null ? 0: this.exOrdId.hashCode());
     result = 31 * result + (this.clOrdId == null ? 0: this.clOrdId.hashCode());
     result = 31 * result + (this.ordStatus == null ? 0: this.ordStatus.hashCode());
+    result = 31 * result + (this.side == null ? 0: this.side.hashCode());
     result = 31 * result + (this.text == null ? 0: this.text.hashCode());
     result = 31 * result + (this.symbol == null ? 0: this.symbol.hashCode());
     result = 31 * result + (this.lastShares == null ? 0: this.lastShares.hashCode());
@@ -210,6 +225,7 @@ public class OrderSummary {
     sb.append("  exOrdId: ").append(exOrdId).append("\n");
     sb.append("  clOrdId: ").append(clOrdId).append("\n");
     sb.append("  ordStatus: ").append(ordStatus).append("\n");
+    sb.append("  side: ").append(side).append("\n");
     sb.append("  text: ").append(text).append("\n");
     sb.append("  symbol: ").append(symbol).append("\n");
     sb.append("  lastShares: ").append(lastShares).append("\n");

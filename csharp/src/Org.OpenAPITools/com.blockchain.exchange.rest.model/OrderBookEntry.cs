@@ -35,8 +35,8 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
         /// </summary>
         /// <param name="px">px.</param>
         /// <param name="qty">qty.</param>
-        /// <param name="num">num.</param>
-        public OrderBookEntry(double px = default(double), double qty = default(double), int num = default(int))
+        /// <param name="num">Either the quantity of orders on this price level for L2, or the individual order id for L3.</param>
+        public OrderBookEntry(double px = default(double), double qty = default(double), long num = default(long))
         {
             this.Px = px;
             this.Qty = qty;
@@ -56,10 +56,11 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
         public double Qty { get; set; }
 
         /// <summary>
-        /// Gets or Sets Num
+        /// Either the quantity of orders on this price level for L2, or the individual order id for L3
         /// </summary>
+        /// <value>Either the quantity of orders on this price level for L2, or the individual order id for L3</value>
         [DataMember(Name="num", EmitDefaultValue=false)]
-        public int Num { get; set; }
+        public long Num { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

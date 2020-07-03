@@ -2,6 +2,7 @@
   (:require [clojure.spec.alpha :as s]
             [spec-tools.data-spec :as ds]
             [blockchain/com-exchange-rest-api.specs.order-status :refer :all]
+            [blockchain/com-exchange-rest-api.specs.side :refer :all]
             )
   (:import (java.io File)))
 
@@ -11,6 +12,7 @@
    (ds/opt :exOrdId) int?
    (ds/opt :clOrdId) string?
    (ds/opt :ordStatus) order-status-spec
+   (ds/opt :side) side-spec
    (ds/opt :text) string?
    (ds/opt :symbol) string?
    (ds/opt :lastShares) float?

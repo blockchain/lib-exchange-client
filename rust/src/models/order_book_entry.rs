@@ -17,8 +17,9 @@ pub struct OrderBookEntry {
     pub px: Option<f64>,
     #[serde(rename = "qty", skip_serializing_if = "Option::is_none")]
     pub qty: Option<f64>,
+    /// Either the quantity of orders on this price level for L2, or the individual order id for L3
     #[serde(rename = "num", skip_serializing_if = "Option::is_none")]
-    pub num: Option<i32>,
+    pub num: Option<i64>,
 }
 
 impl OrderBookEntry {

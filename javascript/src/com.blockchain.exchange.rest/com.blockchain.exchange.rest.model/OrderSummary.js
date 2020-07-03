@@ -13,6 +13,7 @@
 
 import ApiClient from '../ApiClient';
 import OrderStatus from './OrderStatus';
+import Side from './Side';
 
 /**
  * The OrderSummary model module.
@@ -56,6 +57,9 @@ class OrderSummary {
             }
             if (data.hasOwnProperty('ordStatus')) {
                 obj['ordStatus'] = OrderStatus.constructFromObject(data['ordStatus']);
+            }
+            if (data.hasOwnProperty('side')) {
+                obj['side'] = Side.constructFromObject(data['side']);
             }
             if (data.hasOwnProperty('text')) {
                 obj['text'] = ApiClient.convertToType(data['text'], 'String');
@@ -104,6 +108,11 @@ OrderSummary.prototype['clOrdId'] = undefined;
  * @member {module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/OrderStatus} ordStatus
  */
 OrderSummary.prototype['ordStatus'] = undefined;
+
+/**
+ * @member {module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/Side} side
+ */
+OrderSummary.prototype['side'] = undefined;
 
 /**
  * The reason for rejecting the order, if applicable

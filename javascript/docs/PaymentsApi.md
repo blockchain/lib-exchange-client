@@ -84,7 +84,7 @@ ApiKeyAuth.apiKey = 'YOUR API KEY';
 //ApiKeyAuth.apiKeyPrefix = 'Token';
 
 let apiInstance = new BlockchainComExchangeRestApi.PaymentsApi();
-let account = "account_example"; // String | Account
+let account = primary; // String | Account
 let currency = "currency_example"; // String | Currency
 apiInstance.getAccountByTypeAndCurrency(account, currency, (error, data, response) => {
   if (error) {

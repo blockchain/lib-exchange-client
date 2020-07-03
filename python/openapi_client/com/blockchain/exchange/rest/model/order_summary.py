@@ -36,6 +36,7 @@ class OrderSummary(object):
         'ex_ord_id': 'int',
         'cl_ord_id': 'str',
         'ord_status': 'OrderStatus',
+        'side': 'Side',
         'text': 'str',
         'symbol': 'str',
         'last_shares': 'float',
@@ -50,6 +51,7 @@ class OrderSummary(object):
         'ex_ord_id': 'exOrdId',
         'cl_ord_id': 'clOrdId',
         'ord_status': 'ordStatus',
+        'side': 'side',
         'text': 'text',
         'symbol': 'symbol',
         'last_shares': 'lastShares',
@@ -60,7 +62,7 @@ class OrderSummary(object):
         'timestamp': 'timestamp'
     }
 
-    def __init__(self, ex_ord_id=None, cl_ord_id=None, ord_status=None, text=None, symbol=None, last_shares=None, last_px=None, leaves_qty=None, cum_qty=None, avg_px=None, timestamp=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, ex_ord_id=None, cl_ord_id=None, ord_status=None, side=None, text=None, symbol=None, last_shares=None, last_px=None, leaves_qty=None, cum_qty=None, avg_px=None, timestamp=None, local_vars_configuration=None):  # noqa: E501
         """OrderSummary - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -69,6 +71,7 @@ class OrderSummary(object):
         self._ex_ord_id = None
         self._cl_ord_id = None
         self._ord_status = None
+        self._side = None
         self._text = None
         self._symbol = None
         self._last_shares = None
@@ -85,6 +88,8 @@ class OrderSummary(object):
             self.cl_ord_id = cl_ord_id
         if ord_status is not None:
             self.ord_status = ord_status
+        if side is not None:
+            self.side = side
         if text is not None:
             self.text = text
         if symbol is not None:
@@ -171,6 +176,27 @@ class OrderSummary(object):
         """
 
         self._ord_status = ord_status
+
+    @property
+    def side(self):
+        """Gets the side of this OrderSummary.  # noqa: E501
+
+
+        :return: The side of this OrderSummary.  # noqa: E501
+        :rtype: Side
+        """
+        return self._side
+
+    @side.setter
+    def side(self, side):
+        """Sets the side of this OrderSummary.
+
+
+        :param side: The side of this OrderSummary.  # noqa: E501
+        :type: Side
+        """
+
+        self._side = side
 
     @property
     def text(self):
