@@ -6,7 +6,6 @@
 
 
 fees_t *fees_create(
-    int tier,
     double maker_rate,
     double taker_rate,
     double volume_in_usd
@@ -15,7 +14,6 @@ fees_t *fees_create(
     if (!fees_local_var) {
         return NULL;
     }
-    fees_local_var->tier = tier;
     fees_local_var->maker_rate = maker_rate;
     fees_local_var->taker_rate = taker_rate;
     fees_local_var->volume_in_usd = volume_in_usd;
@@ -34,14 +32,6 @@ void fees_free(fees_t *fees) {
 
 cJSON *fees_convertToJSON(fees_t *fees) {
     cJSON *item = cJSON_CreateObject();
-
-    // fees->tier
-    if(fees->tier) { 
-    if(cJSON_AddNumberToObject(item, "tier", fees->tier) == NULL) {
-    goto fail; //Numeric
-    }
-     } 
-
 
     // fees->maker_rate
     if (!fees->maker_rate) {
@@ -84,15 +74,6 @@ fees_t *fees_parseFromJSON(cJSON *feesJSON){
 
     fees_t *fees_local_var = NULL;
 
-    // fees->tier
-    cJSON *tier = cJSON_GetObjectItemCaseSensitive(feesJSON, "tier");
-    if (tier) { 
-    if(!cJSON_IsNumber(tier))
-    {
-    goto end; //Numeric
-    }
-    }
-
     // fees->maker_rate
     cJSON *maker_rate = cJSON_GetObjectItemCaseSensitive(feesJSON, "makerRate");
     if (!maker_rate) {
@@ -131,7 +112,6 @@ fees_t *fees_parseFromJSON(cJSON *feesJSON){
 
 
     fees_local_var = fees_create (
-        tier ? tier->valuedouble : 0,
         maker_rate->valuedouble,
         taker_rate->valuedouble,
         volume_in_usd->valuedouble

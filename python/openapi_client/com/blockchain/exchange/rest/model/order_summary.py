@@ -37,6 +37,7 @@ class OrderSummary(object):
         'cl_ord_id': 'str',
         'ord_status': 'OrderStatus',
         'side': 'Side',
+        'price': 'float',
         'text': 'str',
         'symbol': 'str',
         'last_shares': 'float',
@@ -52,6 +53,7 @@ class OrderSummary(object):
         'cl_ord_id': 'clOrdId',
         'ord_status': 'ordStatus',
         'side': 'side',
+        'price': 'price',
         'text': 'text',
         'symbol': 'symbol',
         'last_shares': 'lastShares',
@@ -62,7 +64,7 @@ class OrderSummary(object):
         'timestamp': 'timestamp'
     }
 
-    def __init__(self, ex_ord_id=None, cl_ord_id=None, ord_status=None, side=None, text=None, symbol=None, last_shares=None, last_px=None, leaves_qty=None, cum_qty=None, avg_px=None, timestamp=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, ex_ord_id=None, cl_ord_id=None, ord_status=None, side=None, price=None, text=None, symbol=None, last_shares=None, last_px=None, leaves_qty=None, cum_qty=None, avg_px=None, timestamp=None, local_vars_configuration=None):  # noqa: E501
         """OrderSummary - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -72,6 +74,7 @@ class OrderSummary(object):
         self._cl_ord_id = None
         self._ord_status = None
         self._side = None
+        self._price = None
         self._text = None
         self._symbol = None
         self._last_shares = None
@@ -84,16 +87,14 @@ class OrderSummary(object):
 
         if ex_ord_id is not None:
             self.ex_ord_id = ex_ord_id
-        if cl_ord_id is not None:
-            self.cl_ord_id = cl_ord_id
-        if ord_status is not None:
-            self.ord_status = ord_status
-        if side is not None:
-            self.side = side
+        self.cl_ord_id = cl_ord_id
+        self.ord_status = ord_status
+        self.side = side
+        if price is not None:
+            self.price = price
         if text is not None:
             self.text = text
-        if symbol is not None:
-            self.symbol = symbol
+        self.symbol = symbol
         if last_shares is not None:
             self.last_shares = last_shares
         if last_px is not None:
@@ -150,6 +151,8 @@ class OrderSummary(object):
         :param cl_ord_id: The cl_ord_id of this OrderSummary.  # noqa: E501
         :type: str
         """
+        if self.local_vars_configuration.client_side_validation and cl_ord_id is None:  # noqa: E501
+            raise ValueError("Invalid value for `cl_ord_id`, must not be `None`")  # noqa: E501
         if (self.local_vars_configuration.client_side_validation and
                 cl_ord_id is not None and len(cl_ord_id) > 20):
             raise ValueError("Invalid value for `cl_ord_id`, length must be less than or equal to `20`")  # noqa: E501
@@ -174,6 +177,8 @@ class OrderSummary(object):
         :param ord_status: The ord_status of this OrderSummary.  # noqa: E501
         :type: OrderStatus
         """
+        if self.local_vars_configuration.client_side_validation and ord_status is None:  # noqa: E501
+            raise ValueError("Invalid value for `ord_status`, must not be `None`")  # noqa: E501
 
         self._ord_status = ord_status
 
@@ -195,8 +200,33 @@ class OrderSummary(object):
         :param side: The side of this OrderSummary.  # noqa: E501
         :type: Side
         """
+        if self.local_vars_configuration.client_side_validation and side is None:  # noqa: E501
+            raise ValueError("Invalid value for `side`, must not be `None`")  # noqa: E501
 
         self._side = side
+
+    @property
+    def price(self):
+        """Gets the price of this OrderSummary.  # noqa: E501
+
+        The limit price for the order  # noqa: E501
+
+        :return: The price of this OrderSummary.  # noqa: E501
+        :rtype: float
+        """
+        return self._price
+
+    @price.setter
+    def price(self, price):
+        """Sets the price of this OrderSummary.
+
+        The limit price for the order  # noqa: E501
+
+        :param price: The price of this OrderSummary.  # noqa: E501
+        :type: float
+        """
+
+        self._price = price
 
     @property
     def text(self):
@@ -241,6 +271,8 @@ class OrderSummary(object):
         :param symbol: The symbol of this OrderSummary.  # noqa: E501
         :type: str
         """
+        if self.local_vars_configuration.client_side_validation and symbol is None:  # noqa: E501
+            raise ValueError("Invalid value for `symbol`, must not be `None`")  # noqa: E501
         if (self.local_vars_configuration.client_side_validation and
                 symbol is not None and not re.search(r'^[A-Z]{3,5}-[A-Z]{3,5}$', symbol)):  # noqa: E501
             raise ValueError(r"Invalid value for `symbol`, must be a follow pattern or equal to `/^[A-Z]{3,5}-[A-Z]{3,5}$/`")  # noqa: E501

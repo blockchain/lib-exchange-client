@@ -63,6 +63,8 @@ import qualified Prelude as P
 -- 
 -- Request a withdrawal
 -- 
+-- This call only works if 2FA is enabled on the account.
+-- 
 -- AuthMethod: 'AuthApiKeyApiKeyAuth'
 -- 
 createWithdrawal 

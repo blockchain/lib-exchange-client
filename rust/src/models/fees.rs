@@ -13,8 +13,6 @@
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Fees {
-    #[serde(rename = "tier", skip_serializing_if = "Option::is_none")]
-    pub tier: Option<i32>,
     #[serde(rename = "makerRate")]
     pub maker_rate: f64,
     #[serde(rename = "takerRate")]
@@ -26,7 +24,6 @@ pub struct Fees {
 impl Fees {
     pub fn new(maker_rate: f64, taker_rate: f64, volume_in_usd: f64) -> Fees {
         Fees {
-            tier: None,
             maker_rate,
             taker_rate,
             volume_in_usd,

@@ -39,7 +39,7 @@ symbol_status_t *symbol_status_create(
     long id,
     double auction_price,
     double auction_size,
-    int auction_time,
+    char *auction_time,
     double imbalance
     ) {
     symbol_status_t *symbol_status_local_var = malloc(sizeof(symbol_status_t));
@@ -76,6 +76,7 @@ void symbol_status_free(symbol_status_t *symbol_status) {
     listEntry_t *listEntry;
     free(symbol_status->base_currency);
     free(symbol_status->counter_currency);
+    free(symbol_status->auction_time);
     free(symbol_status);
 }
 
@@ -213,8 +214,8 @@ cJSON *symbol_status_convertToJSON(symbol_status_t *symbol_status) {
 
     // symbol_status->auction_time
     if(symbol_status->auction_time) { 
-    if(cJSON_AddNumberToObject(item, "auction_time", symbol_status->auction_time) == NULL) {
-    goto fail; //Numeric
+    if(cJSON_AddStringToObject(item, "auction_time", symbol_status->auction_time) == NULL) {
+    goto fail; //String
     }
      } 
 
@@ -387,9 +388,9 @@ symbol_status_t *symbol_status_parseFromJSON(cJSON *symbol_statusJSON){
     // symbol_status->auction_time
     cJSON *auction_time = cJSON_GetObjectItemCaseSensitive(symbol_statusJSON, "auction_time");
     if (auction_time) { 
-    if(!cJSON_IsNumber(auction_time))
+    if(!cJSON_IsString(auction_time))
     {
-    goto end; //Numeric
+    goto end; //String
     }
     }
 
@@ -420,7 +421,7 @@ symbol_status_t *symbol_status_parseFromJSON(cJSON *symbol_statusJSON){
         id ? id->valuedouble : 0,
         auction_price ? auction_price->valuedouble : 0,
         auction_size ? auction_size->valuedouble : 0,
-        auction_time ? auction_time->valuedouble : 0,
+        auction_time ? strdup(auction_time->valuestring) : NULL,
         imbalance ? imbalance->valuedouble : 0
         );
 

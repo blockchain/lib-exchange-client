@@ -21,6 +21,8 @@ Method | HTTP request | Description
 
 Request a withdrawal
 
+This call only works if 2FA is enabled on the account.
+
 ### Example
 
 * Api Key Authentication (ApiKeyAuth):

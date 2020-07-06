@@ -40,6 +40,7 @@ class TestOrderSummary(unittest.TestCase):
                 cl_ord_id = 'ABC', 
                 ord_status = 'FILLED', 
                 side = 'BUY', 
+                price = 0.12345, 
                 text = '0', 
                 symbol = 'BTC-USD', 
                 last_shares = 0.5678, 
@@ -51,6 +52,10 @@ class TestOrderSummary(unittest.TestCase):
             )
         else :
             return OrderSummary(
+                cl_ord_id = 'ABC',
+                ord_status = 'FILLED',
+                side = 'BUY',
+                symbol = 'BTC-USD',
         )
 
     def testOrderSummary(self):

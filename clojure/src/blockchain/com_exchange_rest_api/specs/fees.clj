@@ -7,7 +7,6 @@
 
 (def fees-data
   {
-   (ds/opt :tier) int?
    (ds/req :makerRate) float?
    (ds/req :takerRate) float?
    (ds/req :volumeInUSD) float?

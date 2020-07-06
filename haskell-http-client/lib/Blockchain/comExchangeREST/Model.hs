@@ -417,8 +417,7 @@ mkDepositInfo depositInfoDepositId depositInfoAmount depositInfoCurrency deposit
 -- ** Fees
 -- | Fees
 data Fees = Fees
-  { feesTier :: !(Maybe Int) -- ^ "tier"
-  , feesMakerRate :: !(Double) -- ^ /Required/ "makerRate"
+  { feesMakerRate :: !(Double) -- ^ /Required/ "makerRate"
   , feesTakerRate :: !(Double) -- ^ /Required/ "takerRate"
   , feesVolumeInUsd :: !(Double) -- ^ /Required/ "volumeInUSD"
   } deriving (P.Show, P.Eq, P.Typeable)
@@ -427,8 +426,7 @@ data Fees = Fees
 instance A.FromJSON Fees where
   parseJSON = A.withObject "Fees" $ \o ->
     Fees
-      <$> (o .:? "tier")
-      <*> (o .:  "makerRate")
+      <$> (o .:  "makerRate")
       <*> (o .:  "takerRate")
       <*> (o .:  "volumeInUSD")
 
@@ -436,8 +434,7 @@ instance A.FromJSON Fees where
 instance A.ToJSON Fees where
   toJSON Fees {..} =
    _omitNulls
-      [ "tier" .= feesTier
-      , "makerRate" .= feesMakerRate
+      [ "makerRate" .= feesMakerRate
       , "takerRate" .= feesTakerRate
       , "volumeInUSD" .= feesVolumeInUsd
       ]
@@ -451,8 +448,7 @@ mkFees
   -> Fees
 mkFees feesMakerRate feesTakerRate feesVolumeInUsd =
   Fees
-  { feesTier = Nothing
-  , feesMakerRate
+  { feesMakerRate
   , feesTakerRate
   , feesVolumeInUsd
   }
@@ -533,11 +529,12 @@ mkOrderBookEntry =
 -- | OrderSummary
 data OrderSummary = OrderSummary
   { orderSummaryExOrdId :: !(Maybe Integer) -- ^ "exOrdId" - The unique order id assigned by the exchange
-  , orderSummaryClOrdId :: !(Maybe Text) -- ^ "clOrdId" - Reference field provided by client and cannot exceed 20 characters
-  , orderSummaryOrdStatus :: !(Maybe OrderStatus) -- ^ "ordStatus"
-  , orderSummarySide :: !(Maybe Side) -- ^ "side"
+  , orderSummaryClOrdId :: !(Text) -- ^ /Required/ "clOrdId" - Reference field provided by client and cannot exceed 20 characters
+  , orderSummaryOrdStatus :: !(OrderStatus) -- ^ /Required/ "ordStatus"
+  , orderSummarySide :: !(Side) -- ^ /Required/ "side"
+  , orderSummaryPrice :: !(Maybe Double) -- ^ "price" - The limit price for the order
   , orderSummaryText :: !(Maybe Text) -- ^ "text" - The reason for rejecting the order, if applicable
-  , orderSummarySymbol :: !(Maybe Text) -- ^ "symbol" - Blockchain symbol identifier
+  , orderSummarySymbol :: !(Text) -- ^ /Required/ "symbol" - Blockchain symbol identifier
   , orderSummaryLastShares :: !(Maybe Double) -- ^ "lastShares" - The executed quantity for the order&#39;s last fill
   , orderSummaryLastPx :: !(Maybe Double) -- ^ "lastPx" - The executed price for the last fill
   , orderSummaryLeavesQty :: !(Maybe Double) -- ^ "leavesQty" - For Open and Partially Filled orders this is the remaining quantity open for execution. For Canceled and Expired orders this is the quantity than was still open before cancellation/expiration. For Rejected order this is equal to orderQty. For other states this is always zero.
@@ -551,11 +548,12 @@ instance A.FromJSON OrderSummary where
   parseJSON = A.withObject "OrderSummary" $ \o ->
     OrderSummary
       <$> (o .:? "exOrdId")
-      <*> (o .:? "clOrdId")
-      <*> (o .:? "ordStatus")
-      <*> (o .:? "side")
+      <*> (o .:  "clOrdId")
+      <*> (o .:  "ordStatus")
+      <*> (o .:  "side")
+      <*> (o .:? "price")
       <*> (o .:? "text")
-      <*> (o .:? "symbol")
+      <*> (o .:  "symbol")
       <*> (o .:? "lastShares")
       <*> (o .:? "lastPx")
       <*> (o .:? "leavesQty")
@@ -571,6 +569,7 @@ instance A.ToJSON OrderSummary where
       , "clOrdId" .= orderSummaryClOrdId
       , "ordStatus" .= orderSummaryOrdStatus
       , "side" .= orderSummarySide
+      , "price" .= orderSummaryPrice
       , "text" .= orderSummaryText
       , "symbol" .= orderSummarySymbol
       , "lastShares" .= orderSummaryLastShares
@@ -584,15 +583,20 @@ instance A.ToJSON OrderSummary where
 
 -- | Construct a value of type 'OrderSummary' (by applying it's required fields, if any)
 mkOrderSummary
-  :: OrderSummary
-mkOrderSummary =
+  :: Text -- ^ 'orderSummaryClOrdId': Reference field provided by client and cannot exceed 20 characters
+  -> OrderStatus -- ^ 'orderSummaryOrdStatus' 
+  -> Side -- ^ 'orderSummarySide' 
+  -> Text -- ^ 'orderSummarySymbol': Blockchain symbol identifier
+  -> OrderSummary
+mkOrderSummary orderSummaryClOrdId orderSummaryOrdStatus orderSummarySide orderSummarySymbol =
   OrderSummary
   { orderSummaryExOrdId = Nothing
-  , orderSummaryClOrdId = Nothing
-  , orderSummaryOrdStatus = Nothing
-  , orderSummarySide = Nothing
+  , orderSummaryClOrdId
+  , orderSummaryOrdStatus
+  , orderSummarySide
+  , orderSummaryPrice = Nothing
   , orderSummaryText = Nothing
-  , orderSummarySymbol = Nothing
+  , orderSummarySymbol
   , orderSummaryLastShares = Nothing
   , orderSummaryLastPx = Nothing
   , orderSummaryLeavesQty = Nothing
@@ -688,7 +692,7 @@ data SymbolStatus = SymbolStatus
   , symbolStatusId :: !(Maybe Integer) -- ^ "id"
   , symbolStatusAuctionPrice :: !(Maybe Double) -- ^ "auction_price" - If the symbol is halted and will open on an auction, this will be the opening price.
   , symbolStatusAuctionSize :: !(Maybe Double) -- ^ "auction_size" - Opening size
-  , symbolStatusAuctionTime :: !(Maybe Int) -- ^ "auction_time" - Opening time in HHMM format
+  , symbolStatusAuctionTime :: !(Maybe Text) -- ^ "auction_time" - Opening time in HHMM format
   , symbolStatusImbalance :: !(Maybe Double) -- ^ "imbalance" - Auction imbalance. If &gt; 0 then there will be buy orders left over at the auction price. If &lt; 0 then there will be sell orders left over at the auction price.
   } deriving (P.Show, P.Eq, P.Typeable)
 

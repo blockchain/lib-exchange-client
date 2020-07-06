@@ -37,7 +37,7 @@ type SymbolStatus struct {
 	// Opening size
 	AuctionSize float64 `json:"auction_size,omitempty"`
 	// Opening time in HHMM format
-	AuctionTime int32 `json:"auction_time,omitempty"`
+	AuctionTime string `json:"auction_time,omitempty"`
 	// Auction imbalance. If > 0 then there will be buy orders left over at the auction price. If < 0 then there will be sell orders left over at the auction price.
 	Imbalance float64 `json:"imbalance,omitempty"`
 }

@@ -4,7 +4,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**tier** | Option<**i32**> |  | [optional]
 **maker_rate** | **f64** |  | 
 **taker_rate** | **f64** |  | 
 **volume_in_usd** | **f64** |  | 

@@ -96,7 +96,7 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
         /// <param name="auctionSize">Opening size.</param>
         /// <param name="auctionTime">Opening time in HHMM format.</param>
         /// <param name="imbalance">Auction imbalance. If &gt; 0 then there will be buy orders left over at the auction price. If &lt; 0 then there will be sell orders left over at the auction price..</param>
-        public SymbolStatus(string baseCurrency = default(string), int baseCurrencyScale = default(int), string counterCurrency = default(string), int counterCurrencyScale = default(int), long minPriceIncrement = default(long), int minPriceIncrementScale = default(int), long minOrderSize = default(long), int minOrderSizeScale = default(int), long maxOrderSize = default(long), int maxOrderSizeScale = default(int), long lotSize = default(long), int lotSizeScale = default(int), StatusEnum? status = default(StatusEnum?), long id = default(long), double auctionPrice = default(double), double auctionSize = default(double), int auctionTime = default(int), double imbalance = default(double))
+        public SymbolStatus(string baseCurrency = default(string), int baseCurrencyScale = default(int), string counterCurrency = default(string), int counterCurrencyScale = default(int), long minPriceIncrement = default(long), int minPriceIncrementScale = default(int), long minOrderSize = default(long), int minOrderSizeScale = default(int), long maxOrderSize = default(long), int maxOrderSizeScale = default(int), long lotSize = default(long), int lotSizeScale = default(int), StatusEnum? status = default(StatusEnum?), long id = default(long), double auctionPrice = default(double), double auctionSize = default(double), string auctionTime = default(string), double imbalance = default(double))
         {
             this.BaseCurrency = baseCurrency;
             this.BaseCurrencyScale = baseCurrencyScale;
@@ -223,7 +223,7 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
         /// </summary>
         /// <value>Opening time in HHMM format</value>
         [DataMember(Name="auction_time", EmitDefaultValue=false)]
-        public int AuctionTime { get; set; }
+        public string AuctionTime { get; set; }
 
         /// <summary>
         /// Auction imbalance. If &gt; 0 then there will be buy orders left over at the auction price. If &lt; 0 then there will be sell orders left over at the auction price.

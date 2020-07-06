@@ -28,6 +28,7 @@ type PaymentsApiService service
 
 /*
 CreateWithdrawal Request a withdrawal
+This call only works if 2FA is enabled on the account.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param createWithdrawalRequest
 @return WithdrawalInfo

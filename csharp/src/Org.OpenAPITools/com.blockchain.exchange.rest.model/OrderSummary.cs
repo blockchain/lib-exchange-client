@@ -33,31 +33,74 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
         /// <summary>
         /// Gets or Sets OrdStatus
         /// </summary>
-        [DataMember(Name="ordStatus", EmitDefaultValue=false)]
-        public OrderStatus? OrdStatus { get; set; }
+        [DataMember(Name="ordStatus", EmitDefaultValue=true)]
+        public OrderStatus OrdStatus { get; set; }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OrderSummary" /> class.
+        /// </summary>
+        [JsonConstructorAttribute]
+        protected OrderSummary() { }
         /// <summary>
         /// Initializes a new instance of the <see cref="OrderSummary" /> class.
         /// </summary>
         /// <param name="exOrdId">The unique order id assigned by the exchange.</param>
-        /// <param name="clOrdId">Reference field provided by client and cannot exceed 20 characters.</param>
-        /// <param name="ordStatus">ordStatus.</param>
-        /// <param name="side">side.</param>
+        /// <param name="clOrdId">Reference field provided by client and cannot exceed 20 characters (required).</param>
+        /// <param name="ordStatus">ordStatus (required).</param>
+        /// <param name="side">side (required).</param>
+        /// <param name="price">The limit price for the order.</param>
         /// <param name="text">The reason for rejecting the order, if applicable.</param>
-        /// <param name="symbol">Blockchain symbol identifier.</param>
+        /// <param name="symbol">Blockchain symbol identifier (required).</param>
         /// <param name="lastShares">The executed quantity for the order&#39;s last fill.</param>
         /// <param name="lastPx">The executed price for the last fill.</param>
         /// <param name="leavesQty">For Open and Partially Filled orders this is the remaining quantity open for execution. For Canceled and Expired orders this is the quantity than was still open before cancellation/expiration. For Rejected order this is equal to orderQty. For other states this is always zero..</param>
         /// <param name="cumQty">The quantity of the order which has been filled.</param>
         /// <param name="avgPx">Calculated the Volume Weighted Average Price of all fills for this order.</param>
         /// <param name="timestamp">Time in ms since 01/01/1970 (epoch).</param>
-        public OrderSummary(long exOrdId = default(long), string clOrdId = default(string), OrderStatus? ordStatus = default(OrderStatus?), Side side = default(Side), string text = default(string), string symbol = default(string), double lastShares = default(double), double lastPx = default(double), double leavesQty = default(double), double cumQty = default(double), double avgPx = default(double), long timestamp = default(long))
+        public OrderSummary(long exOrdId = default(long), string clOrdId = default(string), OrderStatus ordStatus = default(OrderStatus), Side side = default(Side), double price = default(double), string text = default(string), string symbol = default(string), double lastShares = default(double), double lastPx = default(double), double leavesQty = default(double), double cumQty = default(double), double avgPx = default(double), long timestamp = default(long))
         {
+            // to ensure "clOrdId" is required (not null)
+            if (clOrdId == null)
+            {
+                throw new InvalidDataException("clOrdId is a required property for OrderSummary and cannot be null");
+            }
+            else
+            {
+                this.ClOrdId = clOrdId;
+            }
+            
+            // to ensure "ordStatus" is required (not null)
+            if (ordStatus == null)
+            {
+                throw new InvalidDataException("ordStatus is a required property for OrderSummary and cannot be null");
+            }
+            else
+            {
+                this.OrdStatus = ordStatus;
+            }
+            
+            // to ensure "side" is required (not null)
+            if (side == null)
+            {
+                throw new InvalidDataException("side is a required property for OrderSummary and cannot be null");
+            }
+            else
+            {
+                this.Side = side;
+            }
+            
+            // to ensure "symbol" is required (not null)
+            if (symbol == null)
+            {
+                throw new InvalidDataException("symbol is a required property for OrderSummary and cannot be null");
+            }
+            else
+            {
+                this.Symbol = symbol;
+            }
+            
             this.ExOrdId = exOrdId;
-            this.ClOrdId = clOrdId;
-            this.OrdStatus = ordStatus;
-            this.Side = side;
+            this.Price = price;
             this.Text = text;
-            this.Symbol = symbol;
             this.LastShares = lastShares;
             this.LastPx = lastPx;
             this.LeavesQty = leavesQty;
@@ -77,15 +120,22 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
         /// Reference field provided by client and cannot exceed 20 characters
         /// </summary>
         /// <value>Reference field provided by client and cannot exceed 20 characters</value>
-        [DataMember(Name="clOrdId", EmitDefaultValue=false)]
+        [DataMember(Name="clOrdId", EmitDefaultValue=true)]
         public string ClOrdId { get; set; }
 
 
         /// <summary>
         /// Gets or Sets Side
         /// </summary>
-        [DataMember(Name="side", EmitDefaultValue=false)]
+        [DataMember(Name="side", EmitDefaultValue=true)]
         public Side Side { get; set; }
+
+        /// <summary>
+        /// The limit price for the order
+        /// </summary>
+        /// <value>The limit price for the order</value>
+        [DataMember(Name="price", EmitDefaultValue=false)]
+        public double Price { get; set; }
 
         /// <summary>
         /// The reason for rejecting the order, if applicable
@@ -98,7 +148,7 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
         /// Blockchain symbol identifier
         /// </summary>
         /// <value>Blockchain symbol identifier</value>
-        [DataMember(Name="symbol", EmitDefaultValue=false)]
+        [DataMember(Name="symbol", EmitDefaultValue=true)]
         public string Symbol { get; set; }
 
         /// <summary>
@@ -155,6 +205,7 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
             sb.Append("  ClOrdId: ").Append(ClOrdId).Append("\n");
             sb.Append("  OrdStatus: ").Append(OrdStatus).Append("\n");
             sb.Append("  Side: ").Append(Side).Append("\n");
+            sb.Append("  Price: ").Append(Price).Append("\n");
             sb.Append("  Text: ").Append(Text).Append("\n");
             sb.Append("  Symbol: ").Append(Symbol).Append("\n");
             sb.Append("  LastShares: ").Append(LastShares).Append("\n");
@@ -218,6 +269,11 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
                     this.Side.Equals(input.Side))
                 ) && 
                 (
+                    this.Price == input.Price ||
+                    (this.Price != null &&
+                    this.Price.Equals(input.Price))
+                ) && 
+                (
                     this.Text == input.Text ||
                     (this.Text != null &&
                     this.Text.Equals(input.Text))
@@ -276,6 +332,8 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
                     hashCode = hashCode * 59 + this.OrdStatus.GetHashCode();
                 if (this.Side != null)
                     hashCode = hashCode * 59 + this.Side.GetHashCode();
+                if (this.Price != null)
+                    hashCode = hashCode * 59 + this.Price.GetHashCode();
                 if (this.Text != null)
                     hashCode = hashCode * 59 + this.Text.GetHashCode();
                 if (this.Symbol != null)

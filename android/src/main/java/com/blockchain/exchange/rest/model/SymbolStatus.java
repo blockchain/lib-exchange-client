@@ -54,7 +54,7 @@ public class SymbolStatus {
   @SerializedName("auction_size")
   private Double auctionSize = null;
   @SerializedName("auction_time")
-  private Integer auctionTime = null;
+  private String auctionTime = null;
   @SerializedName("imbalance")
   private Double imbalance = null;
 
@@ -232,10 +232,10 @@ public class SymbolStatus {
    * Opening time in HHMM format
    **/
   @ApiModelProperty(value = "Opening time in HHMM format")
-  public Integer getAuctionTime() {
+  public String getAuctionTime() {
     return auctionTime;
   }
-  public void setAuctionTime(Integer auctionTime) {
+  public void setAuctionTime(String auctionTime) {
     this.auctionTime = auctionTime;
   }
 

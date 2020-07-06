@@ -50,6 +50,7 @@ export default class PaymentsApi {
 
     /**
      * Request a withdrawal
+     * This call only works if 2FA is enabled on the account.
      * @param {module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/CreateWithdrawalRequest} createWithdrawalRequest 
      * @param {module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.api/PaymentsApi~createWithdrawalCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/WithdrawalInfo}

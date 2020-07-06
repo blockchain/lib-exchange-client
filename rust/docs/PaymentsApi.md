@@ -22,6 +22,8 @@ Method | HTTP request | Description
 > crate::models::WithdrawalInfo create_withdrawal(create_withdrawal_request)
 Request a withdrawal
 
+This call only works if 2FA is enabled on the account.
+
 ### Parameters
 
 

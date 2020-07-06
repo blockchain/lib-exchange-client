@@ -57,7 +57,6 @@ class Fees implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPITypes = [
-        'tier' => 'int',
         'maker_rate' => 'double',
         'taker_rate' => 'double',
         'volume_in_usd' => 'double'
@@ -69,7 +68,6 @@ class Fees implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPIFormats = [
-        'tier' => null,
         'maker_rate' => 'double',
         'taker_rate' => 'double',
         'volume_in_usd' => 'double'
@@ -102,7 +100,6 @@ class Fees implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'tier' => 'tier',
         'maker_rate' => 'makerRate',
         'taker_rate' => 'takerRate',
         'volume_in_usd' => 'volumeInUSD'
@@ -114,7 +111,6 @@ class Fees implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'tier' => 'setTier',
         'maker_rate' => 'setMakerRate',
         'taker_rate' => 'setTakerRate',
         'volume_in_usd' => 'setVolumeInUsd'
@@ -126,7 +122,6 @@ class Fees implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'tier' => 'getTier',
         'maker_rate' => 'getMakerRate',
         'taker_rate' => 'getTakerRate',
         'volume_in_usd' => 'getVolumeInUsd'
@@ -192,7 +187,6 @@ class Fees implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['tier'] = isset($data['tier']) ? $data['tier'] : null;
         $this->container['maker_rate'] = isset($data['maker_rate']) ? $data['maker_rate'] : null;
         $this->container['taker_rate'] = isset($data['taker_rate']) ? $data['taker_rate'] : null;
         $this->container['volume_in_usd'] = isset($data['volume_in_usd']) ? $data['volume_in_usd'] : null;
@@ -230,30 +224,6 @@ class Fees implements ModelInterface, ArrayAccess
         return count($this->listInvalidProperties()) === 0;
     }
 
-
-    /**
-     * Gets tier
-     *
-     * @return int|null
-     */
-    public function getTier()
-    {
-        return $this->container['tier'];
-    }
-
-    /**
-     * Sets tier
-     *
-     * @param int|null $tier tier
-     *
-     * @return $this
-     */
-    public function setTier($tier)
-    {
-        $this->container['tier'] = $tier;
-
-        return $this;
-    }
 
     /**
      * Gets maker_rate

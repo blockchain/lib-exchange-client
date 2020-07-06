@@ -13,13 +13,15 @@ type OrderSummary struct {
 	// The unique order id assigned by the exchange
 	ExOrdId int64 `json:"exOrdId,omitempty"`
 	// Reference field provided by client and cannot exceed 20 characters
-	ClOrdId string `json:"clOrdId,omitempty"`
-	OrdStatus OrderStatus `json:"ordStatus,omitempty"`
-	Side Side `json:"side,omitempty"`
+	ClOrdId string `json:"clOrdId"`
+	OrdStatus OrderStatus `json:"ordStatus"`
+	Side Side `json:"side"`
+	// The limit price for the order
+	Price float64 `json:"price,omitempty"`
 	// The reason for rejecting the order, if applicable
 	Text string `json:"text,omitempty"`
 	// Blockchain symbol identifier
-	Symbol string `json:"symbol,omitempty"`
+	Symbol string `json:"symbol"`
 	// The executed quantity for the order's last fill
 	LastShares float64 `json:"lastShares,omitempty"`
 	// The executed price for the last fill

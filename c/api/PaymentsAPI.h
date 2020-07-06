@@ -16,6 +16,8 @@
 
 // Request a withdrawal
 //
+// This call only works if 2FA is enabled on the account.
+//
 withdrawal_info_t*
 PaymentsAPI_createWithdrawal(apiClient_t *apiClient, create_withdrawal_request_t * create_withdrawal_request );
 

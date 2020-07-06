@@ -78,6 +78,12 @@
       //expect(instance).to.be();
     });
 
+    it('should have the property price (base name: "price")', function() {
+      // uncomment below and update the code to test the property price
+      //var instane = new BlockchainComExchangeRestApi.OrderSummary();
+      //expect(instance).to.be();
+    });
+
     it('should have the property text (base name: "text")', function() {
       // uncomment below and update the code to test the property text
       //var instane = new BlockchainComExchangeRestApi.OrderSummary();

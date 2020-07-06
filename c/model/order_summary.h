@@ -39,6 +39,7 @@ blockchain_com_exchange_rest_api_order_summary__e order_summary_side_FromString(
 typedef struct order_summary_t {
     long ex_ord_id; //numeric
     char *cl_ord_id; // string
+    double price; //numeric
     char *text; // string
     char *symbol; // string
     double last_shares; //numeric
@@ -53,6 +54,7 @@ typedef struct order_summary_t {
 order_summary_t *order_summary_create(
     long ex_ord_id,
     char *cl_ord_id,
+    double price,
     char *text,
     char *symbol,
     double last_shares,

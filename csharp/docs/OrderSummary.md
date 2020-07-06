@@ -6,11 +6,12 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ExOrdId** | **long** | The unique order id assigned by the exchange | [optional] 
-**ClOrdId** | **string** | Reference field provided by client and cannot exceed 20 characters | [optional] 
-**OrdStatus** | **OrderStatus** |  | [optional] 
-**Side** | [**Side**](Side.md) |  | [optional] 
+**ClOrdId** | **string** | Reference field provided by client and cannot exceed 20 characters | 
+**OrdStatus** | **OrderStatus** |  | 
+**Side** | [**Side**](Side.md) |  | 
+**Price** | **double** | The limit price for the order | [optional] 
 **Text** | **string** | The reason for rejecting the order, if applicable | [optional] 
-**Symbol** | **string** | Blockchain symbol identifier | [optional] 
+**Symbol** | **string** | Blockchain symbol identifier | 
 **LastShares** | **double** | The executed quantity for the order&#39;s last fill | [optional] 
 **LastPx** | **double** | The executed price for the last fill | [optional] 
 **LeavesQty** | **double** | For Open and Partially Filled orders this is the remaining quantity open for execution. For Canceled and Expired orders this is the quantity than was still open before cancellation/expiration. For Rejected order this is equal to orderQty. For other states this is always zero. | [optional] 

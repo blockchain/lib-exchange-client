@@ -61,6 +61,7 @@ class OrderSummary implements ModelInterface, ArrayAccess
         'cl_ord_id' => 'string',
         'ord_status' => '\com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\OrderStatus',
         'side' => '\com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\Side',
+        'price' => 'double',
         'text' => 'string',
         'symbol' => 'string',
         'last_shares' => 'double',
@@ -81,6 +82,7 @@ class OrderSummary implements ModelInterface, ArrayAccess
         'cl_ord_id' => null,
         'ord_status' => null,
         'side' => null,
+        'price' => 'double',
         'text' => null,
         'symbol' => null,
         'last_shares' => 'double',
@@ -122,6 +124,7 @@ class OrderSummary implements ModelInterface, ArrayAccess
         'cl_ord_id' => 'clOrdId',
         'ord_status' => 'ordStatus',
         'side' => 'side',
+        'price' => 'price',
         'text' => 'text',
         'symbol' => 'symbol',
         'last_shares' => 'lastShares',
@@ -142,6 +145,7 @@ class OrderSummary implements ModelInterface, ArrayAccess
         'cl_ord_id' => 'setClOrdId',
         'ord_status' => 'setOrdStatus',
         'side' => 'setSide',
+        'price' => 'setPrice',
         'text' => 'setText',
         'symbol' => 'setSymbol',
         'last_shares' => 'setLastShares',
@@ -162,6 +166,7 @@ class OrderSummary implements ModelInterface, ArrayAccess
         'cl_ord_id' => 'getClOrdId',
         'ord_status' => 'getOrdStatus',
         'side' => 'getSide',
+        'price' => 'getPrice',
         'text' => 'getText',
         'symbol' => 'getSymbol',
         'last_shares' => 'getLastShares',
@@ -236,6 +241,7 @@ class OrderSummary implements ModelInterface, ArrayAccess
         $this->container['cl_ord_id'] = isset($data['cl_ord_id']) ? $data['cl_ord_id'] : null;
         $this->container['ord_status'] = isset($data['ord_status']) ? $data['ord_status'] : null;
         $this->container['side'] = isset($data['side']) ? $data['side'] : null;
+        $this->container['price'] = isset($data['price']) ? $data['price'] : null;
         $this->container['text'] = isset($data['text']) ? $data['text'] : null;
         $this->container['symbol'] = isset($data['symbol']) ? $data['symbol'] : null;
         $this->container['last_shares'] = isset($data['last_shares']) ? $data['last_shares'] : null;
@@ -255,11 +261,23 @@ class OrderSummary implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if (!is_null($this->container['cl_ord_id']) && (mb_strlen($this->container['cl_ord_id']) > 20)) {
+        if ($this->container['cl_ord_id'] === null) {
+            $invalidProperties[] = "'cl_ord_id' can't be null";
+        }
+        if ((mb_strlen($this->container['cl_ord_id']) > 20)) {
             $invalidProperties[] = "invalid value for 'cl_ord_id', the character length must be smaller than or equal to 20.";
         }
 
-        if (!is_null($this->container['symbol']) && !preg_match("/^[A-Z]{3,5}-[A-Z]{3,5}$/", $this->container['symbol'])) {
+        if ($this->container['ord_status'] === null) {
+            $invalidProperties[] = "'ord_status' can't be null";
+        }
+        if ($this->container['side'] === null) {
+            $invalidProperties[] = "'side' can't be null";
+        }
+        if ($this->container['symbol'] === null) {
+            $invalidProperties[] = "'symbol' can't be null";
+        }
+        if (!preg_match("/^[A-Z]{3,5}-[A-Z]{3,5}$/", $this->container['symbol'])) {
             $invalidProperties[] = "invalid value for 'symbol', must be conform to the pattern /^[A-Z]{3,5}-[A-Z]{3,5}$/.";
         }
 
@@ -305,7 +323,7 @@ class OrderSummary implements ModelInterface, ArrayAccess
     /**
      * Gets cl_ord_id
      *
-     * @return string|null
+     * @return string
      */
     public function getClOrdId()
     {
@@ -315,13 +333,13 @@ class OrderSummary implements ModelInterface, ArrayAccess
     /**
      * Sets cl_ord_id
      *
-     * @param string|null $cl_ord_id Reference field provided by client and cannot exceed 20 characters
+     * @param string $cl_ord_id Reference field provided by client and cannot exceed 20 characters
      *
      * @return $this
      */
     public function setClOrdId($cl_ord_id)
     {
-        if (!is_null($cl_ord_id) && (mb_strlen($cl_ord_id) > 20)) {
+        if ((mb_strlen($cl_ord_id) > 20)) {
             throw new \InvalidArgumentException('invalid length for $cl_ord_id when calling OrderSummary., must be smaller than or equal to 20.');
         }
 
@@ -333,7 +351,7 @@ class OrderSummary implements ModelInterface, ArrayAccess
     /**
      * Gets ord_status
      *
-     * @return \com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\OrderStatus|null
+     * @return \com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\OrderStatus
      */
     public function getOrdStatus()
     {
@@ -343,7 +361,7 @@ class OrderSummary implements ModelInterface, ArrayAccess
     /**
      * Sets ord_status
      *
-     * @param \com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\OrderStatus|null $ord_status ord_status
+     * @param \com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\OrderStatus $ord_status ord_status
      *
      * @return $this
      */
@@ -357,7 +375,7 @@ class OrderSummary implements ModelInterface, ArrayAccess
     /**
      * Gets side
      *
-     * @return \com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\Side|null
+     * @return \com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\Side
      */
     public function getSide()
     {
@@ -367,13 +385,37 @@ class OrderSummary implements ModelInterface, ArrayAccess
     /**
      * Sets side
      *
-     * @param \com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\Side|null $side side
+     * @param \com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\Side $side side
      *
      * @return $this
      */
     public function setSide($side)
     {
         $this->container['side'] = $side;
+
+        return $this;
+    }
+
+    /**
+     * Gets price
+     *
+     * @return double|null
+     */
+    public function getPrice()
+    {
+        return $this->container['price'];
+    }
+
+    /**
+     * Sets price
+     *
+     * @param double|null $price The limit price for the order
+     *
+     * @return $this
+     */
+    public function setPrice($price)
+    {
+        $this->container['price'] = $price;
 
         return $this;
     }
@@ -405,7 +447,7 @@ class OrderSummary implements ModelInterface, ArrayAccess
     /**
      * Gets symbol
      *
-     * @return string|null
+     * @return string
      */
     public function getSymbol()
     {
@@ -415,14 +457,14 @@ class OrderSummary implements ModelInterface, ArrayAccess
     /**
      * Sets symbol
      *
-     * @param string|null $symbol Blockchain symbol identifier
+     * @param string $symbol Blockchain symbol identifier
      *
      * @return $this
      */
     public function setSymbol($symbol)
     {
 
-        if (!is_null($symbol) && (!preg_match("/^[A-Z]{3,5}-[A-Z]{3,5}$/", $symbol))) {
+        if ((!preg_match("/^[A-Z]{3,5}-[A-Z]{3,5}$/", $symbol))) {
             throw new \InvalidArgumentException("invalid value for $symbol when calling OrderSummary., must conform to the pattern /^[A-Z]{3,5}-[A-Z]{3,5}$/.");
         }
 

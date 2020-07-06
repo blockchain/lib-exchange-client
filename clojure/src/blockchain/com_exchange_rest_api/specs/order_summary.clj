@@ -10,11 +10,12 @@
 (def order-summary-data
   {
    (ds/opt :exOrdId) int?
-   (ds/opt :clOrdId) string?
-   (ds/opt :ordStatus) order-status-spec
-   (ds/opt :side) side-spec
+   (ds/req :clOrdId) string?
+   (ds/req :ordStatus) order-status-spec
+   (ds/req :side) side-spec
+   (ds/opt :price) float?
    (ds/opt :text) string?
-   (ds/opt :symbol) string?
+   (ds/req :symbol) string?
    (ds/opt :lastShares) float?
    (ds/opt :lastPx) float?
    (ds/opt :leavesQty) float?

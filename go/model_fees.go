@@ -10,7 +10,6 @@
 package openapi
 // Fees struct for Fees
 type Fees struct {
-	Tier int32 `json:"tier,omitempty"`
 	MakerRate float64 `json:"makerRate"`
 	TakerRate float64 `json:"takerRate"`
 	VolumeInUSD float64 `json:"volumeInUSD"`

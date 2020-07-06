@@ -49,7 +49,7 @@ class SymbolStatus(object):
         'id': 'int',
         'auction_price': 'float',
         'auction_size': 'float',
-        'auction_time': 'int',
+        'auction_time': 'str',
         'imbalance': 'float'
     }
 
@@ -512,7 +512,7 @@ class SymbolStatus(object):
         Opening time in HHMM format  # noqa: E501
 
         :return: The auction_time of this SymbolStatus.  # noqa: E501
-        :rtype: int
+        :rtype: str
         """
         return self._auction_time
 
@@ -523,7 +523,7 @@ class SymbolStatus(object):
         Opening time in HHMM format  # noqa: E501
 
         :param auction_time: The auction_time of this SymbolStatus.  # noqa: E501
-        :type: int
+        :type: str
         """
 
         self._auction_time = auction_time

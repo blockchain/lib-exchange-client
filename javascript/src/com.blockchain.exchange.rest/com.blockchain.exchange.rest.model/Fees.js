@@ -53,9 +53,6 @@ class Fees {
         if (data) {
             obj = obj || new Fees();
 
-            if (data.hasOwnProperty('tier')) {
-                obj['tier'] = ApiClient.convertToType(data['tier'], 'Number');
-            }
             if (data.hasOwnProperty('makerRate')) {
                 obj['makerRate'] = ApiClient.convertToType(data['makerRate'], 'Number');
             }
@@ -71,11 +68,6 @@ class Fees {
 
 
 }
-
-/**
- * @member {Number} tier
- */
-Fees.prototype['tier'] = undefined;
 
 /**
  * @member {Number} makerRate

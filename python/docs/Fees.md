@@ -3,7 +3,6 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**tier** | **int** |  | [optional] 
 **maker_rate** | **float** |  | 
 **taker_rate** | **float** |  | 
 **volume_in_usd** | **float** |  | 

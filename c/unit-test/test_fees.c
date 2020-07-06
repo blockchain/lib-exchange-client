@@ -22,14 +22,12 @@ fees_t* instantiate_fees(int include_optional) {
   fees_t* fees = NULL;
   if (include_optional) {
     fees = fees_create(
-      1,
       0.0014,
       0.0024,
       1500.00
     );
   } else {
     fees = fees_create(
-      1,
       0.0014,
       0.0024,
       1500.00

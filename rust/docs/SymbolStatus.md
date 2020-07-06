@@ -20,7 +20,7 @@ Name | Type | Description | Notes
 **id** | Option<**i64**> |  | [optional]
 **auction_price** | Option<**f64**> | If the symbol is halted and will open on an auction, this will be the opening price. | [optional]
 **auction_size** | Option<**f64**> | Opening size | [optional]
-**auction_time** | Option<**i32**> | Opening time in HHMM format | [optional]
+**auction_time** | Option<**String**> | Opening time in HHMM format | [optional]
 **imbalance** | Option<**f64**> | Auction imbalance. If > 0 then there will be buy orders left over at the auction price. If < 0 then there will be sell orders left over at the auction price. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

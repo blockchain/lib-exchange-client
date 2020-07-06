@@ -98,6 +98,14 @@ namespace Org.OpenAPITools.Test
             // TODO unit test for the property 'Side'
         }
         /// <summary>
+        /// Test the property 'Price'
+        /// </summary>
+        [Test]
+        public void PriceTest()
+        {
+            // TODO unit test for the property 'Price'
+        }
+        /// <summary>
         /// Test the property 'Text'
         /// </summary>
         [Test]

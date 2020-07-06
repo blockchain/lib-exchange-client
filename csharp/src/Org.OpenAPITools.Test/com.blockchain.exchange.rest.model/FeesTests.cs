@@ -66,14 +66,6 @@ namespace Org.OpenAPITools.Test
 
 
         /// <summary>
-        /// Test the property 'Tier'
-        /// </summary>
-        [Test]
-        public void TierTest()
-        {
-            // TODO unit test for the property 'Tier'
-        }
-        /// <summary>
         /// Test the property 'MakerRate'
         /// </summary>
         [Test]

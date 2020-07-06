@@ -226,11 +226,6 @@ depositInfoTimestampL f DepositInfo{..} = (\depositInfoTimestamp -> DepositInfo 
 
 -- * Fees
 
--- | 'feesTier' Lens
-feesTierL :: Lens_' Fees (Maybe Int)
-feesTierL f Fees{..} = (\feesTier -> Fees { feesTier, ..} ) <$> f feesTier
-{-# INLINE feesTierL #-}
-
 -- | 'feesMakerRate' Lens
 feesMakerRateL :: Lens_' Fees (Double)
 feesMakerRateL f Fees{..} = (\feesMakerRate -> Fees { feesMakerRate, ..} ) <$> f feesMakerRate
@@ -298,19 +293,24 @@ orderSummaryExOrdIdL f OrderSummary{..} = (\orderSummaryExOrdId -> OrderSummary 
 {-# INLINE orderSummaryExOrdIdL #-}
 
 -- | 'orderSummaryClOrdId' Lens
-orderSummaryClOrdIdL :: Lens_' OrderSummary (Maybe Text)
+orderSummaryClOrdIdL :: Lens_' OrderSummary (Text)
 orderSummaryClOrdIdL f OrderSummary{..} = (\orderSummaryClOrdId -> OrderSummary { orderSummaryClOrdId, ..} ) <$> f orderSummaryClOrdId
 {-# INLINE orderSummaryClOrdIdL #-}
 
 -- | 'orderSummaryOrdStatus' Lens
-orderSummaryOrdStatusL :: Lens_' OrderSummary (Maybe OrderStatus)
+orderSummaryOrdStatusL :: Lens_' OrderSummary (OrderStatus)
 orderSummaryOrdStatusL f OrderSummary{..} = (\orderSummaryOrdStatus -> OrderSummary { orderSummaryOrdStatus, ..} ) <$> f orderSummaryOrdStatus
 {-# INLINE orderSummaryOrdStatusL #-}
 
 -- | 'orderSummarySide' Lens
-orderSummarySideL :: Lens_' OrderSummary (Maybe Side)
+orderSummarySideL :: Lens_' OrderSummary (Side)
 orderSummarySideL f OrderSummary{..} = (\orderSummarySide -> OrderSummary { orderSummarySide, ..} ) <$> f orderSummarySide
 {-# INLINE orderSummarySideL #-}
+
+-- | 'orderSummaryPrice' Lens
+orderSummaryPriceL :: Lens_' OrderSummary (Maybe Double)
+orderSummaryPriceL f OrderSummary{..} = (\orderSummaryPrice -> OrderSummary { orderSummaryPrice, ..} ) <$> f orderSummaryPrice
+{-# INLINE orderSummaryPriceL #-}
 
 -- | 'orderSummaryText' Lens
 orderSummaryTextL :: Lens_' OrderSummary (Maybe Text)
@@ -318,7 +318,7 @@ orderSummaryTextL f OrderSummary{..} = (\orderSummaryText -> OrderSummary { orde
 {-# INLINE orderSummaryTextL #-}
 
 -- | 'orderSummarySymbol' Lens
-orderSummarySymbolL :: Lens_' OrderSummary (Maybe Text)
+orderSummarySymbolL :: Lens_' OrderSummary (Text)
 orderSummarySymbolL f OrderSummary{..} = (\orderSummarySymbol -> OrderSummary { orderSummarySymbol, ..} ) <$> f orderSummarySymbol
 {-# INLINE orderSummarySymbolL #-}
 
@@ -474,7 +474,7 @@ symbolStatusAuctionSizeL f SymbolStatus{..} = (\symbolStatusAuctionSize -> Symbo
 {-# INLINE symbolStatusAuctionSizeL #-}
 
 -- | 'symbolStatusAuctionTime' Lens
-symbolStatusAuctionTimeL :: Lens_' SymbolStatus (Maybe Int)
+symbolStatusAuctionTimeL :: Lens_' SymbolStatus (Maybe Text)
 symbolStatusAuctionTimeL f SymbolStatus{..} = (\symbolStatusAuctionTime -> SymbolStatus { symbolStatusAuctionTime, ..} ) <$> f symbolStatusAuctionTime
 {-# INLINE symbolStatusAuctionTimeL #-}
 

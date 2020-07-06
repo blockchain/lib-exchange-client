@@ -32,6 +32,8 @@ basePath =
     "https://api.blockchain.com/v3/exchange"
 
 
+{-| This call only works if 2FA is enabled on the account.
+-}
 createWithdrawal :
     { onSend : Result Http.Error WithdrawalInfo -> msg
 

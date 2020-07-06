@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 **Id** | **long** |  | [optional] 
 **AuctionPrice** | **double** | If the symbol is halted and will open on an auction, this will be the opening price. | [optional] 
 **AuctionSize** | **double** | Opening size | [optional] 
-**AuctionTime** | **int** | Opening time in HHMM format | [optional] 
+**AuctionTime** | **string** | Opening time in HHMM format | [optional] 
 **Imbalance** | **double** | Auction imbalance. If &gt; 0 then there will be buy orders left over at the auction price. If &lt; 0 then there will be sell orders left over at the auction price. | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models)

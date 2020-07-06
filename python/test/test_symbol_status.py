@@ -52,7 +52,7 @@ class TestSymbolStatus(unittest.TestCase):
                 id = 1, 
                 auction_price = 0.0, 
                 auction_size = 0.0, 
-                auction_time = 1530, 
+                auction_time = '1530', 
                 imbalance = 0.0
             )
         else :

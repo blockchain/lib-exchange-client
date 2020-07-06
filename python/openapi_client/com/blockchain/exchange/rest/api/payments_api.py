@@ -39,6 +39,7 @@ class PaymentsApi(object):
     def create_withdrawal(self, create_withdrawal_request, **kwargs):  # noqa: E501
         """Request a withdrawal  # noqa: E501
 
+        This call only works if 2FA is enabled on the account.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.create_withdrawal(create_withdrawal_request, async_req=True)
@@ -63,6 +64,7 @@ class PaymentsApi(object):
     def create_withdrawal_with_http_info(self, create_withdrawal_request, **kwargs):  # noqa: E501
         """Request a withdrawal  # noqa: E501
 
+        This call only works if 2FA is enabled on the account.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.create_withdrawal_with_http_info(create_withdrawal_request, async_req=True)

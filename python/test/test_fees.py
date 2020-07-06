@@ -36,7 +36,6 @@ class TestFees(unittest.TestCase):
         # model = openapi_client.models.fees.Fees()  # noqa: E501
         if include_optional :
             return Fees(
-                tier = 1, 
                 maker_rate = 0.0014, 
                 taker_rate = 0.0024, 
                 volume_in_usd = 1500.00

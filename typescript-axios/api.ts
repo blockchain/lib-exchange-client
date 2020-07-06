@@ -305,12 +305,6 @@ export interface Fees {
      * @type {number}
      * @memberof Fees
      */
-    tier?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Fees
-     */
     makerRate: number;
     /**
      * 
@@ -405,19 +399,25 @@ export interface OrderSummary {
      * @type {string}
      * @memberof OrderSummary
      */
-    clOrdId?: string;
+    clOrdId: string;
     /**
      * 
      * @type {OrderStatus}
      * @memberof OrderSummary
      */
-    ordStatus?: OrderStatus;
+    ordStatus: OrderStatus;
     /**
      * 
      * @type {Side}
      * @memberof OrderSummary
      */
-    side?: Side;
+    side: Side;
+    /**
+     * The limit price for the order
+     * @type {number}
+     * @memberof OrderSummary
+     */
+    price?: number;
     /**
      * The reason for rejecting the order, if applicable
      * @type {string}
@@ -429,7 +429,7 @@ export interface OrderSummary {
      * @type {string}
      * @memberof OrderSummary
      */
-    symbol?: string;
+    symbol: string;
     /**
      * The executed quantity for the order\'s last fill
      * @type {number}
@@ -625,10 +625,10 @@ export interface SymbolStatus {
     auction_size?: number;
     /**
      * Opening time in HHMM format
-     * @type {number}
+     * @type {string}
      * @memberof SymbolStatus
      */
-    auction_time?: number;
+    auction_time?: string;
     /**
      * Auction imbalance. If > 0 then there will be buy orders left over at the auction price. If < 0 then there will be sell orders left over at the auction price.
      * @type {number}
@@ -779,7 +779,7 @@ export enum WithdrawalStatus {
 export const PaymentsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * This call only works if 2FA is enabled on the account.
          * @summary Request a withdrawal
          * @param {CreateWithdrawalRequest} createWithdrawalRequest 
          * @param {*} [options] Override http request option.
@@ -1233,7 +1233,7 @@ export const PaymentsApiAxiosParamCreator = function (configuration?: Configurat
 export const PaymentsApiFp = function(configuration?: Configuration) {
     return {
         /**
-         * 
+         * This call only works if 2FA is enabled on the account.
          * @summary Request a withdrawal
          * @param {CreateWithdrawalRequest} createWithdrawalRequest 
          * @param {*} [options] Override http request option.
@@ -1383,7 +1383,7 @@ export const PaymentsApiFp = function(configuration?: Configuration) {
 export const PaymentsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
         /**
-         * 
+         * This call only works if 2FA is enabled on the account.
          * @summary Request a withdrawal
          * @param {CreateWithdrawalRequest} createWithdrawalRequest 
          * @param {*} [options] Override http request option.
@@ -1494,7 +1494,7 @@ export const PaymentsApiFactory = function (configuration?: Configuration, baseP
  */
 export class PaymentsApi extends BaseAPI {
     /**
-     * 
+     * This call only works if 2FA is enabled on the account.
      * @summary Request a withdrawal
      * @param {CreateWithdrawalRequest} createWithdrawalRequest 
      * @param {*} [options] Override http request option.

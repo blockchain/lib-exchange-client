@@ -33,57 +33,31 @@ class Fees(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'tier': 'int',
         'maker_rate': 'float',
         'taker_rate': 'float',
         'volume_in_usd': 'float'
     }
 
     attribute_map = {
-        'tier': 'tier',
         'maker_rate': 'makerRate',
         'taker_rate': 'takerRate',
         'volume_in_usd': 'volumeInUSD'
     }
 
-    def __init__(self, tier=None, maker_rate=None, taker_rate=None, volume_in_usd=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, maker_rate=None, taker_rate=None, volume_in_usd=None, local_vars_configuration=None):  # noqa: E501
         """Fees - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
         self.local_vars_configuration = local_vars_configuration
 
-        self._tier = None
         self._maker_rate = None
         self._taker_rate = None
         self._volume_in_usd = None
         self.discriminator = None
 
-        if tier is not None:
-            self.tier = tier
         self.maker_rate = maker_rate
         self.taker_rate = taker_rate
         self.volume_in_usd = volume_in_usd
-
-    @property
-    def tier(self):
-        """Gets the tier of this Fees.  # noqa: E501
-
-
-        :return: The tier of this Fees.  # noqa: E501
-        :rtype: int
-        """
-        return self._tier
-
-    @tier.setter
-    def tier(self, tier):
-        """Sets the tier of this Fees.
-
-
-        :param tier: The tier of this Fees.  # noqa: E501
-        :type: int
-        """
-
-        self._tier = tier
 
     @property
     def maker_rate(self):

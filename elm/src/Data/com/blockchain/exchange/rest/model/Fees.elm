@@ -19,8 +19,7 @@ import Json.Encode as Encode
 
 
 type alias Fees =
-    { tier : Maybe (Int)
-    , makerRate : Float
+    { makerRate : Float
     , takerRate : Float
     , volumeInUSD : Float
     }
@@ -29,7 +28,6 @@ type alias Fees =
 decoder : Decoder Fees
 decoder =
     Decode.succeed Fees
-        |> optional "tier" (Decode.nullable Decode.int) Nothing
         |> required "makerRate" Decode.float
         |> required "takerRate" Decode.float
         |> required "volumeInUSD" Decode.float
@@ -48,8 +46,7 @@ encodeWithTag (tagField, tag) model =
 
 encodePairs : Fees -> List (String, Encode.Value)
 encodePairs model =
-    [ ( "tier", Maybe.withDefault Encode.null (Maybe.map Encode.int model.tier) )
-    , ( "makerRate", Encode.float model.makerRate )
+    [ ( "makerRate", Encode.float model.makerRate )
     , ( "takerRate", Encode.float model.takerRate )
     , ( "volumeInUSD", Encode.float model.volumeInUSD )
     ]

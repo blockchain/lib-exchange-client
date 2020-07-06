@@ -96,7 +96,7 @@ class SymbolStatus {
                 obj['auction_size'] = ApiClient.convertToType(data['auction_size'], 'Number');
             }
             if (data.hasOwnProperty('auction_time')) {
-                obj['auction_time'] = ApiClient.convertToType(data['auction_time'], 'Number');
+                obj['auction_time'] = ApiClient.convertToType(data['auction_time'], 'String');
             }
             if (data.hasOwnProperty('imbalance')) {
                 obj['imbalance'] = ApiClient.convertToType(data['imbalance'], 'Number');
@@ -200,7 +200,7 @@ SymbolStatus.prototype['auction_size'] = undefined;
 
 /**
  * Opening time in HHMM format
- * @member {Number} auction_time
+ * @member {String} auction_time
  */
 SymbolStatus.prototype['auction_time'] = undefined;
 

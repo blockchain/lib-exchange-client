@@ -63,7 +63,7 @@ public class PaymentsApi {
 
   /**
   * Request a withdrawal
-  * 
+  * This call only works if 2FA is enabled on the account.
    * @param createWithdrawalRequest 
    * @return WithdrawalInfo
   */
@@ -126,7 +126,7 @@ public class PaymentsApi {
 
       /**
    * Request a withdrawal
-   * 
+   * This call only works if 2FA is enabled on the account.
    * @param createWithdrawalRequest 
   */
   public void createWithdrawal (CreateWithdrawalRequest createWithdrawalRequest, final Response.Listener<WithdrawalInfo> responseListener, final Response.ErrorListener errorListener) {

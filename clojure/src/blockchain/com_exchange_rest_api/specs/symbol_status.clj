@@ -23,7 +23,7 @@
    (ds/opt :id) int?
    (ds/opt :auction_price) float?
    (ds/opt :auction_size) float?
-   (ds/opt :auction_time) int?
+   (ds/opt :auction_time) string?
    (ds/opt :imbalance) float?
    })
 

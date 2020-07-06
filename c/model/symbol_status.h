@@ -43,7 +43,7 @@ typedef struct symbol_status_t {
     long id; //numeric
     double auction_price; //numeric
     double auction_size; //numeric
-    int auction_time; //numeric
+    char *auction_time; // string
     double imbalance; //numeric
 
 } symbol_status_t;
@@ -65,7 +65,7 @@ symbol_status_t *symbol_status_create(
     long id,
     double auction_price,
     double auction_size,
-    int auction_time,
+    char *auction_time,
     double imbalance
 );
 

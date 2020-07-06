@@ -28,6 +28,8 @@ public class OrderSummary {
   private OrderStatus ordStatus = null;
   @SerializedName("side")
   private Side side = null;
+  @SerializedName("price")
+  private Double price = null;
   @SerializedName("text")
   private String text = null;
   @SerializedName("symbol")
@@ -59,7 +61,7 @@ public class OrderSummary {
   /**
    * Reference field provided by client and cannot exceed 20 characters
    **/
-  @ApiModelProperty(value = "Reference field provided by client and cannot exceed 20 characters")
+  @ApiModelProperty(required = true, value = "Reference field provided by client and cannot exceed 20 characters")
   public String getClOrdId() {
     return clOrdId;
   }
@@ -69,7 +71,7 @@ public class OrderSummary {
 
   /**
    **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
   public OrderStatus getOrdStatus() {
     return ordStatus;
   }
@@ -79,12 +81,23 @@ public class OrderSummary {
 
   /**
    **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
   public Side getSide() {
     return side;
   }
   public void setSide(Side side) {
     this.side = side;
+  }
+
+  /**
+   * The limit price for the order
+   **/
+  @ApiModelProperty(value = "The limit price for the order")
+  public Double getPrice() {
+    return price;
+  }
+  public void setPrice(Double price) {
+    this.price = price;
   }
 
   /**
@@ -101,7 +114,7 @@ public class OrderSummary {
   /**
    * Blockchain symbol identifier
    **/
-  @ApiModelProperty(value = "Blockchain symbol identifier")
+  @ApiModelProperty(required = true, value = "Blockchain symbol identifier")
   public String getSymbol() {
     return symbol;
   }
@@ -189,6 +202,7 @@ public class OrderSummary {
         (this.clOrdId == null ? orderSummary.clOrdId == null : this.clOrdId.equals(orderSummary.clOrdId)) &&
         (this.ordStatus == null ? orderSummary.ordStatus == null : this.ordStatus.equals(orderSummary.ordStatus)) &&
         (this.side == null ? orderSummary.side == null : this.side.equals(orderSummary.side)) &&
+        (this.price == null ? orderSummary.price == null : this.price.equals(orderSummary.price)) &&
         (this.text == null ? orderSummary.text == null : this.text.equals(orderSummary.text)) &&
         (this.symbol == null ? orderSummary.symbol == null : this.symbol.equals(orderSummary.symbol)) &&
         (this.lastShares == null ? orderSummary.lastShares == null : this.lastShares.equals(orderSummary.lastShares)) &&
@@ -206,6 +220,7 @@ public class OrderSummary {
     result = 31 * result + (this.clOrdId == null ? 0: this.clOrdId.hashCode());
     result = 31 * result + (this.ordStatus == null ? 0: this.ordStatus.hashCode());
     result = 31 * result + (this.side == null ? 0: this.side.hashCode());
+    result = 31 * result + (this.price == null ? 0: this.price.hashCode());
     result = 31 * result + (this.text == null ? 0: this.text.hashCode());
     result = 31 * result + (this.symbol == null ? 0: this.symbol.hashCode());
     result = 31 * result + (this.lastShares == null ? 0: this.lastShares.hashCode());
@@ -226,6 +241,7 @@ public class OrderSummary {
     sb.append("  clOrdId: ").append(clOrdId).append("\n");
     sb.append("  ordStatus: ").append(ordStatus).append("\n");
     sb.append("  side: ").append(side).append("\n");
+    sb.append("  price: ").append(price).append("\n");
     sb.append("  text: ").append(text).append("\n");
     sb.append("  symbol: ").append(symbol).append("\n");
     sb.append("  lastShares: ").append(lastShares).append("\n");

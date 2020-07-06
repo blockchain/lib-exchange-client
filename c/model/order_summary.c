@@ -42,6 +42,7 @@ blockchain_com_exchange_rest_api_order_summary__e sideorder_summary_FromString(c
 order_summary_t *order_summary_create(
     long ex_ord_id,
     char *cl_ord_id,
+    double price,
     char *text,
     char *symbol,
     double last_shares,
@@ -59,6 +60,7 @@ order_summary_t *order_summary_create(
     order_summary_local_var->cl_ord_id = cl_ord_id;
     order_summary_local_var->ord_status = ord_status;
     order_summary_local_var->side = side;
+    order_summary_local_var->price = price;
     order_summary_local_var->text = text;
     order_summary_local_var->symbol = symbol;
     order_summary_local_var->last_shares = last_shares;
@@ -95,21 +97,29 @@ cJSON *order_summary_convertToJSON(order_summary_t *order_summary) {
 
 
     // order_summary->cl_ord_id
-    if(order_summary->cl_ord_id) { 
+    if (!order_summary->cl_ord_id) {
+        goto fail;
+    }
+    
     if(cJSON_AddStringToObject(item, "clOrdId", order_summary->cl_ord_id) == NULL) {
     goto fail; //String
     }
-     } 
 
 
     // order_summary->ord_status
-    
     
 
 
     // order_summary->side
     
-    
+
+
+    // order_summary->price
+    if(order_summary->price) { 
+    if(cJSON_AddNumberToObject(item, "price", order_summary->price) == NULL) {
+    goto fail; //Numeric
+    }
+     } 
 
 
     // order_summary->text
@@ -121,11 +131,13 @@ cJSON *order_summary_convertToJSON(order_summary_t *order_summary) {
 
 
     // order_summary->symbol
-    if(order_summary->symbol) { 
+    if (!order_summary->symbol) {
+        goto fail;
+    }
+    
     if(cJSON_AddStringToObject(item, "symbol", order_summary->symbol) == NULL) {
     goto fail; //String
     }
-     } 
 
 
     // order_summary->last_shares
@@ -198,19 +210,37 @@ order_summary_t *order_summary_parseFromJSON(cJSON *order_summaryJSON){
 
     // order_summary->cl_ord_id
     cJSON *cl_ord_id = cJSON_GetObjectItemCaseSensitive(order_summaryJSON, "clOrdId");
-    if (cl_ord_id) { 
+    if (!cl_ord_id) {
+        goto end;
+    }
+
+    
     if(!cJSON_IsString(cl_ord_id))
     {
     goto end; //String
     }
-    }
 
     // order_summary->ord_status
     cJSON *ord_status = cJSON_GetObjectItemCaseSensitive(order_summaryJSON, "ordStatus");
+    if (!ord_status) {
+        goto end;
     }
+
 
     // order_summary->side
     cJSON *side = cJSON_GetObjectItemCaseSensitive(order_summaryJSON, "side");
+    if (!side) {
+        goto end;
+    }
+
+
+    // order_summary->price
+    cJSON *price = cJSON_GetObjectItemCaseSensitive(order_summaryJSON, "price");
+    if (price) { 
+    if(!cJSON_IsNumber(price))
+    {
+    goto end; //Numeric
+    }
     }
 
     // order_summary->text
@@ -224,11 +254,14 @@ order_summary_t *order_summary_parseFromJSON(cJSON *order_summaryJSON){
 
     // order_summary->symbol
     cJSON *symbol = cJSON_GetObjectItemCaseSensitive(order_summaryJSON, "symbol");
-    if (symbol) { 
+    if (!symbol) {
+        goto end;
+    }
+
+    
     if(!cJSON_IsString(symbol))
     {
     goto end; //String
-    }
     }
 
     // order_summary->last_shares
@@ -288,9 +321,10 @@ order_summary_t *order_summary_parseFromJSON(cJSON *order_summaryJSON){
 
     order_summary_local_var = order_summary_create (
         ex_ord_id ? ex_ord_id->valuedouble : 0,
-        cl_ord_id ? strdup(cl_ord_id->valuestring) : NULL,
+        strdup(cl_ord_id->valuestring),
+        price ? price->valuedouble : 0,
         text ? strdup(text->valuestring) : NULL,
-        symbol ? strdup(symbol->valuestring) : NULL,
+        strdup(symbol->valuestring),
         last_shares ? last_shares->valuedouble : 0,
         last_px ? last_px->valuedouble : 0,
         leaves_qty ? leaves_qty->valuedouble : 0,

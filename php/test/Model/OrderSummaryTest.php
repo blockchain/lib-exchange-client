@@ -107,6 +107,13 @@ class OrderSummaryTest extends TestCase
     }
 
     /**
+     * Test attribute "price"
+     */
+    public function testPropertyPrice()
+    {
+    }
+
+    /**
      * Test attribute "text"
      */
     public function testPropertyText()

@@ -73,7 +73,7 @@ class SymbolStatus implements ModelInterface, ArrayAccess
         'id' => 'int',
         'auction_price' => 'double',
         'auction_size' => 'double',
-        'auction_time' => 'int',
+        'auction_time' => 'string',
         'imbalance' => 'double'
     ];
 
@@ -749,7 +749,7 @@ class SymbolStatus implements ModelInterface, ArrayAccess
     /**
      * Gets auction_time
      *
-     * @return int|null
+     * @return string|null
      */
     public function getAuctionTime()
     {
@@ -759,7 +759,7 @@ class SymbolStatus implements ModelInterface, ArrayAccess
     /**
      * Sets auction_time
      *
-     * @param int|null $auction_time Opening time in HHMM format
+     * @param string|null $auction_time Opening time in HHMM format
      *
      * @return $this
      */

@@ -4,7 +4,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Tier** | **int32** |  | [optional] 
 **MakerRate** | **float64** |  | 
 **TakerRate** | **float64** |  | 
 **VolumeInUSD** | **float64** |  | 

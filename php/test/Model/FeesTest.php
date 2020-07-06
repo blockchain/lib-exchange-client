@@ -79,13 +79,6 @@ class FeesTest extends TestCase
     }
 
     /**
-     * Test attribute "tier"
-     */
-    public function testPropertyTier()
-    {
-    }
-
-    /**
      * Test attribute "maker_rate"
      */
     public function testPropertyMakerRate()

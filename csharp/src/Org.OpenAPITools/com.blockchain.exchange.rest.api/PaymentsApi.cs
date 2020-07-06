@@ -28,7 +28,7 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.api
         /// Request a withdrawal
         /// </summary>
         /// <remarks>
-        /// 
+        /// This call only works if 2FA is enabled on the account.
         /// </remarks>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="createWithdrawalRequest"></param>
@@ -39,7 +39,7 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.api
         /// Request a withdrawal
         /// </summary>
         /// <remarks>
-        /// 
+        /// This call only works if 2FA is enabled on the account.
         /// </remarks>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="createWithdrawalRequest"></param>
@@ -242,7 +242,7 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.api
         /// Request a withdrawal
         /// </summary>
         /// <remarks>
-        /// 
+        /// This call only works if 2FA is enabled on the account.
         /// </remarks>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="createWithdrawalRequest"></param>
@@ -253,7 +253,7 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.api
         /// Request a withdrawal
         /// </summary>
         /// <remarks>
-        /// 
+        /// This call only works if 2FA is enabled on the account.
         /// </remarks>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="createWithdrawalRequest"></param>
@@ -562,7 +562,7 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.api
         }
 
         /// <summary>
-        /// Request a withdrawal 
+        /// Request a withdrawal This call only works if 2FA is enabled on the account.
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="createWithdrawalRequest"></param>
@@ -574,7 +574,7 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.api
         }
 
         /// <summary>
-        /// Request a withdrawal 
+        /// Request a withdrawal This call only works if 2FA is enabled on the account.
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="createWithdrawalRequest"></param>
@@ -641,7 +641,7 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.api
         }
 
         /// <summary>
-        /// Request a withdrawal 
+        /// Request a withdrawal This call only works if 2FA is enabled on the account.
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="createWithdrawalRequest"></param>
@@ -654,7 +654,7 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.api
         }
 
         /// <summary>
-        /// Request a withdrawal 
+        /// Request a withdrawal This call only works if 2FA is enabled on the account.
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="createWithdrawalRequest"></param>

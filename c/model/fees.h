@@ -19,7 +19,6 @@ typedef struct fees_t fees_t;
 
 
 typedef struct fees_t {
-    int tier; //numeric
     double maker_rate; //numeric
     double taker_rate; //numeric
     double volume_in_usd; //numeric
@@ -27,7 +26,6 @@ typedef struct fees_t {
 } fees_t;
 
 fees_t *fees_create(
-    int tier,
     double maker_rate,
     double taker_rate,
     double volume_in_usd

@@ -57,7 +57,7 @@ pub struct SymbolStatus {
     pub auction_size: Option<f64>,
     /// Opening time in HHMM format
     #[serde(rename = "auction_time", skip_serializing_if = "Option::is_none")]
-    pub auction_time: Option<i32>,
+    pub auction_time: Option<String>,
     /// Auction imbalance. If > 0 then there will be buy orders left over at the auction price. If < 0 then there will be sell orders left over at the auction price.
     #[serde(rename = "imbalance", skip_serializing_if = "Option::is_none")]
     pub imbalance: Option<f64>,

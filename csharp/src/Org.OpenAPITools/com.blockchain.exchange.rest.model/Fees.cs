@@ -38,11 +38,10 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
         /// <summary>
         /// Initializes a new instance of the <see cref="Fees" /> class.
         /// </summary>
-        /// <param name="tier">tier.</param>
         /// <param name="makerRate">makerRate (required).</param>
         /// <param name="takerRate">takerRate (required).</param>
         /// <param name="volumeInUSD">volumeInUSD (required).</param>
-        public Fees(int tier = default(int), double makerRate = default(double), double takerRate = default(double), double volumeInUSD = default(double))
+        public Fees(double makerRate = default(double), double takerRate = default(double), double volumeInUSD = default(double))
         {
             // to ensure "makerRate" is required (not null)
             if (makerRate == null)
@@ -74,15 +73,8 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
                 this.VolumeInUSD = volumeInUSD;
             }
             
-            this.Tier = tier;
         }
         
-        /// <summary>
-        /// Gets or Sets Tier
-        /// </summary>
-        [DataMember(Name="tier", EmitDefaultValue=false)]
-        public int Tier { get; set; }
-
         /// <summary>
         /// Gets or Sets MakerRate
         /// </summary>
@@ -109,7 +101,6 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
         {
             var sb = new StringBuilder();
             sb.Append("class Fees {\n");
-            sb.Append("  Tier: ").Append(Tier).Append("\n");
             sb.Append("  MakerRate: ").Append(MakerRate).Append("\n");
             sb.Append("  TakerRate: ").Append(TakerRate).Append("\n");
             sb.Append("  VolumeInUSD: ").Append(VolumeInUSD).Append("\n");
@@ -148,11 +139,6 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
 
             return 
                 (
-                    this.Tier == input.Tier ||
-                    (this.Tier != null &&
-                    this.Tier.Equals(input.Tier))
-                ) && 
-                (
                     this.MakerRate == input.MakerRate ||
                     (this.MakerRate != null &&
                     this.MakerRate.Equals(input.MakerRate))
@@ -178,8 +164,6 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.Tier != null)
-                    hashCode = hashCode * 59 + this.Tier.GetHashCode();
                 if (this.MakerRate != null)
                     hashCode = hashCode * 59 + this.MakerRate.GetHashCode();
                 if (this.TakerRate != null)

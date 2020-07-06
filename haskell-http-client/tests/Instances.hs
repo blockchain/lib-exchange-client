@@ -191,8 +191,7 @@ instance Arbitrary Fees where
 genFees :: Int -> Gen Fees
 genFees n =
   Fees
-    <$> arbitraryReducedMaybe n -- feesTier :: Maybe Int
-    <*> arbitrary -- feesMakerRate :: Double
+    <$> arbitrary -- feesMakerRate :: Double
     <*> arbitrary -- feesTakerRate :: Double
     <*> arbitrary -- feesVolumeInUsd :: Double
   
@@ -223,11 +222,12 @@ genOrderSummary :: Int -> Gen OrderSummary
 genOrderSummary n =
   OrderSummary
     <$> arbitraryReducedMaybe n -- orderSummaryExOrdId :: Maybe Integer
-    <*> arbitraryReducedMaybe n -- orderSummaryClOrdId :: Maybe Text
-    <*> arbitraryReducedMaybe n -- orderSummaryOrdStatus :: Maybe OrderStatus
-    <*> arbitraryReducedMaybe n -- orderSummarySide :: Maybe Side
+    <*> arbitrary -- orderSummaryClOrdId :: Text
+    <*> arbitraryReduced n -- orderSummaryOrdStatus :: OrderStatus
+    <*> arbitraryReduced n -- orderSummarySide :: Side
+    <*> arbitraryReducedMaybe n -- orderSummaryPrice :: Maybe Double
     <*> arbitraryReducedMaybe n -- orderSummaryText :: Maybe Text
-    <*> arbitraryReducedMaybe n -- orderSummarySymbol :: Maybe Text
+    <*> arbitrary -- orderSummarySymbol :: Text
     <*> arbitraryReducedMaybe n -- orderSummaryLastShares :: Maybe Double
     <*> arbitraryReducedMaybe n -- orderSummaryLastPx :: Maybe Double
     <*> arbitraryReducedMaybe n -- orderSummaryLeavesQty :: Maybe Double
@@ -276,7 +276,7 @@ genSymbolStatus n =
     <*> arbitraryReducedMaybe n -- symbolStatusId :: Maybe Integer
     <*> arbitraryReducedMaybe n -- symbolStatusAuctionPrice :: Maybe Double
     <*> arbitraryReducedMaybe n -- symbolStatusAuctionSize :: Maybe Double
-    <*> arbitraryReducedMaybe n -- symbolStatusAuctionTime :: Maybe Int
+    <*> arbitraryReducedMaybe n -- symbolStatusAuctionTime :: Maybe Text
     <*> arbitraryReducedMaybe n -- symbolStatusImbalance :: Maybe Double
   
 instance Arbitrary UnauthorizedError where

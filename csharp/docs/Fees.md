@@ -5,7 +5,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Tier** | **int** |  | [optional] 
 **MakerRate** | **double** |  | 
 **TakerRate** | **double** |  | 
 **VolumeInUSD** | **double** |  | 

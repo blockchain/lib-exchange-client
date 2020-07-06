@@ -516,6 +516,7 @@ paths:
       tags:
       - payments
     post:
+      description: This call only works if 2FA is enabled on the account.
       operationId: createWithdrawal
       requestBody:
         content:
@@ -915,14 +916,15 @@ components:
       example:
         exOrdId: 11111111
         ordStatus: FILLED
-        clOrdId: ABC
         symbol: BTC-USD
         side: BUY
-        avgPx: 345.33
         lastPx: 3500.12
         lastShares: 0.5678
         leavesQty: 10.0
         cumQty: 0.123345
+        clOrdId: ABC
+        avgPx: 345.33
+        price: 0.12345
         text: text
         timestamp: 1592830770594
       properties:
@@ -940,6 +942,11 @@ components:
           $ref: '#/components/schemas/OrderStatus'
         side:
           $ref: '#/components/schemas/side'
+        price:
+          description: The limit price for the order
+          example: 0.12345
+          format: double
+          type: number
         text:
           description: The reason for rejecting the order, if applicable
           type: string
@@ -982,6 +989,11 @@ components:
           example: 1592830770594
           format: int64
           type: integer
+      required:
+      - clOrdId
+      - ordStatus
+      - side
+      - symbol
       type: object
     CancelOrderRequest:
       properties:
@@ -1071,13 +1083,9 @@ components:
     Fees:
       example:
         makerRate: 0.0014
-        tier: 1
         volumeInUSD: 1500.00
         takerRate: 0.0024
       properties:
-        tier:
-          example: 1
-          type: integer
         makerRate:
           example: 0.0014
           format: double
@@ -1202,7 +1210,7 @@ components:
         min_order_size_scale: 2
         min_price_increment: 10
         lot_size: 5
-        auction_time: 1530
+        auction_time: "1530"
         id: 1
         status: open
       properties:
@@ -1284,8 +1292,8 @@ components:
           type: number
         auction_time:
           description: Opening time in HHMM format
-          example: 1530
-          type: integer
+          example: "1530"
+          type: string
         imbalance:
           description: Auction imbalance. If > 0 then there will be buy orders left
             over at the auction price. If < 0 then there will be sell orders left

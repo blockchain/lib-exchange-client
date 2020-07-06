@@ -4,7 +4,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**tier** | **int** |  | [optional] 
 **maker_rate** | **double** |  | 
 **taker_rate** | **double** |  | 
 **volume_in_usd** | **double** |  | 

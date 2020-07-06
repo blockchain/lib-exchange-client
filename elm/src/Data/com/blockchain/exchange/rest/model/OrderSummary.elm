@@ -22,11 +22,12 @@ import Json.Encode as Encode
 
 type alias OrderSummary =
     { exOrdId : Maybe (Int)
-    , clOrdId : Maybe (String)
-    , ordStatus : Maybe (OrderStatus)
-    , side : Maybe (Side)
+    , clOrdId : String
+    , ordStatus : OrderStatus
+    , side : Side
+    , price : Maybe (Float)
     , text : Maybe (String)
-    , symbol : Maybe (String)
+    , symbol : String
     , lastShares : Maybe (Float)
     , lastPx : Maybe (Float)
     , leavesQty : Maybe (Float)
@@ -40,11 +41,12 @@ decoder : Decoder OrderSummary
 decoder =
     Decode.succeed OrderSummary
         |> optional "exOrdId" (Decode.nullable Decode.int) Nothing
-        |> optional "clOrdId" (Decode.nullable Decode.string) Nothing
-        |> optional "ordStatus" (Decode.nullable OrderStatus.decoder) Nothing
-        |> optional "side" (Decode.nullable Side.decoder) Nothing
+        |> required "clOrdId" Decode.string
+        |> required "ordStatus" OrderStatus.decoder
+        |> required "side" Side.decoder
+        |> optional "price" (Decode.nullable Decode.float) Nothing
         |> optional "text" (Decode.nullable Decode.string) Nothing
-        |> optional "symbol" (Decode.nullable Decode.string) Nothing
+        |> required "symbol" Decode.string
         |> optional "lastShares" (Decode.nullable Decode.float) Nothing
         |> optional "lastPx" (Decode.nullable Decode.float) Nothing
         |> optional "leavesQty" (Decode.nullable Decode.float) Nothing
@@ -67,11 +69,12 @@ encodeWithTag (tagField, tag) model =
 encodePairs : OrderSummary -> List (String, Encode.Value)
 encodePairs model =
     [ ( "exOrdId", Maybe.withDefault Encode.null (Maybe.map Encode.int model.exOrdId) )
-    , ( "clOrdId", Maybe.withDefault Encode.null (Maybe.map Encode.string model.clOrdId) )
-    , ( "ordStatus", Maybe.withDefault Encode.null (Maybe.map OrderStatus.encode model.ordStatus) )
-    , ( "side", Maybe.withDefault Encode.null (Maybe.map Side.encode model.side) )
+    , ( "clOrdId", Encode.string model.clOrdId )
+    , ( "ordStatus", OrderStatus.encode model.ordStatus )
+    , ( "side", Side.encode model.side )
+    , ( "price", Maybe.withDefault Encode.null (Maybe.map Encode.float model.price) )
     , ( "text", Maybe.withDefault Encode.null (Maybe.map Encode.string model.text) )
-    , ( "symbol", Maybe.withDefault Encode.null (Maybe.map Encode.string model.symbol) )
+    , ( "symbol", Encode.string model.symbol )
     , ( "lastShares", Maybe.withDefault Encode.null (Maybe.map Encode.float model.lastShares) )
     , ( "lastPx", Maybe.withDefault Encode.null (Maybe.map Encode.float model.lastPx) )
     , ( "leavesQty", Maybe.withDefault Encode.null (Maybe.map Encode.float model.leavesQty) )

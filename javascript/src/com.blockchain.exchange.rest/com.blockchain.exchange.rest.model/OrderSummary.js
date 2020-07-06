@@ -24,10 +24,14 @@ class OrderSummary {
     /**
      * Constructs a new <code>OrderSummary</code>.
      * @alias module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/OrderSummary
+     * @param clOrdId {String} Reference field provided by client and cannot exceed 20 characters
+     * @param ordStatus {module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/OrderStatus} 
+     * @param side {module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/Side} 
+     * @param symbol {String} Blockchain symbol identifier
      */
-    constructor() { 
+    constructor(clOrdId, ordStatus, side, symbol) { 
         
-        OrderSummary.initialize(this);
+        OrderSummary.initialize(this, clOrdId, ordStatus, side, symbol);
     }
 
     /**
@@ -35,7 +39,11 @@ class OrderSummary {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj) { 
+    static initialize(obj, clOrdId, ordStatus, side, symbol) { 
+        obj['clOrdId'] = clOrdId;
+        obj['ordStatus'] = ordStatus;
+        obj['side'] = side;
+        obj['symbol'] = symbol;
     }
 
     /**
@@ -60,6 +68,9 @@ class OrderSummary {
             }
             if (data.hasOwnProperty('side')) {
                 obj['side'] = Side.constructFromObject(data['side']);
+            }
+            if (data.hasOwnProperty('price')) {
+                obj['price'] = ApiClient.convertToType(data['price'], 'Number');
             }
             if (data.hasOwnProperty('text')) {
                 obj['text'] = ApiClient.convertToType(data['text'], 'String');
@@ -113,6 +124,12 @@ OrderSummary.prototype['ordStatus'] = undefined;
  * @member {module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/Side} side
  */
 OrderSummary.prototype['side'] = undefined;
+
+/**
+ * The limit price for the order
+ * @member {Number} price
+ */
+OrderSummary.prototype['price'] = undefined;
 
 /**
  * The reason for rejecting the order, if applicable

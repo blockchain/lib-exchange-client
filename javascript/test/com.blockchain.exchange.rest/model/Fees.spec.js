@@ -54,12 +54,6 @@
       //expect(instance).to.be.a(BlockchainComExchangeRestApi.Fees);
     });
 
-    it('should have the property tier (base name: "tier")', function() {
-      // uncomment below and update the code to test the property tier
-      //var instane = new BlockchainComExchangeRestApi.Fees();
-      //expect(instance).to.be();
-    });
-
     it('should have the property makerRate (base name: "makerRate")', function() {
       // uncomment below and update the code to test the property makerRate
       //var instane = new BlockchainComExchangeRestApi.Fees();

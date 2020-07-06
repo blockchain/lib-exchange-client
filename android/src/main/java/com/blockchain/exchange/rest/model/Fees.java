@@ -18,24 +18,12 @@ import com.google.gson.annotations.SerializedName;
 @ApiModel(description = "")
 public class Fees {
   
-  @SerializedName("tier")
-  private Integer tier = null;
   @SerializedName("makerRate")
   private Double makerRate = null;
   @SerializedName("takerRate")
   private Double takerRate = null;
   @SerializedName("volumeInUSD")
   private Double volumeInUSD = null;
-
-  /**
-   **/
-  @ApiModelProperty(value = "")
-  public Integer getTier() {
-    return tier;
-  }
-  public void setTier(Integer tier) {
-    this.tier = tier;
-  }
 
   /**
    **/
@@ -77,8 +65,7 @@ public class Fees {
       return false;
     }
     Fees fees = (Fees) o;
-    return (this.tier == null ? fees.tier == null : this.tier.equals(fees.tier)) &&
-        (this.makerRate == null ? fees.makerRate == null : this.makerRate.equals(fees.makerRate)) &&
+    return (this.makerRate == null ? fees.makerRate == null : this.makerRate.equals(fees.makerRate)) &&
         (this.takerRate == null ? fees.takerRate == null : this.takerRate.equals(fees.takerRate)) &&
         (this.volumeInUSD == null ? fees.volumeInUSD == null : this.volumeInUSD.equals(fees.volumeInUSD));
   }
@@ -86,7 +73,6 @@ public class Fees {
   @Override
   public int hashCode() {
     int result = 17;
-    result = 31 * result + (this.tier == null ? 0: this.tier.hashCode());
     result = 31 * result + (this.makerRate == null ? 0: this.makerRate.hashCode());
     result = 31 * result + (this.takerRate == null ? 0: this.takerRate.hashCode());
     result = 31 * result + (this.volumeInUSD == null ? 0: this.volumeInUSD.hashCode());
@@ -98,7 +84,6 @@ public class Fees {
     StringBuilder sb = new StringBuilder();
     sb.append("class Fees {\n");
     
-    sb.append("  tier: ").append(tier).append("\n");
     sb.append("  makerRate: ").append(makerRate).append("\n");
     sb.append("  takerRate: ").append(takerRate).append("\n");
     sb.append("  volumeInUSD: ").append(volumeInUSD).append("\n");

@@ -35,7 +35,7 @@ type alias SymbolStatus =
     , id : Maybe (Int)
     , auctionPrice : Maybe (Float)
     , auctionSize : Maybe (Float)
-    , auctionTime : Maybe (Int)
+    , auctionTime : Maybe (String)
     , imbalance : Maybe (Float)
     }
 
@@ -68,7 +68,7 @@ decoder =
         |> optional "id" (Decode.nullable Decode.int) Nothing
         |> optional "auction_price" (Decode.nullable Decode.float) Nothing
         |> optional "auction_size" (Decode.nullable Decode.float) Nothing
-        |> optional "auction_time" (Decode.nullable Decode.int) Nothing
+        |> optional "auction_time" (Decode.nullable Decode.string) Nothing
         |> optional "imbalance" (Decode.nullable Decode.float) Nothing
 
 
@@ -101,7 +101,7 @@ encodePairs model =
     , ( "id", Maybe.withDefault Encode.null (Maybe.map Encode.int model.id) )
     , ( "auction_price", Maybe.withDefault Encode.null (Maybe.map Encode.float model.auctionPrice) )
     , ( "auction_size", Maybe.withDefault Encode.null (Maybe.map Encode.float model.auctionSize) )
-    , ( "auction_time", Maybe.withDefault Encode.null (Maybe.map Encode.int model.auctionTime) )
+    , ( "auction_time", Maybe.withDefault Encode.null (Maybe.map Encode.string model.auctionTime) )
     , ( "imbalance", Maybe.withDefault Encode.null (Maybe.map Encode.float model.imbalance) )
     ]
 

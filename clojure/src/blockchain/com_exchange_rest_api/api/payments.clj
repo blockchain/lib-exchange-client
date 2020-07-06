@@ -48,7 +48,8 @@
 
 
 (defn-spec create-withdrawal-with-http-info any?
-  "Request a withdrawal"
+  "Request a withdrawal
+  This call only works if 2FA is enabled on the account."
   [create-withdrawal-request create-withdrawal-request]
   (check-required-params create-withdrawal-request)
   (call-api "/withdrawals" :post
@@ -62,7 +63,8 @@
              :auth-names    ["ApiKeyAuth"]}))
 
 (defn-spec create-withdrawal withdrawal-info-spec
-  "Request a withdrawal"
+  "Request a withdrawal
+  This call only works if 2FA is enabled on the account."
   [create-withdrawal-request create-withdrawal-request]
   (let [res (:data (create-withdrawal-with-http-info create-withdrawal-request))]
     (if (:decode-models *api-context*)

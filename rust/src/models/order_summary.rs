@@ -17,18 +17,21 @@ pub struct OrderSummary {
     #[serde(rename = "exOrdId", skip_serializing_if = "Option::is_none")]
     pub ex_ord_id: Option<i64>,
     /// Reference field provided by client and cannot exceed 20 characters
-    #[serde(rename = "clOrdId", skip_serializing_if = "Option::is_none")]
-    pub cl_ord_id: Option<String>,
-    #[serde(rename = "ordStatus", skip_serializing_if = "Option::is_none")]
-    pub ord_status: Option<crate::models::OrderStatus>,
-    #[serde(rename = "side", skip_serializing_if = "Option::is_none")]
-    pub side: Option<crate::models::Side>,
+    #[serde(rename = "clOrdId")]
+    pub cl_ord_id: String,
+    #[serde(rename = "ordStatus")]
+    pub ord_status: crate::models::OrderStatus,
+    #[serde(rename = "side")]
+    pub side: crate::models::Side,
+    /// The limit price for the order
+    #[serde(rename = "price", skip_serializing_if = "Option::is_none")]
+    pub price: Option<f64>,
     /// The reason for rejecting the order, if applicable
     #[serde(rename = "text", skip_serializing_if = "Option::is_none")]
     pub text: Option<String>,
     /// Blockchain symbol identifier
-    #[serde(rename = "symbol", skip_serializing_if = "Option::is_none")]
-    pub symbol: Option<String>,
+    #[serde(rename = "symbol")]
+    pub symbol: String,
     /// The executed quantity for the order's last fill
     #[serde(rename = "lastShares", skip_serializing_if = "Option::is_none")]
     pub last_shares: Option<f64>,
@@ -50,14 +53,15 @@ pub struct OrderSummary {
 }
 
 impl OrderSummary {
-    pub fn new() -> OrderSummary {
+    pub fn new(cl_ord_id: String, ord_status: crate::models::OrderStatus, side: crate::models::Side, symbol: String) -> OrderSummary {
         OrderSummary {
             ex_ord_id: None,
-            cl_ord_id: None,
-            ord_status: None,
-            side: None,
+            cl_ord_id,
+            ord_status,
+            side,
+            price: None,
             text: None,
-            symbol: None,
+            symbol,
             last_shares: None,
             last_px: None,
             leaves_qty: None,

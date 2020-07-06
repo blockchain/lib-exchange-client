@@ -20,7 +20,7 @@ Name | Type | Description | Notes
 **id** | **Number** |  | [optional] 
 **auctionPrice** | **Number** | If the symbol is halted and will open on an auction, this will be the opening price. | [optional] 
 **auctionSize** | **Number** | Opening size | [optional] 
-**auctionTime** | **Number** | Opening time in HHMM format | [optional] 
+**auctionTime** | **String** | Opening time in HHMM format | [optional] 
 **imbalance** | **Number** | Auction imbalance. If &gt; 0 then there will be buy orders left over at the auction price. If &lt; 0 then there will be sell orders left over at the auction price. | [optional] 
 
 

@@ -38,7 +38,7 @@ symbol_status_t* instantiate_symbol_status(int include_optional) {
       1,
       0.0,
       0.0,
-      1530,
+      "1530",
       0.0
     );
   } else {
@@ -59,7 +59,7 @@ symbol_status_t* instantiate_symbol_status(int include_optional) {
       1,
       0.0,
       0.0,
-      1530,
+      "1530",
       0.0
     );
   }
