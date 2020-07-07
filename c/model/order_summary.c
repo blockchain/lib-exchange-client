@@ -4,6 +4,23 @@
 #include "order_summary.h"
 
 
+char* ord_typeorder_summary_ToString(blockchain_com_exchange_rest_api_order_summary__e ord_type) {
+    char* ord_typeArray[] =  { "NULL", "MARKET", "LIMIT", "STOP", "STOPLIMIT" };
+	return ord_typeArray[ord_type];
+}
+
+blockchain_com_exchange_rest_api_order_summary__e ord_typeorder_summary_FromString(char* ord_type){
+    int stringToReturn = 0;
+    char *ord_typeArray[] =  { "NULL", "MARKET", "LIMIT", "STOP", "STOPLIMIT" };
+    size_t sizeofArray = sizeof(ord_typeArray) / sizeof(ord_typeArray[0]);
+    while(stringToReturn < sizeofArray) {
+        if(strcmp(ord_type, ord_typeArray[stringToReturn]) == 0) {
+            return stringToReturn;
+        }
+        stringToReturn++;
+    }
+    return 0;
+}
 char* ord_statusorder_summary_ToString(blockchain_com_exchange_rest_api_order_summary__e ord_status) {
     char* ord_statusArray[] =  { "NULL", "OPEN", "REJECTED", "CANCELED", "FILLED", "EXPIRED" };
 	return ord_statusArray[ord_status];
@@ -58,6 +75,7 @@ order_summary_t *order_summary_create(
     }
     order_summary_local_var->ex_ord_id = ex_ord_id;
     order_summary_local_var->cl_ord_id = cl_ord_id;
+    order_summary_local_var->ord_type = ord_type;
     order_summary_local_var->ord_status = ord_status;
     order_summary_local_var->side = side;
     order_summary_local_var->price = price;
@@ -104,6 +122,10 @@ cJSON *order_summary_convertToJSON(order_summary_t *order_summary) {
     if(cJSON_AddStringToObject(item, "clOrdId", order_summary->cl_ord_id) == NULL) {
     goto fail; //String
     }
+
+
+    // order_summary->ord_type
+    
 
 
     // order_summary->ord_status
@@ -219,6 +241,13 @@ order_summary_t *order_summary_parseFromJSON(cJSON *order_summaryJSON){
     {
     goto end; //String
     }
+
+    // order_summary->ord_type
+    cJSON *ord_type = cJSON_GetObjectItemCaseSensitive(order_summaryJSON, "ordType");
+    if (!ord_type) {
+        goto end;
+    }
+
 
     // order_summary->ord_status
     cJSON *ord_status = cJSON_GetObjectItemCaseSensitive(order_summaryJSON, "ordStatus");

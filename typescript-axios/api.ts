@@ -84,17 +84,17 @@ export interface BalanceMap {
  */
 export interface BaseOrder {
     /**
-     * 
-     * @type {string}
-     * @memberof BaseOrder
-     */
-    ordType?: BaseOrderOrdTypeEnum;
-    /**
      * Reference field provided by client and cannot exceed 20 characters
      * @type {string}
      * @memberof BaseOrder
      */
     clOrdId: string;
+    /**
+     * 
+     * @type {OrdType}
+     * @memberof BaseOrder
+     */
+    ordType: OrdType;
     /**
      * Blockchain symbol identifier
      * @type {string}
@@ -144,18 +144,6 @@ export interface BaseOrder {
      */
     stopPx?: number;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum BaseOrderOrdTypeEnum {
-    MARKET = 'MARKET',
-    LIMIT = 'LIMIT',
-    STOP = 'STOP',
-    STOPLIMIT = 'STOPLIMIT'
-}
-
 /**
  * 
  * @export
@@ -322,6 +310,18 @@ export interface Fees {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+export enum OrdType {
+    MARKET = 'MARKET',
+    LIMIT = 'LIMIT',
+    STOP = 'STOP',
+    STOPLIMIT = 'STOPLIMIT'
+}
+
+/**
+ * 
+ * @export
  * @interface OrderBook
  */
 export interface OrderBook {
@@ -400,6 +400,12 @@ export interface OrderSummary {
      * @memberof OrderSummary
      */
     clOrdId: string;
+    /**
+     * 
+     * @type {OrdType}
+     * @memberof OrderSummary
+     */
+    ordType: OrdType;
     /**
      * 
      * @type {OrderStatus}

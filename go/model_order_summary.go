@@ -14,6 +14,7 @@ type OrderSummary struct {
 	ExOrdId int64 `json:"exOrdId,omitempty"`
 	// Reference field provided by client and cannot exceed 20 characters
 	ClOrdId string `json:"clOrdId"`
+	OrdType OrdType `json:"ordType"`
 	OrdStatus OrderStatus `json:"ordStatus"`
 	Side Side `json:"side"`
 	// The limit price for the order

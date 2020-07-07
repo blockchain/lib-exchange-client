@@ -13,11 +13,11 @@
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct BaseOrder {
-    #[serde(rename = "ordType", skip_serializing_if = "Option::is_none")]
-    pub ord_type: Option<OrdType>,
     /// Reference field provided by client and cannot exceed 20 characters
     #[serde(rename = "clOrdId")]
     pub cl_ord_id: String,
+    #[serde(rename = "ordType")]
+    pub ord_type: crate::models::OrdType,
     /// Blockchain symbol identifier
     #[serde(rename = "symbol")]
     pub symbol: String,
@@ -43,10 +43,10 @@ pub struct BaseOrder {
 }
 
 impl BaseOrder {
-    pub fn new(cl_ord_id: String, symbol: String, side: crate::models::Side, order_qty: f64) -> BaseOrder {
+    pub fn new(cl_ord_id: String, ord_type: crate::models::OrdType, symbol: String, side: crate::models::Side, order_qty: f64) -> BaseOrder {
         BaseOrder {
-            ord_type: None,
             cl_ord_id,
+            ord_type,
             symbol,
             side,
             order_qty,
@@ -59,16 +59,4 @@ impl BaseOrder {
     }
 }
 
-/// 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum OrdType {
-    #[serde(rename = "MARKET")]
-    MARKET,
-    #[serde(rename = "LIMIT")]
-    LIMIT,
-    #[serde(rename = "STOP")]
-    STOP,
-    #[serde(rename = "STOPLIMIT")]
-    STOPLIMIT,
-}
 

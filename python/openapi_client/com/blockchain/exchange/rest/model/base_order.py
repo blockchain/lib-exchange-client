@@ -33,8 +33,8 @@ class BaseOrder(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'ord_type': 'str',
         'cl_ord_id': 'str',
+        'ord_type': 'OrdType',
         'symbol': 'str',
         'side': 'Side',
         'order_qty': 'float',
@@ -46,8 +46,8 @@ class BaseOrder(object):
     }
 
     attribute_map = {
-        'ord_type': 'ordType',
         'cl_ord_id': 'clOrdId',
+        'ord_type': 'ordType',
         'symbol': 'symbol',
         'side': 'side',
         'order_qty': 'orderQty',
@@ -58,14 +58,14 @@ class BaseOrder(object):
         'stop_px': 'stopPx'
     }
 
-    def __init__(self, ord_type=None, cl_ord_id=None, symbol=None, side=None, order_qty=None, time_in_force=None, price=None, expire_date=None, min_qty=None, stop_px=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, cl_ord_id=None, ord_type=None, symbol=None, side=None, order_qty=None, time_in_force=None, price=None, expire_date=None, min_qty=None, stop_px=None, local_vars_configuration=None):  # noqa: E501
         """BaseOrder - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
         self.local_vars_configuration = local_vars_configuration
 
-        self._ord_type = None
         self._cl_ord_id = None
+        self._ord_type = None
         self._symbol = None
         self._side = None
         self._order_qty = None
@@ -76,9 +76,8 @@ class BaseOrder(object):
         self._stop_px = None
         self.discriminator = None
 
-        if ord_type is not None:
-            self.ord_type = ord_type
         self.cl_ord_id = cl_ord_id
+        self.ord_type = ord_type
         self.symbol = symbol
         self.side = side
         self.order_qty = order_qty
@@ -92,33 +91,6 @@ class BaseOrder(object):
             self.min_qty = min_qty
         if stop_px is not None:
             self.stop_px = stop_px
-
-    @property
-    def ord_type(self):
-        """Gets the ord_type of this BaseOrder.  # noqa: E501
-
-
-        :return: The ord_type of this BaseOrder.  # noqa: E501
-        :rtype: str
-        """
-        return self._ord_type
-
-    @ord_type.setter
-    def ord_type(self, ord_type):
-        """Sets the ord_type of this BaseOrder.
-
-
-        :param ord_type: The ord_type of this BaseOrder.  # noqa: E501
-        :type: str
-        """
-        allowed_values = ["MARKET", "LIMIT", "STOP", "STOPLIMIT"]  # noqa: E501
-        if self.local_vars_configuration.client_side_validation and ord_type not in allowed_values:  # noqa: E501
-            raise ValueError(
-                "Invalid value for `ord_type` ({0}), must be one of {1}"  # noqa: E501
-                .format(ord_type, allowed_values)
-            )
-
-        self._ord_type = ord_type
 
     @property
     def cl_ord_id(self):
@@ -147,6 +119,29 @@ class BaseOrder(object):
             raise ValueError("Invalid value for `cl_ord_id`, length must be less than or equal to `20`")  # noqa: E501
 
         self._cl_ord_id = cl_ord_id
+
+    @property
+    def ord_type(self):
+        """Gets the ord_type of this BaseOrder.  # noqa: E501
+
+
+        :return: The ord_type of this BaseOrder.  # noqa: E501
+        :rtype: OrdType
+        """
+        return self._ord_type
+
+    @ord_type.setter
+    def ord_type(self, ord_type):
+        """Sets the ord_type of this BaseOrder.
+
+
+        :param ord_type: The ord_type of this BaseOrder.  # noqa: E501
+        :type: OrdType
+        """
+        if self.local_vars_configuration.client_side_validation and ord_type is None:  # noqa: E501
+            raise ValueError("Invalid value for `ord_type`, must not be `None`")  # noqa: E501
+
+        self._ord_type = ord_type
 
     @property
     def symbol(self):

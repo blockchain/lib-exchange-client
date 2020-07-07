@@ -12,6 +12,7 @@
  */
 
 import ApiClient from '../ApiClient';
+import OrdType from './OrdType';
 import OrderStatus from './OrderStatus';
 import Side from './Side';
 
@@ -25,13 +26,14 @@ class OrderSummary {
      * Constructs a new <code>OrderSummary</code>.
      * @alias module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/OrderSummary
      * @param clOrdId {String} Reference field provided by client and cannot exceed 20 characters
+     * @param ordType {module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/OrdType} 
      * @param ordStatus {module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/OrderStatus} 
      * @param side {module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/Side} 
      * @param symbol {String} Blockchain symbol identifier
      */
-    constructor(clOrdId, ordStatus, side, symbol) { 
+    constructor(clOrdId, ordType, ordStatus, side, symbol) { 
         
-        OrderSummary.initialize(this, clOrdId, ordStatus, side, symbol);
+        OrderSummary.initialize(this, clOrdId, ordType, ordStatus, side, symbol);
     }
 
     /**
@@ -39,8 +41,9 @@ class OrderSummary {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, clOrdId, ordStatus, side, symbol) { 
+    static initialize(obj, clOrdId, ordType, ordStatus, side, symbol) { 
         obj['clOrdId'] = clOrdId;
+        obj['ordType'] = ordType;
         obj['ordStatus'] = ordStatus;
         obj['side'] = side;
         obj['symbol'] = symbol;
@@ -62,6 +65,9 @@ class OrderSummary {
             }
             if (data.hasOwnProperty('clOrdId')) {
                 obj['clOrdId'] = ApiClient.convertToType(data['clOrdId'], 'String');
+            }
+            if (data.hasOwnProperty('ordType')) {
+                obj['ordType'] = OrdType.constructFromObject(data['ordType']);
             }
             if (data.hasOwnProperty('ordStatus')) {
                 obj['ordStatus'] = OrderStatus.constructFromObject(data['ordStatus']);
@@ -114,6 +120,11 @@ OrderSummary.prototype['exOrdId'] = undefined;
  * @member {String} clOrdId
  */
 OrderSummary.prototype['clOrdId'] = undefined;
+
+/**
+ * @member {module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/OrdType} ordType
+ */
+OrderSummary.prototype['ordType'] = undefined;
 
 /**
  * @member {module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/OrderStatus} ordStatus

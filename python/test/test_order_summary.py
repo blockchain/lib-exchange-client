@@ -38,6 +38,7 @@ class TestOrderSummary(unittest.TestCase):
             return OrderSummary(
                 ex_ord_id = 11111111, 
                 cl_ord_id = 'ABC', 
+                ord_type = 'MARKET', 
                 ord_status = 'FILLED', 
                 side = 'BUY', 
                 price = 0.12345, 
@@ -53,6 +54,7 @@ class TestOrderSummary(unittest.TestCase):
         else :
             return OrderSummary(
                 cl_ord_id = 'ABC',
+                ord_type = 'MARKET',
                 ord_status = 'FILLED',
                 side = 'BUY',
                 symbol = 'BTC-USD',

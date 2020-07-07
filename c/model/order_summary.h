@@ -15,8 +15,17 @@
 
 typedef struct order_summary_t order_summary_t;
 
+#include "ord_type.h"
 #include "order_status.h"
 #include "side.h"
+
+// Enum  for order_summary
+
+typedef enum  { blockchain_com_exchange_rest_api_order_summary__NULL = 0, blockchain_com_exchange_rest_api_order_summary__MARKET, blockchain_com_exchange_rest_api_order_summary__LIMIT, blockchain_com_exchange_rest_api_order_summary__STOP, blockchain_com_exchange_rest_api_order_summary__STOPLIMIT } blockchain_com_exchange_rest_api_order_summary__e;
+
+char* order_summary_ord_type_ToString(blockchain_com_exchange_rest_api_order_summary__e ord_type);
+
+blockchain_com_exchange_rest_api_order_summary__e order_summary_ord_type_FromString(char* ord_type);
 
 // Enum  for order_summary
 

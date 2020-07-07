@@ -66,20 +66,20 @@ namespace Org.OpenAPITools.Test
 
 
         /// <summary>
-        /// Test the property 'OrdType'
-        /// </summary>
-        [Test]
-        public void OrdTypeTest()
-        {
-            // TODO unit test for the property 'OrdType'
-        }
-        /// <summary>
         /// Test the property 'ClOrdId'
         /// </summary>
         [Test]
         public void ClOrdIdTest()
         {
             // TODO unit test for the property 'ClOrdId'
+        }
+        /// <summary>
+        /// Test the property 'OrdType'
+        /// </summary>
+        [Test]
+        public void OrdTypeTest()
+        {
+            // TODO unit test for the property 'OrdType'
         }
         /// <summary>
         /// Test the property 'Symbol'

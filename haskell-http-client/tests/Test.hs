@@ -28,6 +28,7 @@ main =
       propMimeEq MimeJSON (Proxy :: Proxy DepositAddressCrypto)
       propMimeEq MimeJSON (Proxy :: Proxy DepositInfo)
       propMimeEq MimeJSON (Proxy :: Proxy Fees)
+      propMimeEq MimeJSON (Proxy :: Proxy OrdType)
       propMimeEq MimeJSON (Proxy :: Proxy OrderBook)
       propMimeEq MimeJSON (Proxy :: Proxy OrderBookEntry)
       propMimeEq MimeJSON (Proxy :: Proxy OrderStatus)

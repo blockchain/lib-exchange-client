@@ -22,8 +22,8 @@ base_order_t* instantiate_base_order(int include_optional) {
   base_order_t* base_order = NULL;
   if (include_optional) {
     base_order = base_order_create(
-      blockchain_com_exchange_rest_api_base_order_ORDTYPE_MARKET,
       "ABC",
+      blockchain_com_exchange_rest_api_base_order__MARKET,
       "BTC-USD",
       blockchain_com_exchange_rest_api_base_order__"BUY",
       10.23,
@@ -35,8 +35,8 @@ base_order_t* instantiate_base_order(int include_optional) {
     );
   } else {
     base_order = base_order_create(
-      blockchain_com_exchange_rest_api_base_order_ORDTYPE_MARKET,
       "ABC",
+      blockchain_com_exchange_rest_api_base_order__MARKET,
       "BTC-USD",
       blockchain_com_exchange_rest_api_base_order__"BUY",
       10.23,

@@ -57,8 +57,8 @@ class BaseOrder implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPITypes = [
-        'ord_type' => 'string',
         'cl_ord_id' => 'string',
+        'ord_type' => '\com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\OrdType',
         'symbol' => 'string',
         'side' => '\com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\Side',
         'order_qty' => 'double',
@@ -75,8 +75,8 @@ class BaseOrder implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $openAPIFormats = [
-        'ord_type' => null,
         'cl_ord_id' => null,
+        'ord_type' => null,
         'symbol' => null,
         'side' => null,
         'order_qty' => 'double',
@@ -114,8 +114,8 @@ class BaseOrder implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'ord_type' => 'ordType',
         'cl_ord_id' => 'clOrdId',
+        'ord_type' => 'ordType',
         'symbol' => 'symbol',
         'side' => 'side',
         'order_qty' => 'orderQty',
@@ -132,8 +132,8 @@ class BaseOrder implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'ord_type' => 'setOrdType',
         'cl_ord_id' => 'setClOrdId',
+        'ord_type' => 'setOrdType',
         'symbol' => 'setSymbol',
         'side' => 'setSide',
         'order_qty' => 'setOrderQty',
@@ -150,8 +150,8 @@ class BaseOrder implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'ord_type' => 'getOrdType',
         'cl_ord_id' => 'getClOrdId',
+        'ord_type' => 'getOrdType',
         'symbol' => 'getSymbol',
         'side' => 'getSide',
         'order_qty' => 'getOrderQty',
@@ -203,27 +203,8 @@ class BaseOrder implements ModelInterface, ArrayAccess
         return self::$openAPIModelName;
     }
 
-    const ORD_TYPE_MARKET = 'MARKET';
-    const ORD_TYPE_LIMIT = 'LIMIT';
-    const ORD_TYPE_STOP = 'STOP';
-    const ORD_TYPE_STOPLIMIT = 'STOPLIMIT';
     
 
-    
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getOrdTypeAllowableValues()
-    {
-        return [
-            self::ORD_TYPE_MARKET,
-            self::ORD_TYPE_LIMIT,
-            self::ORD_TYPE_STOP,
-            self::ORD_TYPE_STOPLIMIT,
-        ];
-    }
     
 
     /**
@@ -241,8 +222,8 @@ class BaseOrder implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['ord_type'] = isset($data['ord_type']) ? $data['ord_type'] : null;
         $this->container['cl_ord_id'] = isset($data['cl_ord_id']) ? $data['cl_ord_id'] : null;
+        $this->container['ord_type'] = isset($data['ord_type']) ? $data['ord_type'] : null;
         $this->container['symbol'] = isset($data['symbol']) ? $data['symbol'] : null;
         $this->container['side'] = isset($data['side']) ? $data['side'] : null;
         $this->container['order_qty'] = isset($data['order_qty']) ? $data['order_qty'] : null;
@@ -262,14 +243,6 @@ class BaseOrder implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        $allowedValues = $this->getOrdTypeAllowableValues();
-        if (!is_null($this->container['ord_type']) && !in_array($this->container['ord_type'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value for 'ord_type', must be one of '%s'",
-                implode("', '", $allowedValues)
-            );
-        }
-
         if ($this->container['cl_ord_id'] === null) {
             $invalidProperties[] = "'cl_ord_id' can't be null";
         }
@@ -277,6 +250,9 @@ class BaseOrder implements ModelInterface, ArrayAccess
             $invalidProperties[] = "invalid value for 'cl_ord_id', the character length must be smaller than or equal to 20.";
         }
 
+        if ($this->container['ord_type'] === null) {
+            $invalidProperties[] = "'ord_type' can't be null";
+        }
         if ($this->container['symbol'] === null) {
             $invalidProperties[] = "'symbol' can't be null";
         }
@@ -314,39 +290,6 @@ class BaseOrder implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets ord_type
-     *
-     * @return string|null
-     */
-    public function getOrdType()
-    {
-        return $this->container['ord_type'];
-    }
-
-    /**
-     * Sets ord_type
-     *
-     * @param string|null $ord_type ord_type
-     *
-     * @return $this
-     */
-    public function setOrdType($ord_type)
-    {
-        $allowedValues = $this->getOrdTypeAllowableValues();
-        if (!is_null($ord_type) && !in_array($ord_type, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'ord_type', must be one of '%s'",
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['ord_type'] = $ord_type;
-
-        return $this;
-    }
-
-    /**
      * Gets cl_ord_id
      *
      * @return string
@@ -370,6 +313,30 @@ class BaseOrder implements ModelInterface, ArrayAccess
         }
 
         $this->container['cl_ord_id'] = $cl_ord_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets ord_type
+     *
+     * @return \com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\OrdType
+     */
+    public function getOrdType()
+    {
+        return $this->container['ord_type'];
+    }
+
+    /**
+     * Sets ord_type
+     *
+     * @param \com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\OrdType $ord_type ord_type
+     *
+     * @return $this
+     */
+    public function setOrdType($ord_type)
+    {
+        $this->container['ord_type'] = $ord_type;
 
         return $this;
     }

@@ -3,8 +3,8 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ord_type** | **str** |  | [optional] 
 **cl_ord_id** | **str** | Reference field provided by client and cannot exceed 20 characters | 
+**ord_type** | [**OrdType**](OrdType.md) |  | 
 **symbol** | **str** | Blockchain symbol identifier | 
 **side** | [**Side**](Side.md) |  | 
 **order_qty** | **float** | The order size in the terms of the base currency | 

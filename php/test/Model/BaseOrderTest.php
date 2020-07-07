@@ -79,16 +79,16 @@ class BaseOrderTest extends TestCase
     }
 
     /**
-     * Test attribute "ord_type"
+     * Test attribute "cl_ord_id"
      */
-    public function testPropertyOrdType()
+    public function testPropertyClOrdId()
     {
     }
 
     /**
-     * Test attribute "cl_ord_id"
+     * Test attribute "ord_type"
      */
-    public function testPropertyClOrdId()
+    public function testPropertyOrdType()
     {
     }
 

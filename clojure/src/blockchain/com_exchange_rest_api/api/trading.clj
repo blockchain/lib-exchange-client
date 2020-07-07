@@ -19,6 +19,7 @@
             [blockchain/com-exchange-rest-api.specs.balance :refer :all]
             [blockchain/com-exchange-rest-api.specs.deposit-address-crypto :refer :all]
             [blockchain/com-exchange-rest-api.specs.price :refer :all]
+            [blockchain/com-exchange-rest-api.specs.ord-type :refer :all]
             [blockchain/com-exchange-rest-api.specs.price-event :refer :all]
             [blockchain/com-exchange-rest-api.specs.currency :refer :all]
             [blockchain/com-exchange-rest-api.specs.stop-px :refer :all]

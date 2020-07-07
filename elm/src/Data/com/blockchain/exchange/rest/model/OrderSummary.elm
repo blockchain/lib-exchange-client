@@ -12,6 +12,7 @@
 
 module Data.OrderSummary exposing (OrderSummary, decoder, encode, encodeWithTag, toString)
 
+import Data.OrdType as OrdType exposing (OrdType)
 import Data.OrderStatus as OrderStatus exposing (OrderStatus)
 import Data.Side as Side exposing (Side)
 import Dict exposing (Dict)
@@ -23,6 +24,7 @@ import Json.Encode as Encode
 type alias OrderSummary =
     { exOrdId : Maybe (Int)
     , clOrdId : String
+    , ordType : OrdType
     , ordStatus : OrderStatus
     , side : Side
     , price : Maybe (Float)
@@ -42,6 +44,7 @@ decoder =
     Decode.succeed OrderSummary
         |> optional "exOrdId" (Decode.nullable Decode.int) Nothing
         |> required "clOrdId" Decode.string
+        |> required "ordType" OrdType.decoder
         |> required "ordStatus" OrderStatus.decoder
         |> required "side" Side.decoder
         |> optional "price" (Decode.nullable Decode.float) Nothing
@@ -70,6 +73,7 @@ encodePairs : OrderSummary -> List (String, Encode.Value)
 encodePairs model =
     [ ( "exOrdId", Maybe.withDefault Encode.null (Maybe.map Encode.int model.exOrdId) )
     , ( "clOrdId", Encode.string model.clOrdId )
+    , ( "ordType", OrdType.encode model.ordType )
     , ( "ordStatus", OrderStatus.encode model.ordStatus )
     , ( "side", Side.encode model.side )
     , ( "price", Maybe.withDefault Encode.null (Maybe.map Encode.float model.price) )

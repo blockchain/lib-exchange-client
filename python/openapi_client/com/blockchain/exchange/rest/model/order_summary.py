@@ -35,6 +35,7 @@ class OrderSummary(object):
     openapi_types = {
         'ex_ord_id': 'int',
         'cl_ord_id': 'str',
+        'ord_type': 'OrdType',
         'ord_status': 'OrderStatus',
         'side': 'Side',
         'price': 'float',
@@ -51,6 +52,7 @@ class OrderSummary(object):
     attribute_map = {
         'ex_ord_id': 'exOrdId',
         'cl_ord_id': 'clOrdId',
+        'ord_type': 'ordType',
         'ord_status': 'ordStatus',
         'side': 'side',
         'price': 'price',
@@ -64,7 +66,7 @@ class OrderSummary(object):
         'timestamp': 'timestamp'
     }
 
-    def __init__(self, ex_ord_id=None, cl_ord_id=None, ord_status=None, side=None, price=None, text=None, symbol=None, last_shares=None, last_px=None, leaves_qty=None, cum_qty=None, avg_px=None, timestamp=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, ex_ord_id=None, cl_ord_id=None, ord_type=None, ord_status=None, side=None, price=None, text=None, symbol=None, last_shares=None, last_px=None, leaves_qty=None, cum_qty=None, avg_px=None, timestamp=None, local_vars_configuration=None):  # noqa: E501
         """OrderSummary - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -72,6 +74,7 @@ class OrderSummary(object):
 
         self._ex_ord_id = None
         self._cl_ord_id = None
+        self._ord_type = None
         self._ord_status = None
         self._side = None
         self._price = None
@@ -88,6 +91,7 @@ class OrderSummary(object):
         if ex_ord_id is not None:
             self.ex_ord_id = ex_ord_id
         self.cl_ord_id = cl_ord_id
+        self.ord_type = ord_type
         self.ord_status = ord_status
         self.side = side
         if price is not None:
@@ -158,6 +162,29 @@ class OrderSummary(object):
             raise ValueError("Invalid value for `cl_ord_id`, length must be less than or equal to `20`")  # noqa: E501
 
         self._cl_ord_id = cl_ord_id
+
+    @property
+    def ord_type(self):
+        """Gets the ord_type of this OrderSummary.  # noqa: E501
+
+
+        :return: The ord_type of this OrderSummary.  # noqa: E501
+        :rtype: OrdType
+        """
+        return self._ord_type
+
+    @ord_type.setter
+    def ord_type(self, ord_type):
+        """Sets the ord_type of this OrderSummary.
+
+
+        :param ord_type: The ord_type of this OrderSummary.  # noqa: E501
+        :type: OrdType
+        """
+        if self.local_vars_configuration.client_side_validation and ord_type is None:  # noqa: E501
+            raise ValueError("Invalid value for `ord_type`, must not be `None`")  # noqa: E501
+
+        self._ord_type = ord_type
 
     @property
     def ord_status(self):

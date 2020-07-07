@@ -131,8 +131,8 @@ instance Arbitrary BaseOrder where
 genBaseOrder :: Int -> Gen BaseOrder
 genBaseOrder n =
   BaseOrder
-    <$> arbitraryReducedMaybe n -- baseOrderOrdType :: Maybe E'OrdType
-    <*> arbitrary -- baseOrderClOrdId :: Text
+    <$> arbitrary -- baseOrderClOrdId :: Text
+    <*> arbitraryReduced n -- baseOrderOrdType :: OrdType
     <*> arbitrary -- baseOrderSymbol :: Text
     <*> arbitraryReduced n -- baseOrderSide :: Side
     <*> arbitrary -- baseOrderOrderQty :: Double
@@ -223,6 +223,7 @@ genOrderSummary n =
   OrderSummary
     <$> arbitraryReducedMaybe n -- orderSummaryExOrdId :: Maybe Integer
     <*> arbitrary -- orderSummaryClOrdId :: Text
+    <*> arbitraryReduced n -- orderSummaryOrdType :: OrdType
     <*> arbitraryReduced n -- orderSummaryOrdStatus :: OrderStatus
     <*> arbitraryReduced n -- orderSummarySide :: Side
     <*> arbitraryReducedMaybe n -- orderSummaryPrice :: Maybe Double
@@ -317,13 +318,13 @@ genWithdrawalInfo n =
 instance Arbitrary E'Action where
   arbitrary = arbitraryBoundedEnum
 
-instance Arbitrary E'OrdType where
-  arbitrary = arbitraryBoundedEnum
-
 instance Arbitrary E'State where
   arbitrary = arbitraryBoundedEnum
 
 instance Arbitrary E'Status where
+  arbitrary = arbitraryBoundedEnum
+
+instance Arbitrary OrdType where
   arbitrary = arbitraryBoundedEnum
 
 instance Arbitrary OrderStatus where

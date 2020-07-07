@@ -14,6 +14,8 @@ pub mod deposit_info;
 pub use self::deposit_info::DepositInfo;
 pub mod fees;
 pub use self::fees::Fees;
+pub mod ord_type;
+pub use self::ord_type::OrdType;
 pub mod order_book;
 pub use self::order_book::OrderBook;
 pub mod order_book_entry;

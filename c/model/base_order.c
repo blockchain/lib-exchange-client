@@ -4,12 +4,12 @@
 #include "base_order.h"
 
 
-char* ord_typebase_order_ToString(blockchain_com_exchange_rest_api_base_order_ORDTYPE_e ord_type) {
+char* ord_typebase_order_ToString(blockchain_com_exchange_rest_api_base_order__e ord_type) {
     char* ord_typeArray[] =  { "NULL", "MARKET", "LIMIT", "STOP", "STOPLIMIT" };
 	return ord_typeArray[ord_type];
 }
 
-blockchain_com_exchange_rest_api_base_order_ORDTYPE_e ord_typebase_order_FromString(char* ord_type){
+blockchain_com_exchange_rest_api_base_order__e ord_typebase_order_FromString(char* ord_type){
     int stringToReturn = 0;
     char *ord_typeArray[] =  { "NULL", "MARKET", "LIMIT", "STOP", "STOPLIMIT" };
     size_t sizeofArray = sizeof(ord_typeArray) / sizeof(ord_typeArray[0]);
@@ -57,7 +57,6 @@ blockchain_com_exchange_rest_api_base_order__e time_in_forcebase_order_FromStrin
 }
 
 base_order_t *base_order_create(
-    blockchain_com_exchange_rest_api_base_order_ORDTYPE_e ord_type,
     char *cl_ord_id,
     char *symbol,
     double order_qty,
@@ -70,8 +69,8 @@ base_order_t *base_order_create(
     if (!base_order_local_var) {
         return NULL;
     }
-    base_order_local_var->ord_type = ord_type;
     base_order_local_var->cl_ord_id = cl_ord_id;
+    base_order_local_var->ord_type = ord_type;
     base_order_local_var->symbol = symbol;
     base_order_local_var->side = side;
     base_order_local_var->order_qty = order_qty;
@@ -98,15 +97,6 @@ void base_order_free(base_order_t *base_order) {
 cJSON *base_order_convertToJSON(base_order_t *base_order) {
     cJSON *item = cJSON_CreateObject();
 
-    // base_order->ord_type
-    
-    if(cJSON_AddStringToObject(item, "ordType", ord_typebase_order_ToString(base_order->ord_type)) == NULL)
-    {
-    goto fail; //Enum
-    }
-    
-
-
     // base_order->cl_ord_id
     if (!base_order->cl_ord_id) {
         goto fail;
@@ -115,6 +105,10 @@ cJSON *base_order_convertToJSON(base_order_t *base_order) {
     if(cJSON_AddStringToObject(item, "clOrdId", base_order->cl_ord_id) == NULL) {
     goto fail; //String
     }
+
+
+    // base_order->ord_type
+    
 
 
     // base_order->symbol
@@ -189,17 +183,6 @@ base_order_t *base_order_parseFromJSON(cJSON *base_orderJSON){
 
     base_order_t *base_order_local_var = NULL;
 
-    // base_order->ord_type
-    cJSON *ord_type = cJSON_GetObjectItemCaseSensitive(base_orderJSON, "ordType");
-    blockchain_com_exchange_rest_api_base_order_ORDTYPE_e ord_typeVariable;
-    if (ord_type) { 
-    if(!cJSON_IsString(ord_type))
-    {
-    goto end; //Enum
-    }
-    ord_typeVariable = ord_typebase_order_FromString(ord_type->valuestring);
-    }
-
     // base_order->cl_ord_id
     cJSON *cl_ord_id = cJSON_GetObjectItemCaseSensitive(base_orderJSON, "clOrdId");
     if (!cl_ord_id) {
@@ -211,6 +194,13 @@ base_order_t *base_order_parseFromJSON(cJSON *base_orderJSON){
     {
     goto end; //String
     }
+
+    // base_order->ord_type
+    cJSON *ord_type = cJSON_GetObjectItemCaseSensitive(base_orderJSON, "ordType");
+    if (!ord_type) {
+        goto end;
+    }
+
 
     // base_order->symbol
     cJSON *symbol = cJSON_GetObjectItemCaseSensitive(base_orderJSON, "symbol");
@@ -285,7 +275,6 @@ base_order_t *base_order_parseFromJSON(cJSON *base_orderJSON){
 
 
     base_order_local_var = base_order_create (
-        ord_type ? ord_typeVariable : -1,
         strdup(cl_ord_id->valuestring),
         strdup(symbol->valuestring),
         order_qty->valuedouble,

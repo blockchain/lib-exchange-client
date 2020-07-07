@@ -81,15 +81,15 @@ balanceMapPrimaryL f BalanceMap{..} = (\balanceMapPrimary -> BalanceMap { balanc
 
 -- * BaseOrder
 
--- | 'baseOrderOrdType' Lens
-baseOrderOrdTypeL :: Lens_' BaseOrder (Maybe E'OrdType)
-baseOrderOrdTypeL f BaseOrder{..} = (\baseOrderOrdType -> BaseOrder { baseOrderOrdType, ..} ) <$> f baseOrderOrdType
-{-# INLINE baseOrderOrdTypeL #-}
-
 -- | 'baseOrderClOrdId' Lens
 baseOrderClOrdIdL :: Lens_' BaseOrder (Text)
 baseOrderClOrdIdL f BaseOrder{..} = (\baseOrderClOrdId -> BaseOrder { baseOrderClOrdId, ..} ) <$> f baseOrderClOrdId
 {-# INLINE baseOrderClOrdIdL #-}
+
+-- | 'baseOrderOrdType' Lens
+baseOrderOrdTypeL :: Lens_' BaseOrder (OrdType)
+baseOrderOrdTypeL f BaseOrder{..} = (\baseOrderOrdType -> BaseOrder { baseOrderOrdType, ..} ) <$> f baseOrderOrdType
+{-# INLINE baseOrderOrdTypeL #-}
 
 -- | 'baseOrderSymbol' Lens
 baseOrderSymbolL :: Lens_' BaseOrder (Text)
@@ -243,6 +243,10 @@ feesVolumeInUsdL f Fees{..} = (\feesVolumeInUsd -> Fees { feesVolumeInUsd, ..} )
 
 
 
+-- * OrdType
+
+
+
 -- * OrderBook
 
 -- | 'orderBookSymbol' Lens
@@ -296,6 +300,11 @@ orderSummaryExOrdIdL f OrderSummary{..} = (\orderSummaryExOrdId -> OrderSummary 
 orderSummaryClOrdIdL :: Lens_' OrderSummary (Text)
 orderSummaryClOrdIdL f OrderSummary{..} = (\orderSummaryClOrdId -> OrderSummary { orderSummaryClOrdId, ..} ) <$> f orderSummaryClOrdId
 {-# INLINE orderSummaryClOrdIdL #-}
+
+-- | 'orderSummaryOrdType' Lens
+orderSummaryOrdTypeL :: Lens_' OrderSummary (OrdType)
+orderSummaryOrdTypeL f OrderSummary{..} = (\orderSummaryOrdType -> OrderSummary { orderSummaryOrdType, ..} ) <$> f orderSummaryOrdType
+{-# INLINE orderSummaryOrdTypeL #-}
 
 -- | 'orderSummaryOrdStatus' Lens
 orderSummaryOrdStatusL :: Lens_' OrderSummary (OrderStatus)

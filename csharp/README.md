@@ -151,6 +151,7 @@ Class | Method | HTTP request | Description
  - [com.blockchain.exchange.rest.model.DepositAddressCrypto](docs/DepositAddressCrypto.md)
  - [com.blockchain.exchange.rest.model.DepositInfo](docs/DepositInfo.md)
  - [com.blockchain.exchange.rest.model.Fees](docs/Fees.md)
+ - [com.blockchain.exchange.rest.model.OrdType](docs/OrdType.md)
  - [com.blockchain.exchange.rest.model.OrderBook](docs/OrderBook.md)
  - [com.blockchain.exchange.rest.model.OrderBookEntry](docs/OrderBookEntry.md)
  - [com.blockchain.exchange.rest.model.OrderStatus](docs/OrderStatus.md)

@@ -845,6 +845,14 @@ components:
         liquidity in the market.'
       example: ALO
       type: string
+    ordType:
+      enum:
+      - MARKET
+      - LIMIT
+      - STOP
+      - STOPLIMIT
+      title: Order type
+      type: string
     BaseOrder:
       example:
         clOrdId: ABC
@@ -854,23 +862,16 @@ components:
         orderQty: 10.23
         expireDate: 20200103
         timeInForce: GTC
-        ordType: MARKET
         stopPx: 0.12345
         minQty: 10.0
       properties:
-        ordType:
-          enum:
-          - MARKET
-          - LIMIT
-          - STOP
-          - STOPLIMIT
-          title: Order type
-          type: string
         clOrdId:
           description: Reference field provided by client and cannot exceed 20 characters
           example: ABC
           maxLength: 20
           type: string
+        ordType:
+          $ref: '#/components/schemas/ordType'
         symbol:
           description: Blockchain symbol identifier
           example: BTC-USD
@@ -908,6 +909,7 @@ components:
           type: number
       required:
       - clOrdId
+      - ordType
       - orderQty
       - side
       - symbol
@@ -938,6 +940,8 @@ components:
           example: ABC
           maxLength: 20
           type: string
+        ordType:
+          $ref: '#/components/schemas/ordType'
         ordStatus:
           $ref: '#/components/schemas/OrderStatus'
         side:
@@ -992,6 +996,7 @@ components:
       required:
       - clOrdId
       - ordStatus
+      - ordType
       - side
       - symbol
       type: object

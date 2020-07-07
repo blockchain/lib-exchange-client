@@ -12,6 +12,7 @@
  */
 
 import ApiClient from '../ApiClient';
+import OrdType from './OrdType';
 import Side from './Side';
 import TimeInForce from './TimeInForce';
 
@@ -25,13 +26,14 @@ class BaseOrder {
      * Constructs a new <code>BaseOrder</code>.
      * @alias module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/BaseOrder
      * @param clOrdId {String} Reference field provided by client and cannot exceed 20 characters
+     * @param ordType {module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/OrdType} 
      * @param symbol {String} Blockchain symbol identifier
      * @param side {module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/Side} 
      * @param orderQty {Number} The order size in the terms of the base currency
      */
-    constructor(clOrdId, symbol, side, orderQty) { 
+    constructor(clOrdId, ordType, symbol, side, orderQty) { 
         
-        BaseOrder.initialize(this, clOrdId, symbol, side, orderQty);
+        BaseOrder.initialize(this, clOrdId, ordType, symbol, side, orderQty);
     }
 
     /**
@@ -39,8 +41,9 @@ class BaseOrder {
      * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
      * Only for internal use.
      */
-    static initialize(obj, clOrdId, symbol, side, orderQty) { 
+    static initialize(obj, clOrdId, ordType, symbol, side, orderQty) { 
         obj['clOrdId'] = clOrdId;
+        obj['ordType'] = ordType;
         obj['symbol'] = symbol;
         obj['side'] = side;
         obj['orderQty'] = orderQty;
@@ -57,11 +60,11 @@ class BaseOrder {
         if (data) {
             obj = obj || new BaseOrder();
 
-            if (data.hasOwnProperty('ordType')) {
-                obj['ordType'] = ApiClient.convertToType(data['ordType'], 'String');
-            }
             if (data.hasOwnProperty('clOrdId')) {
                 obj['clOrdId'] = ApiClient.convertToType(data['clOrdId'], 'String');
+            }
+            if (data.hasOwnProperty('ordType')) {
+                obj['ordType'] = OrdType.constructFromObject(data['ordType']);
             }
             if (data.hasOwnProperty('symbol')) {
                 obj['symbol'] = ApiClient.convertToType(data['symbol'], 'String');
@@ -95,15 +98,15 @@ class BaseOrder {
 }
 
 /**
- * @member {module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/BaseOrder.OrdTypeEnum} ordType
- */
-BaseOrder.prototype['ordType'] = undefined;
-
-/**
  * Reference field provided by client and cannot exceed 20 characters
  * @member {String} clOrdId
  */
 BaseOrder.prototype['clOrdId'] = undefined;
+
+/**
+ * @member {module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/OrdType} ordType
+ */
+BaseOrder.prototype['ordType'] = undefined;
 
 /**
  * Blockchain symbol identifier
@@ -153,39 +156,6 @@ BaseOrder.prototype['stopPx'] = undefined;
 
 
 
-
-
-/**
- * Allowed values for the <code>ordType</code> property.
- * @enum {String}
- * @readonly
- */
-BaseOrder['OrdTypeEnum'] = {
-
-    /**
-     * value: "MARKET"
-     * @const
-     */
-    "MARKET": "MARKET",
-
-    /**
-     * value: "LIMIT"
-     * @const
-     */
-    "LIMIT": "LIMIT",
-
-    /**
-     * value: "STOP"
-     * @const
-     */
-    "STOP": "STOP",
-
-    /**
-     * value: "STOPLIMIT"
-     * @const
-     */
-    "STOPLIMIT": "STOPLIMIT"
-};
 
 
 

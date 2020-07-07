@@ -1,0 +1,1210 @@
+openapi: 3.0.0
+info:
+  description: Blockchain.com Exchange REST API
+  title: Blockchain.com Exchange REST API
+  version: 1.0.0
+servers:
+- url: https://api.exchange.blockchain.com
+security:
+- ApiKeyAuth: []
+paths:
+  /l2/{pair}:
+    get:
+      parameters:
+      - description: Pair
+        explode: false
+        in: path
+        name: pair
+        required: true
+        schema:
+          $ref: '#/components/schemas/symbol'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderBook'
+          description: Success
+      security:
+      - ApiKeyAuth: []
+      - {}
+      summary: L2 Order Book
+      x-accepts: application/json
+  /l3/{pair}:
+    get:
+      parameters:
+      - description: Pair
+        explode: false
+        in: path
+        name: pair
+        required: true
+        schema:
+          $ref: '#/components/schemas/symbol'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderBook'
+          description: Success
+      security:
+      - ApiKeyAuth: []
+      - {}
+      summary: L3 Order Book
+      x-accepts: application/json
+  /tickers:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/PriceEvent'
+                type: array
+          description: Success
+      security:
+      - ApiKeyAuth: []
+      - {}
+      summary: Price
+      x-accepts: application/json
+  /tickers/{pair}:
+    get:
+      parameters:
+      - description: Pair
+        explode: false
+        in: path
+        name: pair
+        required: true
+        schema:
+          $ref: '#/components/schemas/symbol'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceEvent'
+          description: Success
+      security:
+      - ApiKeyAuth: []
+      - {}
+      summary: Price
+      x-accepts: application/json
+  /symbols:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  $ref: '#/components/schemas/SymbolStatus'
+                type: object
+          description: Success
+      security:
+      - ApiKeyAuth: []
+      - {}
+      summary: Symbols
+      x-accepts: application/json
+  /symbols/{pair}:
+    get:
+      parameters:
+      - description: Pair
+        explode: false
+        in: path
+        name: pair
+        required: true
+        schema:
+          $ref: '#/components/schemas/symbol'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SymbolStatus'
+          description: Success
+      security:
+      - ApiKeyAuth: []
+      - {}
+      summary: Symbols
+      x-accepts: application/json
+  /trades:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/OrderSummary'
+                type: array
+          description: Success
+      summary: List historical trades
+      x-accepts: application/json
+  /accounts:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceMap'
+          description: Success
+      summary: Receive current account balances
+      x-accepts: application/json
+  /accounts/{account}/{currency}:
+    get:
+      parameters:
+      - description: Account
+        explode: false
+        in: path
+        name: account
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Currency
+        explode: false
+        in: path
+        name: currency
+        required: true
+        schema:
+          $ref: '#/components/schemas/currency'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Balance'
+          description: Success
+      summary: Receive current account balances
+      x-accepts: application/json
+  /fees:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fees'
+          description: Success
+      summary: Get current fee level
+      x-accepts: application/json
+  /orders:
+    delete:
+      parameters:
+      - explode: true
+        in: query
+        name: symbol
+        required: false
+        schema:
+          $ref: '#/components/schemas/symbol'
+        style: form
+      responses:
+        "200":
+          description: Success
+      summary: Delete all open orders (of a symbol, if specified)
+      x-accepts: application/json
+    get:
+      parameters:
+      - description: Order Status
+        explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          $ref: '#/components/schemas/OrderStatus'
+        style: form
+      - description: Time From
+        explode: true
+        in: query
+        name: from
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: Time To
+        explode: true
+        in: query
+        name: to
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: Offset
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/OrderSummary'
+                type: array
+          description: Success
+      summary: Get a list of orders
+      x-accepts: application/json
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderRequest'
+        description: Trade
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderSummary'
+          description: Success
+      summary: Add an order
+      x-contentType: application/json
+      x-accepts: application/json
+  /orders/{orderId}:
+    delete:
+      parameters:
+      - description: Order ID
+        explode: false
+        in: path
+        name: orderId
+        required: true
+        schema:
+          $ref: '#/components/schemas/ExchangeOrderId'
+        style: simple
+      responses:
+        "200":
+          description: Success
+      summary: Cancel a trade
+      x-accepts: application/json
+    get:
+      parameters:
+      - description: Order ID
+        explode: false
+        in: path
+        name: orderId
+        required: true
+        schema:
+          $ref: '#/components/schemas/ExchangeOrderId'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderSummary'
+          description: Success
+        "404":
+          description: Not found
+      summary: Get a specific order
+      x-accepts: application/json
+  /whitelist:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/WhitelistEntry'
+                type: array
+          description: Success
+      summary: Get a list of all whitelisted withdrawal accounts
+      x-accepts: application/json
+  /whitelist/{currency}:
+    get:
+      parameters:
+      - description: Currency
+        explode: false
+        in: path
+        name: currency
+        required: true
+        schema:
+          $ref: '#/components/schemas/currency'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/WhitelistEntry'
+                type: array
+          description: Success
+      summary: Get a list of all whitelisted withdrawal accounts
+      x-accepts: application/json
+  /withdrawals:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWithdrawalRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateWithdrawalResponse'
+          description: Success
+      summary: Request a withdrawal
+      x-contentType: application/json
+      x-accepts: application/json
+  /withdrawals/{withdrawalId}:
+    get:
+      parameters:
+      - description: Withdrawal ID
+        explode: false
+        in: path
+        name: withdrawalId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetWithdrawalResponse'
+          description: Success
+        "404":
+          description: Not found
+      summary: Get status about a withdrawal
+      x-accepts: application/json
+  /deposit-addresses/{currency}:
+    get:
+      parameters:
+      - description: Currency
+        explode: false
+        in: path
+        name: currency
+        required: true
+        schema:
+          $ref: '#/components/schemas/currency'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositAddress'
+          description: Success
+      summary: Get a deposit address
+      x-accepts: application/json
+components:
+  parameters:
+    pairParam:
+      description: Pair
+      explode: false
+      in: path
+      name: pair
+      required: true
+      schema:
+        $ref: '#/components/schemas/symbol'
+      style: simple
+    currencyParam:
+      description: Currency
+      explode: false
+      in: path
+      name: currency
+      required: true
+      schema:
+        $ref: '#/components/schemas/currency'
+      style: simple
+    timeFromParam:
+      description: Pair
+      explode: false
+      in: path
+      name: pair
+      required: true
+      schema:
+        $ref: '#/components/schemas/symbol'
+      style: simple
+    orderIdParam:
+      description: Order ID
+      explode: false
+      in: path
+      name: orderId
+      required: true
+      schema:
+        $ref: '#/components/schemas/ExchangeOrderId'
+      style: simple
+    orderStatusFilter:
+      description: Order Status
+      explode: true
+      in: query
+      name: status
+      required: false
+      schema:
+        $ref: '#/components/schemas/OrderStatus'
+      style: form
+    timeFromFilter:
+      description: Time From
+      explode: true
+      in: query
+      name: from
+      required: false
+      schema:
+        format: int64
+        type: integer
+      style: form
+    timeToFilter:
+      description: Time To
+      explode: true
+      in: query
+      name: to
+      required: false
+      schema:
+        format: int64
+        type: integer
+      style: form
+    offsetFilter:
+      description: Offset
+      explode: true
+      in: query
+      name: offset
+      required: false
+      schema:
+        format: int64
+        type: integer
+      style: form
+  schemas:
+    symbol:
+      description: Blockchain symbol identifier
+      example: BTC-USD
+      pattern: ^[A-Z]{3,5}-[A-Z]{3,5}$
+      type: string
+    currency:
+      example: BTC
+      pattern: ^[A-Z]{3,5}$
+      type: string
+    ExchangeOrderId:
+      description: The unique order id assigned by the exchange
+      example: 11111111
+      format: int64
+      type: integer
+    ClientOrderId:
+      description: Reference field provided by client and cannot exceed 20 characters
+      example: ABC
+      maxLength: 20
+      type: string
+    WithdrawalId:
+      description: Unique ID for this withdrawal
+      type: string
+    WithdrawalStatus:
+      enum:
+      - PENDING
+      - COMPLETED
+      type: string
+    OrderStatus:
+      enum:
+      - pending
+      - open
+      - rejected
+      - cancelled
+      - filled
+      - partial
+      - expired
+      example: filled
+      type: string
+    timeInForceLimit:
+      description: '"GTC" for Good Till Cancel, "IOC" for Immediate or Cancel, "FOK"
+        for Fill or Kill, "GTD" Good Till Date'
+      enum:
+      - GTC
+      - IOC
+      - FOK
+      - GTD
+      example: GTC
+      type: string
+    timeInForceStop:
+      description: '"GTC" for Good Till Cancel, "GTD" Good Till Date'
+      enum:
+      - GTC
+      - GTD
+      example: GTC
+      type: string
+    side:
+      description: '"buy" for Buy, "sell" for Sell'
+      enum:
+      - buy
+      - sell
+      example: buy
+      type: string
+    orderQty:
+      description: The order size in the terms of the base currency
+      example: 10.23
+      format: double
+      type: number
+    price:
+      description: The limit price for the order
+      example: 0.12345
+      format: double
+      type: number
+    expireDate:
+      description: expiry date in the format YYYYMMDD
+      example: 20190318
+      maximum: 20501231
+      minimum: 20200101
+      type: integer
+    stopPx:
+      description: Price to trigger the stop order
+      example: 3500.12
+      format: double
+      type: number
+    minQty:
+      description: The minimum quantity required for an IOC fill
+      example: 10.0
+      format: double
+      type: number
+    execInst:
+      description: 'The order is placed with Add Liquidity Only (aka Post Only): it
+        will not match liquidity immediately. It will be rejected instead of matching
+        liquidity in the market.'
+      example: ALO
+      type: string
+    BaseOrder:
+      properties:
+        ordType:
+          enum:
+          - market
+          - limit
+          - stop
+          - stopLimit
+          title: Order type
+          type: string
+        clOrdId:
+          description: Reference field provided by client and cannot exceed 20 characters
+          example: ABC
+          maxLength: 20
+          type: string
+        symbol:
+          description: Blockchain symbol identifier
+          example: BTC-USD
+          pattern: ^[A-Z]{3,5}-[A-Z]{3,5}$
+          type: string
+        side:
+          $ref: '#/components/schemas/side'
+        orderQty:
+          description: The order size in the terms of the base currency
+          example: 10.23
+          format: double
+          type: number
+      required:
+      - clOrdId
+      - orderQty
+      - side
+      - symbol
+      type: object
+    MarketOrder:
+      allOf:
+      - $ref: '#/components/schemas/BaseOrder'
+      - $ref: '#/components/schemas/MarketOrder_allOf'
+      type: object
+    LimitOrder:
+      allOf:
+      - $ref: '#/components/schemas/BaseOrder'
+      - $ref: '#/components/schemas/LimitOrder_allOf'
+      type: object
+    StopOrder:
+      allOf:
+      - $ref: '#/components/schemas/BaseOrder'
+      - $ref: '#/components/schemas/StopOrder_allOf'
+      type: object
+    StopLimitOrder:
+      allOf:
+      - $ref: '#/components/schemas/BaseOrder'
+      - $ref: '#/components/schemas/StopLimitOrder_allOf'
+      type: object
+    CreateOrderRequest:
+      discriminator:
+        mapping:
+          market: '#/components/schemas/MarketOrder'
+          limit: '#/components/schemas/LimitOrder'
+          stopLimit: '#/components/schemas/StopLimitOrder'
+          stop: '#/components/schemas/StopOrder'
+        propertyName: ordType
+      oneOf:
+      - $ref: '#/components/schemas/MarketOrder'
+      - $ref: '#/components/schemas/LimitOrder'
+      - $ref: '#/components/schemas/StopLimitOrder'
+      - $ref: '#/components/schemas/StopOrder'
+      type: object
+      x-one-of-name: CreateOrderRequest
+    OrderSummary:
+      example:
+        exOrdId: 11111111
+        ordStatus: filled
+        clOrdId: ABC
+        avgPx: 345.33
+        lastPx: 3500.12
+        lastShares: 0.5678
+        leavesQty: 10.0
+        cumQty: 0.123345
+        transactTime: 2019-08-13T13:15:35.000955868Z
+      properties:
+        exOrdId:
+          description: The unique order id assigned by the exchange
+          example: 11111111
+          format: int64
+          type: integer
+        clOrdId:
+          description: Reference field provided by client and cannot exceed 20 characters
+          example: ABC
+          maxLength: 20
+          type: string
+        ordStatus:
+          $ref: '#/components/schemas/OrderStatus'
+        lastShares:
+          description: The executed quantity for the order's last fill
+          example: 0.5678
+          format: double
+          type: number
+        lastPx:
+          description: The executed price for the last fill
+          example: 3500.12
+          format: double
+          type: number
+        leavesQty:
+          description: For Open and Partially Filled orders this is the remaining
+            quantity open for execution. For Cancelled and Expired orders this is
+            the quantity than was still open before cancellation/expiration. For Rejected
+            order this is equal to orderQty. For other states this is always zero.
+          example: 10.0
+          format: double
+          type: number
+        cumQty:
+          description: The quantity of the order which has been filled
+          example: 0.123345
+          format: double
+          type: number
+        transactTime:
+          description: The time the transaction occurred
+          example: 2019-08-13T13:15:35.000955868Z
+          format: date-time
+          type: string
+        avgPx:
+          description: Calculated the Volume Weighted Average Price of all fills for
+            this order
+          example: 345.33
+          format: double
+          type: number
+      type: object
+    CancelOrderRequest:
+      properties:
+        action:
+          enum:
+          - CancelOrderRequest
+          type: string
+        orderID:
+          description: The unique order id assigned by the exchange
+          example: 11111111
+          format: int64
+          type: integer
+      required:
+      - action
+      - orderID
+      type: object
+    BalanceMap:
+      additionalProperties:
+        $ref: '#/components/schemas/BalanceList'
+      example:
+        primary:
+        - balance_local: 38.746779155
+          balance: 0.00366963
+          rate: 10558.77
+          available: 0.00266963
+          currency: BTC
+          available_local: 28.188009155
+        - balance_local: 38.746779155
+          balance: 0.00366963
+          rate: 10558.77
+          available: 0.00266963
+          currency: BTC
+          available_local: 28.188009155
+      properties:
+        primary:
+          items:
+            $ref: '#/components/schemas/Balance'
+          type: array
+      required:
+      - primary
+      type: object
+    BalanceList:
+      items:
+        $ref: '#/components/schemas/Balance'
+      type: array
+    Balance:
+      example:
+        balance_local: 38.746779155
+        balance: 0.00366963
+        rate: 10558.77
+        available: 0.00266963
+        currency: BTC
+        available_local: 28.188009155
+      properties:
+        currency:
+          example: BTC
+          pattern: ^[A-Z]{3,5}$
+          type: string
+        balance:
+          example: 0.00366963
+          format: double
+          type: number
+        available:
+          example: 0.00266963
+          format: double
+          type: number
+        balance_local:
+          example: 38.746779155
+          format: double
+          type: number
+        available_local:
+          example: 28.188009155
+          format: double
+          type: number
+        rate:
+          example: 10558.77
+          format: double
+          type: number
+      required:
+      - available
+      - available_local
+      - balance
+      - balance_local
+      - currency
+      - rate
+      type: object
+    Fees:
+      example:
+        makerRate: 0.0014
+        tier: 1
+        volumeInUSD: 1500.00
+        takerRate: 0.0024
+      properties:
+        tier:
+          example: 1
+          type: integer
+        makerRate:
+          example: 0.0014
+          format: double
+          type: number
+        takerRate:
+          example: 0.0024
+          format: double
+          type: number
+        volumeInUSD:
+          example: 1500.00
+          format: double
+          type: number
+      required:
+      - makerRate
+      - takerRate
+      - tier
+      - volumeInUSD
+      type: object
+    WhitelistEntry:
+      example:
+        name: name
+        currency: BTC
+        whitelistId: whitelistId
+      properties:
+        whitelistId:
+          description: Unique ID for each whitelist entry
+          type: string
+        name:
+          description: User specified name for this entry
+          type: string
+        currency:
+          example: BTC
+          pattern: ^[A-Z]{3,5}$
+          type: string
+      type: object
+    CreateWithdrawalRequest:
+      example:
+        amount: 12.23
+        beneficiary: beneficiary
+        currency: BTC
+      properties:
+        amount:
+          description: The amount to withdraw in the currency specified
+          example: 12.23
+          format: double
+          type: number
+        currency:
+          example: BTC
+          pattern: ^[A-Z]{3,5}$
+          type: string
+        beneficiary:
+          type: string
+      required:
+      - amount
+      - beneficiary
+      - currency
+      type: object
+    CreateWithdrawalResponse:
+      example:
+        withdrawalId: withdrawalId
+      properties:
+        withdrawalId:
+          description: Unique ID for this withdrawal
+          type: string
+        state:
+          $ref: '#/components/schemas/WithdrawalStatus'
+      required:
+      - state
+      - withdrawalId
+      type: object
+    GetWithdrawalResponse:
+      example:
+        withdrawalId: withdrawalId
+        updatedAt: 2020-03-28T15:48:05.898Z
+      properties:
+        withdrawalId:
+          description: Unique ID for this withdrawal
+          type: string
+        state:
+          $ref: '#/components/schemas/WithdrawalStatus'
+        updatedAt:
+          description: Timestamp of the last update to this withdrawal
+          example: 2020-03-28T15:48:05.898Z
+          type: string
+      required:
+      - state
+      - withdrawalId
+      type: object
+    DepositAddress:
+      discriminator:
+        mapping:
+          crypto: '#/components/schemas/DepositAddressCrypto'
+        propertyName: type
+      oneOf:
+      - $ref: '#/components/schemas/DepositAddressCrypto'
+      x-one-of-name: DepositAddress
+    DepositAddressCrypto:
+      properties:
+        type:
+          type: string
+        address:
+          description: Address to deposit to
+          type: string
+        memo:
+          description: Memo to be used with this deposit, if applicable
+          type: string
+      required:
+      - address
+      - type
+      type: object
+    BalanceResponse:
+      properties:
+        balances:
+          items:
+            $ref: '#/components/schemas/Balance'
+          type: array
+        total_available_local:
+          example: 65.477864168
+          format: double
+          type: number
+        total_balance_local:
+          example: 87.696634168
+          format: double
+          type: number
+      required:
+      - balances
+      - total_available_local
+      - total_balance_local
+      type: object
+    PriceEvent:
+      example:
+        symbol: BTC-USD
+        last_trade_price: 5000.0
+        price:
+        - 0.8008281904610115
+        - 0.8008281904610115
+        - 0.8008281904610115
+        - 0.8008281904610115
+        - 0.8008281904610115
+        volume_24h: 0.3015
+        price_24h: 4998.0
+      properties:
+        symbol:
+          description: Blockchain symbol identifier
+          example: BTC-USD
+          pattern: ^[A-Z]{3,5}-[A-Z]{3,5}$
+          type: string
+        price_24h:
+          example: 4998.0
+          format: double
+          type: number
+        volume_24h:
+          example: 0.3015
+          format: double
+          type: number
+        last_trade_price:
+          example: 5000.0
+          format: double
+          type: number
+        price:
+          items:
+            format: double
+            type: number
+          maxItems: 6
+          minItems: 6
+          type: array
+      type: object
+    PriceEventList:
+      properties:
+        orders:
+          items:
+            $ref: '#/components/schemas/PriceEvent'
+          type: array
+      type: object
+    SymbolStatus:
+      example:
+        base_currency: BTC-USD
+        counter_currency: BTC-USD
+        max_order_size: 0
+        max_order_size_scale: 8
+        imbalance: 0.0
+        base_currency_scale: 8
+        auction_price: 0.0
+        counter_currency_scale: 2
+        min_order_size: 10
+        lot_size_scale: 2
+        min_price_increment_scale: 0
+        auction_size: 0.0
+        min_order_size_scale: 2
+        min_price_increment: 10
+        lot_size: 5
+        auction_time: 1530
+        id: 1
+        status: open
+      properties:
+        base_currency:
+          description: Blockchain symbol identifier
+          example: BTC-USD
+          pattern: ^[A-Z]{3,5}-[A-Z]{3,5}$
+          type: string
+        base_currency_scale:
+          description: The number of decimals the currency can be split in
+          example: 8
+          type: integer
+        counter_currency:
+          description: Blockchain symbol identifier
+          example: BTC-USD
+          pattern: ^[A-Z]{3,5}-[A-Z]{3,5}$
+          type: string
+        counter_currency_scale:
+          description: The number of decimals the currency can be split in
+          example: 2
+          type: integer
+        min_price_increment:
+          description: The price of the instrument must be a multiple of min_price_increment
+            * (10^-min_price_increment_scale)
+          example: 10
+          format: int64
+          type: integer
+        min_price_increment_scale:
+          example: 0
+          type: integer
+        min_order_size:
+          description: The minimum quantity for an order for this instrument must
+            be min_order_size*(10^-min_order_size_scale)
+          example: 10
+          format: int64
+          type: integer
+        min_order_size_scale:
+          example: 2
+          type: integer
+        max_order_size:
+          description: The maximum quantity for an order for this instrument is max_order_size*(10^-max_order_size_scale).
+            If this equal to zero, there is no limit
+          example: 0
+          format: int64
+          type: integer
+        max_order_size_scale:
+          example: 8
+          type: integer
+        lot_size:
+          example: 5
+          format: int64
+          type: integer
+        lot_size_scale:
+          example: 2
+          type: integer
+        status:
+          description: Symbol status; open, close, suspend, halt, halt-freeze.
+          enum:
+          - open
+          - close
+          - suspend
+          - halt
+          - halt-freeze
+          type: string
+        id:
+          example: 1
+          format: int64
+          type: integer
+        auction_price:
+          description: If the symbol is halted and will open on an auction, this will
+            be the opening price.
+          example: 0.0
+          format: double
+          type: number
+        auction_size:
+          description: Opening size
+          example: 0.0
+          format: double
+          type: number
+        auction_time:
+          description: Opening time in HHMM format
+          example: 1530
+          type: integer
+        imbalance:
+          description: Auction imbalance. If > 0 then there will be buy orders left
+            over at the auction price. If < 0 then there will be sell orders left
+            over at the auction price.
+          example: 0.0
+          format: double
+          type: number
+      type: object
+    OrderBookEntry:
+      example:
+        qty: 1.45
+        num: 1
+        px: 8723.45
+      properties:
+        px:
+          example: 8723.45
+          format: double
+          type: number
+        qty:
+          example: 1.45
+          format: double
+          type: number
+        num:
+          example: 1
+          type: integer
+      type: object
+    OrderBook:
+      example:
+        symbol: BTC-USD
+        asks:
+        - qty: 1.45
+          num: 1
+          px: 8723.45
+        - qty: 1.45
+          num: 1
+          px: 8723.45
+        bids:
+        - qty: 1.45
+          num: 1
+          px: 8723.45
+        - qty: 1.45
+          num: 1
+          px: 8723.45
+      properties:
+        symbol:
+          description: Blockchain symbol identifier
+          example: BTC-USD
+          pattern: ^[A-Z]{3,5}-[A-Z]{3,5}$
+          type: string
+        bids:
+          items:
+            $ref: '#/components/schemas/OrderBookEntry'
+          type: array
+        asks:
+          items:
+            $ref: '#/components/schemas/OrderBookEntry'
+          type: array
+      type: object
+    UnauthorizedError:
+      description: API key is missing or invalid
+      properties:
+        error:
+          type: string
+    MarketOrder_allOf:
+      properties:
+        timeInForce:
+          $ref: '#/components/schemas/timeInForceLimit'
+      required:
+      - ordType
+    LimitOrder_allOf:
+      properties:
+        timeInForce:
+          $ref: '#/components/schemas/timeInForceLimit'
+        price:
+          description: The limit price for the order
+          example: 0.12345
+          format: double
+          type: number
+        expireDate:
+          description: expiry date in the format YYYYMMDD
+          example: 20190318
+          maximum: 20501231
+          minimum: 20200101
+          type: integer
+        minQty:
+          description: The minimum quantity required for an IOC fill
+          example: 10.0
+          format: double
+          type: number
+      required:
+      - ordType
+      - price
+      - timeInForce
+    StopOrder_allOf:
+      properties:
+        timeInForce:
+          $ref: '#/components/schemas/timeInForceStop'
+        stopPx:
+          description: The limit price for the order
+          example: 0.12345
+          format: double
+          type: number
+      required:
+      - ordType
+      - stopPx
+      - timeInForce
+    StopLimitOrder_allOf:
+      properties:
+        timeInForce:
+          $ref: '#/components/schemas/timeInForceStop'
+        price:
+          description: The limit price for the order
+          example: 0.12345
+          format: double
+          type: number
+        stopPx:
+          description: The limit price for the order
+          example: 0.12345
+          format: double
+          type: number
+      required:
+      - ordType
+      - price
+      - stopPx
+      - timeInForce
+  securitySchemes:
+    ApiKeyAuth:
+      in: header
+      name: X-API-Token
+      type: apiKey
+

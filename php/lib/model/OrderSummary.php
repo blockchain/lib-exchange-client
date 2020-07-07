@@ -59,6 +59,7 @@ class OrderSummary implements ModelInterface, ArrayAccess
     protected static $openAPITypes = [
         'ex_ord_id' => 'int',
         'cl_ord_id' => 'string',
+        'ord_type' => '\com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\OrdType',
         'ord_status' => '\com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\OrderStatus',
         'side' => '\com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\Side',
         'price' => 'double',
@@ -80,6 +81,7 @@ class OrderSummary implements ModelInterface, ArrayAccess
     protected static $openAPIFormats = [
         'ex_ord_id' => 'int64',
         'cl_ord_id' => null,
+        'ord_type' => null,
         'ord_status' => null,
         'side' => null,
         'price' => 'double',
@@ -122,6 +124,7 @@ class OrderSummary implements ModelInterface, ArrayAccess
     protected static $attributeMap = [
         'ex_ord_id' => 'exOrdId',
         'cl_ord_id' => 'clOrdId',
+        'ord_type' => 'ordType',
         'ord_status' => 'ordStatus',
         'side' => 'side',
         'price' => 'price',
@@ -143,6 +146,7 @@ class OrderSummary implements ModelInterface, ArrayAccess
     protected static $setters = [
         'ex_ord_id' => 'setExOrdId',
         'cl_ord_id' => 'setClOrdId',
+        'ord_type' => 'setOrdType',
         'ord_status' => 'setOrdStatus',
         'side' => 'setSide',
         'price' => 'setPrice',
@@ -164,6 +168,7 @@ class OrderSummary implements ModelInterface, ArrayAccess
     protected static $getters = [
         'ex_ord_id' => 'getExOrdId',
         'cl_ord_id' => 'getClOrdId',
+        'ord_type' => 'getOrdType',
         'ord_status' => 'getOrdStatus',
         'side' => 'getSide',
         'price' => 'getPrice',
@@ -239,6 +244,7 @@ class OrderSummary implements ModelInterface, ArrayAccess
     {
         $this->container['ex_ord_id'] = isset($data['ex_ord_id']) ? $data['ex_ord_id'] : null;
         $this->container['cl_ord_id'] = isset($data['cl_ord_id']) ? $data['cl_ord_id'] : null;
+        $this->container['ord_type'] = isset($data['ord_type']) ? $data['ord_type'] : null;
         $this->container['ord_status'] = isset($data['ord_status']) ? $data['ord_status'] : null;
         $this->container['side'] = isset($data['side']) ? $data['side'] : null;
         $this->container['price'] = isset($data['price']) ? $data['price'] : null;
@@ -268,6 +274,9 @@ class OrderSummary implements ModelInterface, ArrayAccess
             $invalidProperties[] = "invalid value for 'cl_ord_id', the character length must be smaller than or equal to 20.";
         }
 
+        if ($this->container['ord_type'] === null) {
+            $invalidProperties[] = "'ord_type' can't be null";
+        }
         if ($this->container['ord_status'] === null) {
             $invalidProperties[] = "'ord_status' can't be null";
         }
@@ -344,6 +353,30 @@ class OrderSummary implements ModelInterface, ArrayAccess
         }
 
         $this->container['cl_ord_id'] = $cl_ord_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets ord_type
+     *
+     * @return \com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\OrdType
+     */
+    public function getOrdType()
+    {
+        return $this->container['ord_type'];
+    }
+
+    /**
+     * Sets ord_type
+     *
+     * @param \com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\OrdType $ord_type ord_type
+     *
+     * @return $this
+     */
+    public function setOrdType($ord_type)
+    {
+        $this->container['ord_type'] = $ord_type;
 
         return $this;
     }

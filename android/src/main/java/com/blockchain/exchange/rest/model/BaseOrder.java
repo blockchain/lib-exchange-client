@@ -12,6 +12,7 @@
 
 package com.blockchain.exchange.rest.model;
 
+import com.blockchain.exchange.rest.model.OrdType;
 import com.blockchain.exchange.rest.model.Side;
 import com.blockchain.exchange.rest.model.TimeInForce;
 import io.swagger.annotations.*;
@@ -20,13 +21,10 @@ import com.google.gson.annotations.SerializedName;
 @ApiModel(description = "")
 public class BaseOrder {
   
-  public enum OrdTypeEnum {
-     MARKET,  LIMIT,  STOP,  STOPLIMIT, 
-  };
-  @SerializedName("ordType")
-  private OrdTypeEnum ordType = null;
   @SerializedName("clOrdId")
   private String clOrdId = null;
+  @SerializedName("ordType")
+  private OrdType ordType = null;
   @SerializedName("symbol")
   private String symbol = null;
   @SerializedName("side")
@@ -45,16 +43,6 @@ public class BaseOrder {
   private Double stopPx = null;
 
   /**
-   **/
-  @ApiModelProperty(value = "")
-  public OrdTypeEnum getOrdType() {
-    return ordType;
-  }
-  public void setOrdType(OrdTypeEnum ordType) {
-    this.ordType = ordType;
-  }
-
-  /**
    * Reference field provided by client and cannot exceed 20 characters
    **/
   @ApiModelProperty(required = true, value = "Reference field provided by client and cannot exceed 20 characters")
@@ -63,6 +51,16 @@ public class BaseOrder {
   }
   public void setClOrdId(String clOrdId) {
     this.clOrdId = clOrdId;
+  }
+
+  /**
+   **/
+  @ApiModelProperty(required = true, value = "")
+  public OrdType getOrdType() {
+    return ordType;
+  }
+  public void setOrdType(OrdType ordType) {
+    this.ordType = ordType;
   }
 
   /**
@@ -163,8 +161,8 @@ public class BaseOrder {
       return false;
     }
     BaseOrder baseOrder = (BaseOrder) o;
-    return (this.ordType == null ? baseOrder.ordType == null : this.ordType.equals(baseOrder.ordType)) &&
-        (this.clOrdId == null ? baseOrder.clOrdId == null : this.clOrdId.equals(baseOrder.clOrdId)) &&
+    return (this.clOrdId == null ? baseOrder.clOrdId == null : this.clOrdId.equals(baseOrder.clOrdId)) &&
+        (this.ordType == null ? baseOrder.ordType == null : this.ordType.equals(baseOrder.ordType)) &&
         (this.symbol == null ? baseOrder.symbol == null : this.symbol.equals(baseOrder.symbol)) &&
         (this.side == null ? baseOrder.side == null : this.side.equals(baseOrder.side)) &&
         (this.orderQty == null ? baseOrder.orderQty == null : this.orderQty.equals(baseOrder.orderQty)) &&
@@ -178,8 +176,8 @@ public class BaseOrder {
   @Override
   public int hashCode() {
     int result = 17;
-    result = 31 * result + (this.ordType == null ? 0: this.ordType.hashCode());
     result = 31 * result + (this.clOrdId == null ? 0: this.clOrdId.hashCode());
+    result = 31 * result + (this.ordType == null ? 0: this.ordType.hashCode());
     result = 31 * result + (this.symbol == null ? 0: this.symbol.hashCode());
     result = 31 * result + (this.side == null ? 0: this.side.hashCode());
     result = 31 * result + (this.orderQty == null ? 0: this.orderQty.hashCode());
@@ -196,8 +194,8 @@ public class BaseOrder {
     StringBuilder sb = new StringBuilder();
     sb.append("class BaseOrder {\n");
     
-    sb.append("  ordType: ").append(ordType).append("\n");
     sb.append("  clOrdId: ").append(clOrdId).append("\n");
+    sb.append("  ordType: ").append(ordType).append("\n");
     sb.append("  symbol: ").append(symbol).append("\n");
     sb.append("  side: ").append(side).append("\n");
     sb.append("  orderQty: ").append(orderQty).append("\n");

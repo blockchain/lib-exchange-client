@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**OrdType** | **string** |  | [optional] 
 **ClOrdId** | **string** | Reference field provided by client and cannot exceed 20 characters | 
+**OrdType** | [**OrdType**](ordType.md) |  | 
 **Symbol** | **string** | Blockchain symbol identifier | 
 **Side** | [**Side**](side.md) |  | 
 **OrderQty** | **float64** | The order size in the terms of the base currency | 

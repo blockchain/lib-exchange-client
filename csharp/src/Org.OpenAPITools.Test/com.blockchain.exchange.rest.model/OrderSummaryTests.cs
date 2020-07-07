@@ -82,6 +82,14 @@ namespace Org.OpenAPITools.Test
             // TODO unit test for the property 'ClOrdId'
         }
         /// <summary>
+        /// Test the property 'OrdType'
+        /// </summary>
+        [Test]
+        public void OrdTypeTest()
+        {
+            // TODO unit test for the property 'OrdType'
+        }
+        /// <summary>
         /// Test the property 'OrdStatus'
         /// </summary>
         [Test]

@@ -54,14 +54,14 @@
       //expect(instance).to.be.a(BlockchainComExchangeRestApi.BaseOrder);
     });
 
-    it('should have the property ordType (base name: "ordType")', function() {
-      // uncomment below and update the code to test the property ordType
+    it('should have the property clOrdId (base name: "clOrdId")', function() {
+      // uncomment below and update the code to test the property clOrdId
       //var instane = new BlockchainComExchangeRestApi.BaseOrder();
       //expect(instance).to.be();
     });
 
-    it('should have the property clOrdId (base name: "clOrdId")', function() {
-      // uncomment below and update the code to test the property clOrdId
+    it('should have the property ordType (base name: "ordType")', function() {
+      // uncomment below and update the code to test the property ordType
       //var instane = new BlockchainComExchangeRestApi.BaseOrder();
       //expect(instance).to.be();
     });

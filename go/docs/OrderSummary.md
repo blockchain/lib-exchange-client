@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ExOrdId** | **int64** | The unique order id assigned by the exchange | [optional] 
 **ClOrdId** | **string** | Reference field provided by client and cannot exceed 20 characters | 
+**OrdType** | [**OrdType**](ordType.md) |  | 
 **OrdStatus** | [**OrderStatus**](OrderStatus.md) |  | 
 **Side** | [**Side**](side.md) |  | 
 **Price** | **float64** | The limit price for the order | [optional] 

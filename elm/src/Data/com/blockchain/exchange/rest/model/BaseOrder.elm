@@ -10,8 +10,9 @@
 -}
 
 
-module Data.BaseOrder exposing (BaseOrder, OrdType(..), decoder, encode, encodeWithTag, toString)
+module Data.BaseOrder exposing (BaseOrder, decoder, encode, encodeWithTag, toString)
 
+import Data.OrdType as OrdType exposing (OrdType)
 import Data.Side as Side exposing (Side)
 import Data.TimeInForce as TimeInForce exposing (TimeInForce)
 import Dict exposing (Dict)
@@ -21,8 +22,8 @@ import Json.Encode as Encode
 
 
 type alias BaseOrder =
-    { ordType : Maybe (OrdType)
-    , clOrdId : String
+    { clOrdId : String
+    , ordType : OrdType
     , symbol : String
     , side : Side
     , orderQty : Float
@@ -34,19 +35,11 @@ type alias BaseOrder =
     }
 
 
-type OrdType
-    = MARKET
-    | LIMIT
-    | STOP
-    | STOPLIMIT
-
-
-
 decoder : Decoder BaseOrder
 decoder =
     Decode.succeed BaseOrder
-        |> optional "ordType" (Decode.nullable ordTypeDecoder) Nothing
         |> required "clOrdId" Decode.string
+        |> required "ordType" OrdType.decoder
         |> required "symbol" Decode.string
         |> required "side" Side.decoder
         |> required "orderQty" Decode.float
@@ -70,8 +63,8 @@ encodeWithTag (tagField, tag) model =
 
 encodePairs : BaseOrder -> List (String, Encode.Value)
 encodePairs model =
-    [ ( "ordType", Maybe.withDefault Encode.null (Maybe.map encodeOrdType model.ordType) )
-    , ( "clOrdId", Encode.string model.clOrdId )
+    [ ( "clOrdId", Encode.string model.clOrdId )
+    , ( "ordType", OrdType.encode model.ordType )
     , ( "symbol", Encode.string model.symbol )
     , ( "side", Side.encode model.side )
     , ( "orderQty", Encode.float model.orderQty )
@@ -87,48 +80,6 @@ encodePairs model =
 toString : BaseOrder -> String
 toString =
     Encode.encode 0 << encode
-
-
-
-
-ordTypeDecoder : Decoder OrdType
-ordTypeDecoder =
-    Decode.string
-        |> Decode.andThen
-            (\str ->
-                case str of
-                    "MARKET" ->
-                        Decode.succeed MARKET
-
-                    "LIMIT" ->
-                        Decode.succeed LIMIT
-
-                    "STOP" ->
-                        Decode.succeed STOP
-
-                    "STOPLIMIT" ->
-                        Decode.succeed STOPLIMIT
-
-                    other ->
-                        Decode.fail <| "Unknown type: " ++ other
-            )
-
-
-
-encodeOrdType : OrdType -> Encode.Value
-encodeOrdType model =
-    case model of
-        MARKET ->
-            Encode.string "MARKET"
-
-        LIMIT ->
-            Encode.string "LIMIT"
-
-        STOP ->
-            Encode.string "STOP"
-
-        STOPLIMIT ->
-            Encode.string "STOPLIMIT"
 
 
 

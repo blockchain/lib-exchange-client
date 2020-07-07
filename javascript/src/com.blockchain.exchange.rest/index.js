@@ -21,6 +21,7 @@ import CreateWithdrawalRequest from './com.blockchain.exchange.rest.model/Create
 import DepositAddressCrypto from './com.blockchain.exchange.rest.model/DepositAddressCrypto';
 import DepositInfo from './com.blockchain.exchange.rest.model/DepositInfo';
 import Fees from './com.blockchain.exchange.rest.model/Fees';
+import OrdType from './com.blockchain.exchange.rest.model/OrdType';
 import OrderBook from './com.blockchain.exchange.rest.model/OrderBook';
 import OrderBookEntry from './com.blockchain.exchange.rest.model/OrderBookEntry';
 import OrderStatus from './com.blockchain.exchange.rest.model/OrderStatus';
@@ -125,6 +126,12 @@ export {
      * @property {module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/Fees}
      */
     Fees,
+
+    /**
+     * The OrdType model constructor.
+     * @property {module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/OrdType}
+     */
+    OrdType,
 
     /**
      * The OrderBook model constructor.

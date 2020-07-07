@@ -24,6 +24,7 @@ order_summary_t* instantiate_order_summary(int include_optional) {
     order_summary = order_summary_create(
       11111111,
       "ABC",
+      blockchain_com_exchange_rest_api_order_summary__MARKET,
       blockchain_com_exchange_rest_api_order_summary__"FILLED",
       blockchain_com_exchange_rest_api_order_summary__"BUY",
       0.12345,
@@ -40,6 +41,7 @@ order_summary_t* instantiate_order_summary(int include_optional) {
     order_summary = order_summary_create(
       11111111,
       "ABC",
+      blockchain_com_exchange_rest_api_order_summary__MARKET,
       blockchain_com_exchange_rest_api_order_summary__"FILLED",
       blockchain_com_exchange_rest_api_order_summary__"BUY",
       0.12345,

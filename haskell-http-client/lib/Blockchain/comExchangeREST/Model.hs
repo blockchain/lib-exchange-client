@@ -182,8 +182,8 @@ mkBalanceMap balanceMapPrimary =
 -- ** BaseOrder
 -- | BaseOrder
 data BaseOrder = BaseOrder
-  { baseOrderOrdType :: !(Maybe E'OrdType) -- ^ "ordType"
-  , baseOrderClOrdId :: !(Text) -- ^ /Required/ "clOrdId" - Reference field provided by client and cannot exceed 20 characters
+  { baseOrderClOrdId :: !(Text) -- ^ /Required/ "clOrdId" - Reference field provided by client and cannot exceed 20 characters
+  , baseOrderOrdType :: !(OrdType) -- ^ /Required/ "ordType"
   , baseOrderSymbol :: !(Text) -- ^ /Required/ "symbol" - Blockchain symbol identifier
   , baseOrderSide :: !(Side) -- ^ /Required/ "side"
   , baseOrderOrderQty :: !(Double) -- ^ /Required/ "orderQty" - The order size in the terms of the base currency
@@ -198,8 +198,8 @@ data BaseOrder = BaseOrder
 instance A.FromJSON BaseOrder where
   parseJSON = A.withObject "BaseOrder" $ \o ->
     BaseOrder
-      <$> (o .:? "ordType")
-      <*> (o .:  "clOrdId")
+      <$> (o .:  "clOrdId")
+      <*> (o .:  "ordType")
       <*> (o .:  "symbol")
       <*> (o .:  "side")
       <*> (o .:  "orderQty")
@@ -213,8 +213,8 @@ instance A.FromJSON BaseOrder where
 instance A.ToJSON BaseOrder where
   toJSON BaseOrder {..} =
    _omitNulls
-      [ "ordType" .= baseOrderOrdType
-      , "clOrdId" .= baseOrderClOrdId
+      [ "clOrdId" .= baseOrderClOrdId
+      , "ordType" .= baseOrderOrdType
       , "symbol" .= baseOrderSymbol
       , "side" .= baseOrderSide
       , "orderQty" .= baseOrderOrderQty
@@ -229,14 +229,15 @@ instance A.ToJSON BaseOrder where
 -- | Construct a value of type 'BaseOrder' (by applying it's required fields, if any)
 mkBaseOrder
   :: Text -- ^ 'baseOrderClOrdId': Reference field provided by client and cannot exceed 20 characters
+  -> OrdType -- ^ 'baseOrderOrdType' 
   -> Text -- ^ 'baseOrderSymbol': Blockchain symbol identifier
   -> Side -- ^ 'baseOrderSide' 
   -> Double -- ^ 'baseOrderOrderQty': The order size in the terms of the base currency
   -> BaseOrder
-mkBaseOrder baseOrderClOrdId baseOrderSymbol baseOrderSide baseOrderOrderQty =
+mkBaseOrder baseOrderClOrdId baseOrderOrdType baseOrderSymbol baseOrderSide baseOrderOrderQty =
   BaseOrder
-  { baseOrderOrdType = Nothing
-  , baseOrderClOrdId
+  { baseOrderClOrdId
+  , baseOrderOrdType
   , baseOrderSymbol
   , baseOrderSide
   , baseOrderOrderQty
@@ -530,6 +531,7 @@ mkOrderBookEntry =
 data OrderSummary = OrderSummary
   { orderSummaryExOrdId :: !(Maybe Integer) -- ^ "exOrdId" - The unique order id assigned by the exchange
   , orderSummaryClOrdId :: !(Text) -- ^ /Required/ "clOrdId" - Reference field provided by client and cannot exceed 20 characters
+  , orderSummaryOrdType :: !(OrdType) -- ^ /Required/ "ordType"
   , orderSummaryOrdStatus :: !(OrderStatus) -- ^ /Required/ "ordStatus"
   , orderSummarySide :: !(Side) -- ^ /Required/ "side"
   , orderSummaryPrice :: !(Maybe Double) -- ^ "price" - The limit price for the order
@@ -549,6 +551,7 @@ instance A.FromJSON OrderSummary where
     OrderSummary
       <$> (o .:? "exOrdId")
       <*> (o .:  "clOrdId")
+      <*> (o .:  "ordType")
       <*> (o .:  "ordStatus")
       <*> (o .:  "side")
       <*> (o .:? "price")
@@ -567,6 +570,7 @@ instance A.ToJSON OrderSummary where
    _omitNulls
       [ "exOrdId" .= orderSummaryExOrdId
       , "clOrdId" .= orderSummaryClOrdId
+      , "ordType" .= orderSummaryOrdType
       , "ordStatus" .= orderSummaryOrdStatus
       , "side" .= orderSummarySide
       , "price" .= orderSummaryPrice
@@ -584,14 +588,16 @@ instance A.ToJSON OrderSummary where
 -- | Construct a value of type 'OrderSummary' (by applying it's required fields, if any)
 mkOrderSummary
   :: Text -- ^ 'orderSummaryClOrdId': Reference field provided by client and cannot exceed 20 characters
+  -> OrdType -- ^ 'orderSummaryOrdType' 
   -> OrderStatus -- ^ 'orderSummaryOrdStatus' 
   -> Side -- ^ 'orderSummarySide' 
   -> Text -- ^ 'orderSummarySymbol': Blockchain symbol identifier
   -> OrderSummary
-mkOrderSummary orderSummaryClOrdId orderSummaryOrdStatus orderSummarySide orderSummarySymbol =
+mkOrderSummary orderSummaryClOrdId orderSummaryOrdType orderSummaryOrdStatus orderSummarySide orderSummarySymbol =
   OrderSummary
   { orderSummaryExOrdId = Nothing
   , orderSummaryClOrdId
+  , orderSummaryOrdType
   , orderSummaryOrdStatus
   , orderSummarySide
   , orderSummaryPrice = Nothing
@@ -918,40 +924,6 @@ toE'Action = \case
   s -> P.Left $ "toE'Action: enum parse failure: " P.++ P.show s
 
 
--- ** E'OrdType
-
--- | Enum of 'Text'
-data E'OrdType
-  = E'OrdType'MARKET -- ^ @"MARKET"@
-  | E'OrdType'LIMIT -- ^ @"LIMIT"@
-  | E'OrdType'STOP -- ^ @"STOP"@
-  | E'OrdType'STOPLIMIT -- ^ @"STOPLIMIT"@
-  deriving (P.Show, P.Eq, P.Typeable, P.Ord, P.Bounded, P.Enum)
-
-instance A.ToJSON E'OrdType where toJSON = A.toJSON . fromE'OrdType
-instance A.FromJSON E'OrdType where parseJSON o = P.either P.fail (pure . P.id) . toE'OrdType =<< A.parseJSON o
-instance WH.ToHttpApiData E'OrdType where toQueryParam = WH.toQueryParam . fromE'OrdType
-instance WH.FromHttpApiData E'OrdType where parseQueryParam o = WH.parseQueryParam o >>= P.left T.pack . toE'OrdType
-instance MimeRender MimeMultipartFormData E'OrdType where mimeRender _ = mimeRenderDefaultMultipartFormData
-
--- | unwrap 'E'OrdType' enum
-fromE'OrdType :: E'OrdType -> Text
-fromE'OrdType = \case
-  E'OrdType'MARKET -> "MARKET"
-  E'OrdType'LIMIT -> "LIMIT"
-  E'OrdType'STOP -> "STOP"
-  E'OrdType'STOPLIMIT -> "STOPLIMIT"
-
--- | parse 'E'OrdType' enum
-toE'OrdType :: Text -> P.Either String E'OrdType
-toE'OrdType = \case
-  "MARKET" -> P.Right E'OrdType'MARKET
-  "LIMIT" -> P.Right E'OrdType'LIMIT
-  "STOP" -> P.Right E'OrdType'STOP
-  "STOPLIMIT" -> P.Right E'OrdType'STOPLIMIT
-  s -> P.Left $ "toE'OrdType: enum parse failure: " P.++ P.show s
-
-
 -- ** E'State
 
 -- | Enum of 'Text'
@@ -1019,6 +991,40 @@ toE'Status = \case
   "halt" -> P.Right E'Status'Halt
   "halt-freeze" -> P.Right E'Status'Halt_freeze
   s -> P.Left $ "toE'Status: enum parse failure: " P.++ P.show s
+
+
+-- ** OrdType
+
+-- | Enum of 'Text'
+data OrdType
+  = OrdType'MARKET -- ^ @"MARKET"@
+  | OrdType'LIMIT -- ^ @"LIMIT"@
+  | OrdType'STOP -- ^ @"STOP"@
+  | OrdType'STOPLIMIT -- ^ @"STOPLIMIT"@
+  deriving (P.Show, P.Eq, P.Typeable, P.Ord, P.Bounded, P.Enum)
+
+instance A.ToJSON OrdType where toJSON = A.toJSON . fromOrdType
+instance A.FromJSON OrdType where parseJSON o = P.either P.fail (pure . P.id) . toOrdType =<< A.parseJSON o
+instance WH.ToHttpApiData OrdType where toQueryParam = WH.toQueryParam . fromOrdType
+instance WH.FromHttpApiData OrdType where parseQueryParam o = WH.parseQueryParam o >>= P.left T.pack . toOrdType
+instance MimeRender MimeMultipartFormData OrdType where mimeRender _ = mimeRenderDefaultMultipartFormData
+
+-- | unwrap 'OrdType' enum
+fromOrdType :: OrdType -> Text
+fromOrdType = \case
+  OrdType'MARKET -> "MARKET"
+  OrdType'LIMIT -> "LIMIT"
+  OrdType'STOP -> "STOP"
+  OrdType'STOPLIMIT -> "STOPLIMIT"
+
+-- | parse 'OrdType' enum
+toOrdType :: Text -> P.Either String OrdType
+toOrdType = \case
+  "MARKET" -> P.Right OrdType'MARKET
+  "LIMIT" -> P.Right OrdType'LIMIT
+  "STOP" -> P.Right OrdType'STOP
+  "STOPLIMIT" -> P.Right OrdType'STOPLIMIT
+  s -> P.Left $ "toOrdType: enum parse failure: " P.++ P.show s
 
 
 -- ** OrderStatus

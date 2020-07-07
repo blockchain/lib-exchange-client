@@ -644,26 +644,30 @@ components:
       # TODO enum with allowed values
       description: "The order is placed with Add Liquidity Only (aka Post Only): it will not match liquidity immediately. It will be rejected instead of matching liquidity in the market."
       example: "ALO"
+    ordType:
+      type: string
+      title: "Order type"
+      enum:
+        - "MARKET"
+        - "LIMIT"
+        - "STOP"
+        - "STOPLIMIT"
+
 
     # Different Order types
     BaseOrder:
       type: object
       required:
         - clOrdId
+        - ordType
         - symbol
         - side
         - orderQty
       properties:
-        ordType:
-          type: string
-          title: "Order type"
-          enum:
-            - "MARKET"
-            - "LIMIT"
-            - "STOP"
-            - "STOPLIMIT"
         clOrdId:
           $ref: '#/components/schemas/ClientOrderId'
+        ordType:
+          $ref: '#/components/schemas/ordType'
         symbol:
           $ref: '#/components/schemas/symbol'
         side:
@@ -685,6 +689,7 @@ components:
       type: object
       required:
         - clOrdId
+        - ordType
         - ordStatus
         - side
         - symbol
@@ -693,6 +698,8 @@ components:
           $ref: '#/components/schemas/ExchangeOrderId'
         clOrdId:
           $ref: '#/components/schemas/ClientOrderId'
+        ordType:
+          $ref: '#/components/schemas/ordType'
         ordStatus:
           $ref: '#/components/schemas/OrderStatus'
         side:

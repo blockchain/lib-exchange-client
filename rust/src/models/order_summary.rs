@@ -19,6 +19,8 @@ pub struct OrderSummary {
     /// Reference field provided by client and cannot exceed 20 characters
     #[serde(rename = "clOrdId")]
     pub cl_ord_id: String,
+    #[serde(rename = "ordType")]
+    pub ord_type: crate::models::OrdType,
     #[serde(rename = "ordStatus")]
     pub ord_status: crate::models::OrderStatus,
     #[serde(rename = "side")]
@@ -53,10 +55,11 @@ pub struct OrderSummary {
 }
 
 impl OrderSummary {
-    pub fn new(cl_ord_id: String, ord_status: crate::models::OrderStatus, side: crate::models::Side, symbol: String) -> OrderSummary {
+    pub fn new(cl_ord_id: String, ord_type: crate::models::OrdType, ord_status: crate::models::OrderStatus, side: crate::models::Side, symbol: String) -> OrderSummary {
         OrderSummary {
             ex_ord_id: None,
             cl_ord_id,
+            ord_type,
             ord_status,
             side,
             price: None,

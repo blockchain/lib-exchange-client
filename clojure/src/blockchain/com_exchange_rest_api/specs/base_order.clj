@@ -1,6 +1,7 @@
 (ns blockchain/com-exchange-rest-api.specs.base-order
   (:require [clojure.spec.alpha :as s]
             [spec-tools.data-spec :as ds]
+            [blockchain/com-exchange-rest-api.specs.ord-type :refer :all]
             [blockchain/com-exchange-rest-api.specs.side :refer :all]
             [blockchain/com-exchange-rest-api.specs.time-in-force :refer :all]
             )
@@ -9,8 +10,8 @@
 
 (def base-order-data
   {
-   (ds/opt :ordType) string?
    (ds/req :clOrdId) string?
+   (ds/req :ordType) ord-type-spec
    (ds/req :symbol) string?
    (ds/req :side) side-spec
    (ds/req :orderQty) float?

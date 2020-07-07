@@ -36,8 +36,8 @@ class TestBaseOrder(unittest.TestCase):
         # model = openapi_client.models.base_order.BaseOrder()  # noqa: E501
         if include_optional :
             return BaseOrder(
-                ord_type = 'MARKET', 
                 cl_ord_id = 'ABC', 
+                ord_type = 'MARKET', 
                 symbol = 'BTC-USD', 
                 side = 'BUY', 
                 order_qty = 10.23, 
@@ -50,6 +50,7 @@ class TestBaseOrder(unittest.TestCase):
         else :
             return BaseOrder(
                 cl_ord_id = 'ABC',
+                ord_type = 'MARKET',
                 symbol = 'BTC-USD',
                 side = 'BUY',
                 order_qty = 10.23,

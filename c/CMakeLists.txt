@@ -46,6 +46,7 @@ set(SRCS
     model/deposit_address_crypto.c
     model/deposit_info.c
     model/fees.c
+    model/ord_type.c
     model/order_book.c
     model/order_book_entry.c
     model/order_status.c
@@ -81,6 +82,7 @@ set(HDRS
     model/deposit_address_crypto.h
     model/deposit_info.h
     model/fees.h
+    model/ord_type.h
     model/order_book.h
     model/order_book_entry.h
     model/order_status.h

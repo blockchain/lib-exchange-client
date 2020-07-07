@@ -31,43 +31,6 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
     public partial class BaseOrder :  IEquatable<BaseOrder>, IValidatableObject
     {
         /// <summary>
-        /// Defines OrdType
-        /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum OrdTypeEnum
-        {
-            /// <summary>
-            /// Enum MARKET for value: MARKET
-            /// </summary>
-            [EnumMember(Value = "MARKET")]
-            MARKET = 1,
-
-            /// <summary>
-            /// Enum LIMIT for value: LIMIT
-            /// </summary>
-            [EnumMember(Value = "LIMIT")]
-            LIMIT = 2,
-
-            /// <summary>
-            /// Enum STOP for value: STOP
-            /// </summary>
-            [EnumMember(Value = "STOP")]
-            STOP = 3,
-
-            /// <summary>
-            /// Enum STOPLIMIT for value: STOPLIMIT
-            /// </summary>
-            [EnumMember(Value = "STOPLIMIT")]
-            STOPLIMIT = 4
-
-        }
-
-        /// <summary>
-        /// Gets or Sets OrdType
-        /// </summary>
-        [DataMember(Name="ordType", EmitDefaultValue=false)]
-        public OrdTypeEnum? OrdType { get; set; }
-        /// <summary>
         /// Gets or Sets TimeInForce
         /// </summary>
         [DataMember(Name="timeInForce", EmitDefaultValue=false)]
@@ -80,8 +43,8 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseOrder" /> class.
         /// </summary>
-        /// <param name="ordType">ordType.</param>
         /// <param name="clOrdId">Reference field provided by client and cannot exceed 20 characters (required).</param>
+        /// <param name="ordType">ordType (required).</param>
         /// <param name="symbol">Blockchain symbol identifier (required).</param>
         /// <param name="side">side (required).</param>
         /// <param name="orderQty">The order size in the terms of the base currency (required).</param>
@@ -90,7 +53,7 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
         /// <param name="expireDate">expiry date in the format YYYYMMDD.</param>
         /// <param name="minQty">The minimum quantity required for an IOC fill.</param>
         /// <param name="stopPx">The limit price for the order.</param>
-        public BaseOrder(OrdTypeEnum? ordType = default(OrdTypeEnum?), string clOrdId = default(string), string symbol = default(string), Side side = default(Side), double orderQty = default(double), TimeInForce? timeInForce = default(TimeInForce?), double price = default(double), int expireDate = default(int), double minQty = default(double), double stopPx = default(double))
+        public BaseOrder(string clOrdId = default(string), OrdType ordType = default(OrdType), string symbol = default(string), Side side = default(Side), double orderQty = default(double), TimeInForce? timeInForce = default(TimeInForce?), double price = default(double), int expireDate = default(int), double minQty = default(double), double stopPx = default(double))
         {
             // to ensure "clOrdId" is required (not null)
             if (clOrdId == null)
@@ -100,6 +63,16 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
             else
             {
                 this.ClOrdId = clOrdId;
+            }
+            
+            // to ensure "ordType" is required (not null)
+            if (ordType == null)
+            {
+                throw new InvalidDataException("ordType is a required property for BaseOrder and cannot be null");
+            }
+            else
+            {
+                this.OrdType = ordType;
             }
             
             // to ensure "symbol" is required (not null)
@@ -132,7 +105,6 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
                 this.OrderQty = orderQty;
             }
             
-            this.OrdType = ordType;
             this.TimeInForce = timeInForce;
             this.Price = price;
             this.ExpireDate = expireDate;
@@ -140,13 +112,18 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
             this.StopPx = stopPx;
         }
         
-
         /// <summary>
         /// Reference field provided by client and cannot exceed 20 characters
         /// </summary>
         /// <value>Reference field provided by client and cannot exceed 20 characters</value>
         [DataMember(Name="clOrdId", EmitDefaultValue=true)]
         public string ClOrdId { get; set; }
+
+        /// <summary>
+        /// Gets or Sets OrdType
+        /// </summary>
+        [DataMember(Name="ordType", EmitDefaultValue=true)]
+        public OrdType OrdType { get; set; }
 
         /// <summary>
         /// Blockchain symbol identifier
@@ -205,8 +182,8 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
         {
             var sb = new StringBuilder();
             sb.Append("class BaseOrder {\n");
-            sb.Append("  OrdType: ").Append(OrdType).Append("\n");
             sb.Append("  ClOrdId: ").Append(ClOrdId).Append("\n");
+            sb.Append("  OrdType: ").Append(OrdType).Append("\n");
             sb.Append("  Symbol: ").Append(Symbol).Append("\n");
             sb.Append("  Side: ").Append(Side).Append("\n");
             sb.Append("  OrderQty: ").Append(OrderQty).Append("\n");
@@ -250,14 +227,14 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
 
             return 
                 (
-                    this.OrdType == input.OrdType ||
-                    (this.OrdType != null &&
-                    this.OrdType.Equals(input.OrdType))
-                ) && 
-                (
                     this.ClOrdId == input.ClOrdId ||
                     (this.ClOrdId != null &&
                     this.ClOrdId.Equals(input.ClOrdId))
+                ) && 
+                (
+                    this.OrdType == input.OrdType ||
+                    (this.OrdType != null &&
+                    this.OrdType.Equals(input.OrdType))
                 ) && 
                 (
                     this.Symbol == input.Symbol ||
@@ -310,10 +287,10 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.OrdType != null)
-                    hashCode = hashCode * 59 + this.OrdType.GetHashCode();
                 if (this.ClOrdId != null)
                     hashCode = hashCode * 59 + this.ClOrdId.GetHashCode();
+                if (this.OrdType != null)
+                    hashCode = hashCode * 59 + this.OrdType.GetHashCode();
                 if (this.Symbol != null)
                     hashCode = hashCode * 59 + this.Symbol.GetHashCode();
                 if (this.Side != null)

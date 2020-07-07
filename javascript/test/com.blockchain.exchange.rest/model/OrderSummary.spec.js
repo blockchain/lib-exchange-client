@@ -66,6 +66,12 @@
       //expect(instance).to.be();
     });
 
+    it('should have the property ordType (base name: "ordType")', function() {
+      // uncomment below and update the code to test the property ordType
+      //var instane = new BlockchainComExchangeRestApi.OrderSummary();
+      //expect(instance).to.be();
+    });
+
     it('should have the property ordStatus (base name: "ordStatus")', function() {
       // uncomment below and update the code to test the property ordStatus
       //var instane = new BlockchainComExchangeRestApi.OrderSummary();

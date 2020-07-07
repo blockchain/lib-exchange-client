@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ord_type** | **string** |  | [optional] 
 **cl_ord_id** | **string** | Reference field provided by client and cannot exceed 20 characters | 
+**ord_type** | [**\com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\OrdType**](OrdType.md) |  | 
 **symbol** | **string** | Blockchain symbol identifier | 
 **side** | [**\com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\Side**](Side.md) |  | 
 **order_qty** | **double** | The order size in the terms of the base currency | 

@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ord_type** | Option<**String**> |  | [optional]
 **cl_ord_id** | **String** | Reference field provided by client and cannot exceed 20 characters | 
+**ord_type** | [**crate::models::OrdType**](ordType.md) |  | 
 **symbol** | **String** | Blockchain symbol identifier | 
 **side** | [**crate::models::Side**](side.md) |  | 
 **order_qty** | **f64** | The order size in the terms of the base currency | 

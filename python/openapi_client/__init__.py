@@ -38,6 +38,7 @@ from openapi_client.com.blockchain.exchange.rest.model.create_withdrawal_request
 from openapi_client.com.blockchain.exchange.rest.model.deposit_address_crypto import DepositAddressCrypto
 from openapi_client.com.blockchain.exchange.rest.model.deposit_info import DepositInfo
 from openapi_client.com.blockchain.exchange.rest.model.fees import Fees
+from openapi_client.com.blockchain.exchange.rest.model.ord_type import OrdType
 from openapi_client.com.blockchain.exchange.rest.model.order_book import OrderBook
 from openapi_client.com.blockchain.exchange.rest.model.order_book_entry import OrderBookEntry
 from openapi_client.com.blockchain.exchange.rest.model.order_status import OrderStatus

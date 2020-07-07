@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ex_ord_id** | Option<**i64**> | The unique order id assigned by the exchange | [optional]
 **cl_ord_id** | **String** | Reference field provided by client and cannot exceed 20 characters | 
+**ord_type** | [**crate::models::OrdType**](ordType.md) |  | 
 **ord_status** | [**crate::models::OrderStatus**](OrderStatus.md) |  | 
 **side** | [**crate::models::Side**](side.md) |  | 
 **price** | Option<**f64**> | The limit price for the order | [optional]

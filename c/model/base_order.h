@@ -15,16 +15,17 @@
 
 typedef struct base_order_t base_order_t;
 
+#include "ord_type.h"
 #include "side.h"
 #include "time_in_force.h"
 
-// Enum ORDTYPE for base_order
+// Enum  for base_order
 
-typedef enum  { blockchain_com_exchange_rest_api_base_order_ORDTYPE_NULL = 0, blockchain_com_exchange_rest_api_base_order_ORDTYPE_MARKET, blockchain_com_exchange_rest_api_base_order_ORDTYPE_LIMIT, blockchain_com_exchange_rest_api_base_order_ORDTYPE_STOP, blockchain_com_exchange_rest_api_base_order_ORDTYPE_STOPLIMIT } blockchain_com_exchange_rest_api_base_order_ORDTYPE_e;
+typedef enum  { blockchain_com_exchange_rest_api_base_order__NULL = 0, blockchain_com_exchange_rest_api_base_order__MARKET, blockchain_com_exchange_rest_api_base_order__LIMIT, blockchain_com_exchange_rest_api_base_order__STOP, blockchain_com_exchange_rest_api_base_order__STOPLIMIT } blockchain_com_exchange_rest_api_base_order__e;
 
-char* base_order_ord_type_ToString(blockchain_com_exchange_rest_api_base_order_ORDTYPE_e ord_type);
+char* base_order_ord_type_ToString(blockchain_com_exchange_rest_api_base_order__e ord_type);
 
-blockchain_com_exchange_rest_api_base_order_ORDTYPE_e base_order_ord_type_FromString(char* ord_type);
+blockchain_com_exchange_rest_api_base_order__e base_order_ord_type_FromString(char* ord_type);
 
 // Enum  for base_order
 
@@ -45,7 +46,6 @@ blockchain_com_exchange_rest_api_base_order__e base_order_time_in_force_FromStri
 
 
 typedef struct base_order_t {
-    blockchain_com_exchange_rest_api_base_order_ORDTYPE_e ord_type; //enum
     char *cl_ord_id; // string
     char *symbol; // string
     double order_qty; //numeric
@@ -57,7 +57,6 @@ typedef struct base_order_t {
 } base_order_t;
 
 base_order_t *base_order_create(
-    blockchain_com_exchange_rest_api_base_order_ORDTYPE_e ord_type,
     char *cl_ord_id,
     char *symbol,
     double order_qty,

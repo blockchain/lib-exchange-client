@@ -10,9 +10,9 @@
 package openapi
 // BaseOrder struct for BaseOrder
 type BaseOrder struct {
-	OrdType string `json:"ordType,omitempty"`
 	// Reference field provided by client and cannot exceed 20 characters
 	ClOrdId string `json:"clOrdId"`
+	OrdType OrdType `json:"ordType"`
 	// Blockchain symbol identifier
 	Symbol string `json:"symbol"`
 	Side Side `json:"side"`

@@ -45,6 +45,7 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
         /// </summary>
         /// <param name="exOrdId">The unique order id assigned by the exchange.</param>
         /// <param name="clOrdId">Reference field provided by client and cannot exceed 20 characters (required).</param>
+        /// <param name="ordType">ordType (required).</param>
         /// <param name="ordStatus">ordStatus (required).</param>
         /// <param name="side">side (required).</param>
         /// <param name="price">The limit price for the order.</param>
@@ -56,7 +57,7 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
         /// <param name="cumQty">The quantity of the order which has been filled.</param>
         /// <param name="avgPx">Calculated the Volume Weighted Average Price of all fills for this order.</param>
         /// <param name="timestamp">Time in ms since 01/01/1970 (epoch).</param>
-        public OrderSummary(long exOrdId = default(long), string clOrdId = default(string), OrderStatus ordStatus = default(OrderStatus), Side side = default(Side), double price = default(double), string text = default(string), string symbol = default(string), double lastShares = default(double), double lastPx = default(double), double leavesQty = default(double), double cumQty = default(double), double avgPx = default(double), long timestamp = default(long))
+        public OrderSummary(long exOrdId = default(long), string clOrdId = default(string), OrdType ordType = default(OrdType), OrderStatus ordStatus = default(OrderStatus), Side side = default(Side), double price = default(double), string text = default(string), string symbol = default(string), double lastShares = default(double), double lastPx = default(double), double leavesQty = default(double), double cumQty = default(double), double avgPx = default(double), long timestamp = default(long))
         {
             // to ensure "clOrdId" is required (not null)
             if (clOrdId == null)
@@ -66,6 +67,16 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
             else
             {
                 this.ClOrdId = clOrdId;
+            }
+            
+            // to ensure "ordType" is required (not null)
+            if (ordType == null)
+            {
+                throw new InvalidDataException("ordType is a required property for OrderSummary and cannot be null");
+            }
+            else
+            {
+                this.OrdType = ordType;
             }
             
             // to ensure "ordStatus" is required (not null)
@@ -122,6 +133,12 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
         /// <value>Reference field provided by client and cannot exceed 20 characters</value>
         [DataMember(Name="clOrdId", EmitDefaultValue=true)]
         public string ClOrdId { get; set; }
+
+        /// <summary>
+        /// Gets or Sets OrdType
+        /// </summary>
+        [DataMember(Name="ordType", EmitDefaultValue=true)]
+        public OrdType OrdType { get; set; }
 
 
         /// <summary>
@@ -203,6 +220,7 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
             sb.Append("class OrderSummary {\n");
             sb.Append("  ExOrdId: ").Append(ExOrdId).Append("\n");
             sb.Append("  ClOrdId: ").Append(ClOrdId).Append("\n");
+            sb.Append("  OrdType: ").Append(OrdType).Append("\n");
             sb.Append("  OrdStatus: ").Append(OrdStatus).Append("\n");
             sb.Append("  Side: ").Append(Side).Append("\n");
             sb.Append("  Price: ").Append(Price).Append("\n");
@@ -257,6 +275,11 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
                     this.ClOrdId == input.ClOrdId ||
                     (this.ClOrdId != null &&
                     this.ClOrdId.Equals(input.ClOrdId))
+                ) && 
+                (
+                    this.OrdType == input.OrdType ||
+                    (this.OrdType != null &&
+                    this.OrdType.Equals(input.OrdType))
                 ) && 
                 (
                     this.OrdStatus == input.OrdStatus ||
@@ -328,6 +351,8 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
                     hashCode = hashCode * 59 + this.ExOrdId.GetHashCode();
                 if (this.ClOrdId != null)
                     hashCode = hashCode * 59 + this.ClOrdId.GetHashCode();
+                if (this.OrdType != null)
+                    hashCode = hashCode * 59 + this.OrdType.GetHashCode();
                 if (this.OrdStatus != null)
                     hashCode = hashCode * 59 + this.OrdStatus.GetHashCode();
                 if (this.Side != null)

@@ -167,6 +167,7 @@ Class | Method | HTTP request | Description
  - [BlockchainComExchangeRestApi.DepositAddressCrypto](docs/DepositAddressCrypto.md)
  - [BlockchainComExchangeRestApi.DepositInfo](docs/DepositInfo.md)
  - [BlockchainComExchangeRestApi.Fees](docs/Fees.md)
+ - [BlockchainComExchangeRestApi.OrdType](docs/OrdType.md)
  - [BlockchainComExchangeRestApi.OrderBook](docs/OrderBook.md)
  - [BlockchainComExchangeRestApi.OrderBookEntry](docs/OrderBookEntry.md)
  - [BlockchainComExchangeRestApi.OrderStatus](docs/OrderStatus.md)

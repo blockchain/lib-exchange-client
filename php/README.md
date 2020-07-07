@@ -131,6 +131,7 @@ Class | Method | HTTP request | Description
  - [DepositAddressCrypto](docs/Model/DepositAddressCrypto.md)
  - [DepositInfo](docs/Model/DepositInfo.md)
  - [Fees](docs/Model/Fees.md)
+ - [OrdType](docs/Model/OrdType.md)
  - [OrderBook](docs/Model/OrderBook.md)
  - [OrderBookEntry](docs/Model/OrderBookEntry.md)
  - [OrderStatus](docs/Model/OrderStatus.md)

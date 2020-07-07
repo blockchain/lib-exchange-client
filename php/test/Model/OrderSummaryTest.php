@@ -93,6 +93,13 @@ class OrderSummaryTest extends TestCase
     }
 
     /**
+     * Test attribute "ord_type"
+     */
+    public function testPropertyOrdType()
+    {
+    }
+
+    /**
      * Test attribute "ord_status"
      */
     public function testPropertyOrdStatus()
