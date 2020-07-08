@@ -2171,7 +2171,7 @@ export class TradingApi extends BaseAPI {
 export const UnauthenticatedApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Level 2 Order Book data is available through the l2 channel. This channel returns the volume available at each price. All the price levels are retrieved with this channel. Each entry in bids and asks arrays is a price level, along with its price (px), quantity (qty) and number of orders (num) attributes.
+         * Level 2 Order Book data is available through the l2 channel. Each entry in bids and asks arrays is a price level, along with its price (px), quantity (qty) and number of orders (num) attributes.
          * @summary L2 Order Book
          * @param {string} symbol Symbol
          * @param {*} [options] Override http request option.
@@ -2215,7 +2215,7 @@ export const UnauthenticatedApiAxiosParamCreator = function (configuration?: Con
             };
         },
         /**
-         * Level 3 Order Book data is available through the l3 channel. This channel returns all the order updates reaching the exchange; by applying the updates to the snapshot you can recreate the full state of the orderbook. Each entry in bids and asks arrays is an order, along with its id (id), price (px) and quantity (qty) attributes.
+         * Level 3 Order Book data is available through the l3 channel. Each entry in bids and asks arrays is an order, along with its id (id), price (px) and quantity (qty) attributes.
          * @summary L3 Order Book
          * @param {string} symbol Symbol
          * @param {*} [options] Override http request option.
@@ -2432,7 +2432,7 @@ export const UnauthenticatedApiAxiosParamCreator = function (configuration?: Con
 export const UnauthenticatedApiFp = function(configuration?: Configuration) {
     return {
         /**
-         * Level 2 Order Book data is available through the l2 channel. This channel returns the volume available at each price. All the price levels are retrieved with this channel. Each entry in bids and asks arrays is a price level, along with its price (px), quantity (qty) and number of orders (num) attributes.
+         * Level 2 Order Book data is available through the l2 channel. Each entry in bids and asks arrays is a price level, along with its price (px), quantity (qty) and number of orders (num) attributes.
          * @summary L2 Order Book
          * @param {string} symbol Symbol
          * @param {*} [options] Override http request option.
@@ -2446,7 +2446,7 @@ export const UnauthenticatedApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Level 3 Order Book data is available through the l3 channel. This channel returns all the order updates reaching the exchange; by applying the updates to the snapshot you can recreate the full state of the orderbook. Each entry in bids and asks arrays is an order, along with its id (id), price (px) and quantity (qty) attributes.
+         * Level 3 Order Book data is available through the l3 channel. Each entry in bids and asks arrays is an order, along with its id (id), price (px) and quantity (qty) attributes.
          * @summary L3 Order Book
          * @param {string} symbol Symbol
          * @param {*} [options] Override http request option.
@@ -2523,7 +2523,7 @@ export const UnauthenticatedApiFp = function(configuration?: Configuration) {
 export const UnauthenticatedApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
         /**
-         * Level 2 Order Book data is available through the l2 channel. This channel returns the volume available at each price. All the price levels are retrieved with this channel. Each entry in bids and asks arrays is a price level, along with its price (px), quantity (qty) and number of orders (num) attributes.
+         * Level 2 Order Book data is available through the l2 channel. Each entry in bids and asks arrays is a price level, along with its price (px), quantity (qty) and number of orders (num) attributes.
          * @summary L2 Order Book
          * @param {string} symbol Symbol
          * @param {*} [options] Override http request option.
@@ -2533,7 +2533,7 @@ export const UnauthenticatedApiFactory = function (configuration?: Configuration
             return UnauthenticatedApiFp(configuration).getL2OrderBook(symbol, options).then((request) => request(axios, basePath));
         },
         /**
-         * Level 3 Order Book data is available through the l3 channel. This channel returns all the order updates reaching the exchange; by applying the updates to the snapshot you can recreate the full state of the orderbook. Each entry in bids and asks arrays is an order, along with its id (id), price (px) and quantity (qty) attributes.
+         * Level 3 Order Book data is available through the l3 channel. Each entry in bids and asks arrays is an order, along with its id (id), price (px) and quantity (qty) attributes.
          * @summary L3 Order Book
          * @param {string} symbol Symbol
          * @param {*} [options] Override http request option.
@@ -2591,7 +2591,7 @@ export const UnauthenticatedApiFactory = function (configuration?: Configuration
  */
 export class UnauthenticatedApi extends BaseAPI {
     /**
-     * Level 2 Order Book data is available through the l2 channel. This channel returns the volume available at each price. All the price levels are retrieved with this channel. Each entry in bids and asks arrays is a price level, along with its price (px), quantity (qty) and number of orders (num) attributes.
+     * Level 2 Order Book data is available through the l2 channel. Each entry in bids and asks arrays is a price level, along with its price (px), quantity (qty) and number of orders (num) attributes.
      * @summary L2 Order Book
      * @param {string} symbol Symbol
      * @param {*} [options] Override http request option.
@@ -2603,7 +2603,7 @@ export class UnauthenticatedApi extends BaseAPI {
     }
 
     /**
-     * Level 3 Order Book data is available through the l3 channel. This channel returns all the order updates reaching the exchange; by applying the updates to the snapshot you can recreate the full state of the orderbook. Each entry in bids and asks arrays is an order, along with its id (id), price (px) and quantity (qty) attributes.
+     * Level 3 Order Book data is available through the l3 channel. Each entry in bids and asks arrays is an order, along with its id (id), price (px) and quantity (qty) attributes.
      * @summary L3 Order Book
      * @param {string} symbol Symbol
      * @param {*} [options] Override http request option.

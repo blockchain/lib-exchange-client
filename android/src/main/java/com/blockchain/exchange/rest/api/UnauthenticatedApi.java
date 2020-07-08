@@ -59,7 +59,7 @@ public class UnauthenticatedApi {
 
   /**
   * L2 Order Book
-  * Level 2 Order Book data is available through the l2 channel. This channel returns the volume available at each price. All the price levels are retrieved with this channel. Each entry in bids and asks arrays is a price level, along with its price (px), quantity (qty) and number of orders (num) attributes.
+  * Level 2 Order Book data is available through the l2 channel. Each entry in bids and asks arrays is a price level, along with its price (px), quantity (qty) and number of orders (num) attributes.
    * @param symbol Symbol
    * @return OrderBook
   */
@@ -121,7 +121,7 @@ public class UnauthenticatedApi {
 
       /**
    * L2 Order Book
-   * Level 2 Order Book data is available through the l2 channel. This channel returns the volume available at each price. All the price levels are retrieved with this channel. Each entry in bids and asks arrays is a price level, along with its price (px), quantity (qty) and number of orders (num) attributes.
+   * Level 2 Order Book data is available through the l2 channel. Each entry in bids and asks arrays is a price level, along with its price (px), quantity (qty) and number of orders (num) attributes.
    * @param symbol Symbol
   */
   public void getL2OrderBook (String symbol, final Response.Listener<OrderBook> responseListener, final Response.ErrorListener errorListener) {
@@ -186,7 +186,7 @@ public class UnauthenticatedApi {
   }
   /**
   * L3 Order Book
-  * Level 3 Order Book data is available through the l3 channel. This channel returns all the order updates reaching the exchange; by applying the updates to the snapshot you can recreate the full state of the orderbook. Each entry in bids and asks arrays is an order, along with its id (id), price (px) and quantity (qty) attributes.
+  * Level 3 Order Book data is available through the l3 channel. Each entry in bids and asks arrays is an order, along with its id (id), price (px) and quantity (qty) attributes.
    * @param symbol Symbol
    * @return OrderBook
   */
@@ -248,7 +248,7 @@ public class UnauthenticatedApi {
 
       /**
    * L3 Order Book
-   * Level 3 Order Book data is available through the l3 channel. This channel returns all the order updates reaching the exchange; by applying the updates to the snapshot you can recreate the full state of the orderbook. Each entry in bids and asks arrays is an order, along with its id (id), price (px) and quantity (qty) attributes.
+   * Level 3 Order Book data is available through the l3 channel. Each entry in bids and asks arrays is an order, along with its id (id), price (px) and quantity (qty) attributes.
    * @param symbol Symbol
   */
   public void getL3OrderBook (String symbol, final Response.Listener<OrderBook> responseListener, final Response.ErrorListener errorListener) {

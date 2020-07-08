@@ -46,7 +46,7 @@ export default class UnauthenticatedApi {
 
     /**
      * L2 Order Book
-     * Level 2 Order Book data is available through the l2 channel. This channel returns the volume available at each price. All the price levels are retrieved with this channel. Each entry in bids and asks arrays is a price level, along with its price (px), quantity (qty) and number of orders (num) attributes.
+     * Level 2 Order Book data is available through the l2 channel. Each entry in bids and asks arrays is a price level, along with its price (px), quantity (qty) and number of orders (num) attributes.
      * @param {String} symbol Symbol
      * @param {module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.api/UnauthenticatedApi~getL2OrderBookCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/OrderBook}
@@ -89,7 +89,7 @@ export default class UnauthenticatedApi {
 
     /**
      * L3 Order Book
-     * Level 3 Order Book data is available through the l3 channel. This channel returns all the order updates reaching the exchange; by applying the updates to the snapshot you can recreate the full state of the orderbook. Each entry in bids and asks arrays is an order, along with its id (id), price (px) and quantity (qty) attributes.
+     * Level 3 Order Book data is available through the l3 channel. Each entry in bids and asks arrays is an order, along with its id (id), price (px) and quantity (qty) attributes.
      * @param {String} symbol Symbol
      * @param {module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.api/UnauthenticatedApi~getL3OrderBookCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/OrderBook}
