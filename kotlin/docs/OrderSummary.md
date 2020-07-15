@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**clOrdId** | **kotlin.String** | Reference field provided by client and cannot exceed 20 characters | 
+**clOrdId** | **kotlin.String** | Reference field provided by client. Cannot exceed 20 characters, only alphanumeric characters are allowed. | 
 **ordType** | [**OrdType**](OrdType.md) |  | 
 **ordStatus** | [**OrderStatus**](OrderStatus.md) |  | 
 **side** | [**Side**](Side.md) |  | 

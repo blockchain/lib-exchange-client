@@ -14,7 +14,7 @@
 
 // Request a withdrawal
 //
-// This call only works if 2FA is enabled on the account.
+// Call `GET /whitelist` first to retrieve the ID of the beneficiary. To add a beneficiary to the whitelist, please visit the profile page in the Exchange. This call only works if 2FA is enabled on the account.
 //
 withdrawal_info_t*
 PaymentsAPI_createWithdrawal(apiClient_t *apiClient, create_withdrawal_request_t * create_withdrawal_request )

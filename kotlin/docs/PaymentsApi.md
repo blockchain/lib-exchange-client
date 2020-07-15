@@ -22,7 +22,7 @@ Method | HTTP request | Description
 
 Request a withdrawal
 
-This call only works if 2FA is enabled on the account.
+Call &#x60;GET /whitelist&#x60; first to retrieve the ID of the beneficiary. To add a beneficiary to the whitelist, please visit the profile page in the Exchange. This call only works if 2FA is enabled on the account.
 
 ### Example
 ```kotlin

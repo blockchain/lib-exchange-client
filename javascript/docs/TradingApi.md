@@ -262,7 +262,7 @@ Name | Type | Description  | Notes
 
 Get a list orders
 
-Returns live and historic orders, defaulting to live orders. Returns at most 50 results, use pagination to return further results
+Returns live and historic orders, defaulting to live orders. Returns at most 100 results, use timestamp to paginate for further results
 
 ### Example
 
@@ -281,7 +281,7 @@ let opts = {
   'from': 789, // Number | Epoch timestamp in ms
   'to': 789, // Number | Epoch timestamp in ms
   'status': new BlockchainComExchangeRestApi.OrderStatus(), // OrderStatus | Order Status
-  'page': 789 // Number | Page number, starting at 0, for paginated responses
+  'limit': 100 // Number | Maximum amount of results to return in a single call. If omitted, 100 results are returned by default. 
 };
 apiInstance.getOrders(opts, (error, data, response) => {
   if (error) {
@@ -301,7 +301,7 @@ Name | Type | Description  | Notes
  **from** | **Number**| Epoch timestamp in ms | [optional] 
  **to** | **Number**| Epoch timestamp in ms | [optional] 
  **status** | [**OrderStatus**](.md)| Order Status | [optional] 
- **page** | **Number**| Page number, starting at 0, for paginated responses | [optional] 
+ **limit** | **Number**| Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  | [optional] 
 
 ### Return type
 

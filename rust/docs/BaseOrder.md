@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**cl_ord_id** | **String** | Reference field provided by client and cannot exceed 20 characters | 
+**cl_ord_id** | **String** | Reference field provided by client. Cannot exceed 20 characters, only alphanumeric characters are allowed. | 
 **ord_type** | [**crate::models::OrdType**](ordType.md) |  | 
 **symbol** | **String** | Blockchain symbol identifier | 
 **side** | [**crate::models::Side**](side.md) |  | 

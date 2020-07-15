@@ -152,10 +152,10 @@ Name | Type | Description  | Required | Notes
 
 ## get_orders
 
-> Vec<crate::models::OrderSummary> get_orders(symbol, from, to, status, page)
+> Vec<crate::models::OrderSummary> get_orders(symbol, from, to, status, limit)
 Get a list orders
 
-Returns live and historic orders, defaulting to live orders. Returns at most 50 results, use pagination to return further results
+Returns live and historic orders, defaulting to live orders. Returns at most 100 results, use timestamp to paginate for further results
 
 ### Parameters
 
@@ -166,7 +166,7 @@ Name | Type | Description  | Required | Notes
 **from** | Option<**i64**> | Epoch timestamp in ms |  |
 **to** | Option<**i64**> | Epoch timestamp in ms |  |
 **status** | Option<[**crate::models::OrderStatus**](.md)> | Order Status |  |
-**page** | Option<**i64**> | Page number, starting at 0, for paginated responses |  |
+**limit** | Option<**i32**> | Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  |  |
 
 ### Return type
 

@@ -383,11 +383,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_orders**
-> list[OrderSummary] get_orders(symbol=symbol, _from=_from, to=to, status=status, page=page)
+> list[OrderSummary] get_orders(symbol=symbol, _from=_from, to=to, status=status, limit=limit)
 
 Get a list orders
 
-Returns live and historic orders, defaulting to live orders. Returns at most 50 results, use pagination to return further results
+Returns live and historic orders, defaulting to live orders. Returns at most 100 results, use timestamp to paginate for further results
 
 ### Example
 
@@ -427,11 +427,11 @@ with openapi_client.ApiClient(configuration) as api_client:
 _from = 56 # int | Epoch timestamp in ms (optional)
 to = 56 # int | Epoch timestamp in ms (optional)
 status = openapi_client.OrderStatus() # OrderStatus | Order Status (optional)
-page = 56 # int | Page number, starting at 0, for paginated responses (optional)
+limit = 100 # int | Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  (optional)
 
     try:
         # Get a list orders
-        api_response = api_instance.get_orders(symbol=symbol, _from=_from, to=to, status=status, page=page)
+        api_response = api_instance.get_orders(symbol=symbol, _from=_from, to=to, status=status, limit=limit)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TradingApi->get_orders: %s\n" % e)
@@ -445,7 +445,7 @@ Name | Type | Description  | Notes
  **_from** | **int**| Epoch timestamp in ms | [optional] 
  **to** | **int**| Epoch timestamp in ms | [optional] 
  **status** | [**OrderStatus**](.md)| Order Status | [optional] 
- **page** | **int**| Page number, starting at 0, for paginated responses | [optional] 
+ **limit** | **int**| Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  | [optional] 
 
 ### Return type
 

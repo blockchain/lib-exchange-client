@@ -20,7 +20,7 @@ UnauthenticatedAPI_getL2OrderBook(apiClient_t *apiClient, char * symbol );
 
 // L3 Order Book
 //
-// Level 3 Order Book data is available through the l3 channel. Each entry in bids and asks arrays is an order, along with its id (id), price (px) and quantity (qty) attributes.
+// Level 3 Order Book data is available through the l3 channel. Each entry in bids and asks arrays is an order, along with its id (id), price (px) and quantity (qty) attributes. In contrast to the L2 order book, the L3 order book contains all individual orders without aggregation.
 //
 order_book_t*
 UnauthenticatedAPI_getL3OrderBook(apiClient_t *apiClient, char * symbol );

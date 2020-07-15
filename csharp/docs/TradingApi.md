@@ -400,11 +400,11 @@ Name | Type | Description  | Notes
 
 ## GetOrders
 
-> List&lt;OrderSummary&gt; GetOrders (string symbol = null, long? from = null, long? to = null, OrderStatus? status = null, long? page = null)
+> List&lt;OrderSummary&gt; GetOrders (string symbol = null, long? from = null, long? to = null, OrderStatus? status = null, int? limit = null)
 
 Get a list orders
 
-Returns live and historic orders, defaulting to live orders. Returns at most 50 results, use pagination to return further results
+Returns live and historic orders, defaulting to live orders. Returns at most 100 results, use timestamp to paginate for further results
 
 ### Example
 
@@ -432,12 +432,12 @@ namespace Example
             var from = 789;  // long? | Epoch timestamp in ms (optional) 
             var to = 789;  // long? | Epoch timestamp in ms (optional) 
             var status = ;  // OrderStatus? | Order Status (optional) 
-            var page = 789;  // long? | Page number, starting at 0, for paginated responses (optional) 
+            var limit = 100;  // int? | Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  (optional) 
 
             try
             {
                 // Get a list orders
-                List<OrderSummary> result = apiInstance.GetOrders(symbol, from, to, status, page);
+                List<OrderSummary> result = apiInstance.GetOrders(symbol, from, to, status, limit);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -460,7 +460,7 @@ Name | Type | Description  | Notes
  **from** | **long?**| Epoch timestamp in ms | [optional] 
  **to** | **long?**| Epoch timestamp in ms | [optional] 
  **status** | **OrderStatus?**| Order Status | [optional] 
- **page** | **long?**| Page number, starting at 0, for paginated responses | [optional] 
+ **limit** | **int?**| Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  | [optional] 
 
 ### Return type
 

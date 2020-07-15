@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ex_ord_id** | **int** | The unique order id assigned by the exchange | [optional] 
-**cl_ord_id** | **string** | Reference field provided by client and cannot exceed 20 characters | 
+**cl_ord_id** | **string** | Reference field provided by client. Cannot exceed 20 characters, only alphanumeric characters are allowed. | 
 **ord_type** | [**\com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\OrdType**](OrdType.md) |  | 
 **ord_status** | [**\com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\OrderStatus**](OrderStatus.md) |  | 
 **side** | [**\com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\Side**](Side.md) |  | 

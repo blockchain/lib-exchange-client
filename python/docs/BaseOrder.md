@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**cl_ord_id** | **str** | Reference field provided by client and cannot exceed 20 characters | 
+**cl_ord_id** | **str** | Reference field provided by client. Cannot exceed 20 characters, only alphanumeric characters are allowed. | 
 **ord_type** | [**OrdType**](OrdType.md) |  | 
 **symbol** | **str** | Blockchain symbol identifier | 
 **side** | [**Side**](Side.md) |  | 

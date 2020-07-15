@@ -161,13 +161,13 @@
 
 (defn-spec get-orders-with-http-info any?
   "Get a list orders
-  Returns live and historic orders, defaulting to live orders. Returns at most 50 results, use pagination to return further results"
+  Returns live and historic orders, defaulting to live orders. Returns at most 100 results, use timestamp to paginate for further results"
   ([] (get-orders-with-http-info nil))
-  ([{:keys [symbol from to status page]} (s/map-of keyword? any?)]
+  ([{:keys [symbol from to status limit]} (s/map-of keyword? any?)]
    (call-api "/orders" :get
              {:path-params   {}
               :header-params {}
-              :query-params  {"symbol" symbol "from" from "to" to "status" status "page" page }
+              :query-params  {"symbol" symbol "from" from "to" to "status" status "limit" limit }
               :form-params   {}
               :content-types []
               :accepts       ["application/json"]
@@ -175,7 +175,7 @@
 
 (defn-spec get-orders (s/coll-of order-summary-spec)
   "Get a list orders
-  Returns live and historic orders, defaulting to live orders. Returns at most 50 results, use pagination to return further results"
+  Returns live and historic orders, defaulting to live orders. Returns at most 100 results, use timestamp to paginate for further results"
   ([] (get-orders nil))
   ([optional-params any?]
    (let [res (:data (get-orders-with-http-info optional-params))]

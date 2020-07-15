@@ -7,7 +7,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **exOrdId** | **Long** | The unique order id assigned by the exchange |  [optional]
-**clOrdId** | **String** | Reference field provided by client and cannot exceed 20 characters | 
+**clOrdId** | **String** | Reference field provided by client. Cannot exceed 20 characters, only alphanumeric characters are allowed. | 
 **ordType** | [**OrdType**](OrdType.md) |  | 
 **ordStatus** | [**OrderStatus**](OrderStatus.md) |  | 
 **side** | [**Side**](Side.md) |  | 

@@ -50,7 +50,7 @@
 
 (defn-spec create-withdrawal-with-http-info any?
   "Request a withdrawal
-  This call only works if 2FA is enabled on the account."
+  Call `GET /whitelist` first to retrieve the ID of the beneficiary. To add a beneficiary to the whitelist, please visit the profile page in the Exchange. This call only works if 2FA is enabled on the account."
   [create-withdrawal-request create-withdrawal-request]
   (check-required-params create-withdrawal-request)
   (call-api "/withdrawals" :post
@@ -65,7 +65,7 @@
 
 (defn-spec create-withdrawal withdrawal-info-spec
   "Request a withdrawal
-  This call only works if 2FA is enabled on the account."
+  Call `GET /whitelist` first to retrieve the ID of the beneficiary. To add a beneficiary to the whitelist, please visit the profile page in the Exchange. This call only works if 2FA is enabled on the account."
   [create-withdrawal-request create-withdrawal-request]
   (let [res (:data (create-withdrawal-with-http-info create-withdrawal-request))]
     (if (:decode-models *api-context*)

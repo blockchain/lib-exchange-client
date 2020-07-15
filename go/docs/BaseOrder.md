@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ClOrdId** | **string** | Reference field provided by client and cannot exceed 20 characters | 
+**ClOrdId** | **string** | Reference field provided by client. Cannot exceed 20 characters, only alphanumeric characters are allowed. | 
 **OrdType** | [**OrdType**](ordType.md) |  | 
 **Symbol** | **string** | Blockchain symbol identifier | 
 **Side** | [**Side**](side.md) |  | 

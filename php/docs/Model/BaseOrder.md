@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**cl_ord_id** | **string** | Reference field provided by client and cannot exceed 20 characters | 
+**cl_ord_id** | **string** | Reference field provided by client. Cannot exceed 20 characters, only alphanumeric characters are allowed. | 
 **ord_type** | [**\com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\OrdType**](OrdType.md) |  | 
 **symbol** | **string** | Blockchain symbol identifier | 
 **side** | [**\com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\Side**](Side.md) |  | 

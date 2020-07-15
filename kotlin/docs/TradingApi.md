@@ -248,11 +248,11 @@ Configure ApiKeyAuth:
 
 <a name="getOrders"></a>
 # **getOrders**
-> kotlin.Array&lt;OrderSummary&gt; getOrders(symbol, from, to, status, page)
+> kotlin.Array&lt;OrderSummary&gt; getOrders(symbol, from, to, status, limit)
 
 Get a list orders
 
-Returns live and historic orders, defaulting to live orders. Returns at most 50 results, use pagination to return further results
+Returns live and historic orders, defaulting to live orders. Returns at most 100 results, use timestamp to paginate for further results
 
 ### Example
 ```kotlin
@@ -265,9 +265,9 @@ val symbol : kotlin.String = symbol_example // kotlin.String | Only return resul
 val from : kotlin.Long = 789 // kotlin.Long | Epoch timestamp in ms
 val to : kotlin.Long = 789 // kotlin.Long | Epoch timestamp in ms
 val status : OrderStatus =  // OrderStatus | Order Status
-val page : kotlin.Long = 789 // kotlin.Long | Page number, starting at 0, for paginated responses
+val limit : kotlin.Int = 100 // kotlin.Int | Maximum amount of results to return in a single call. If omitted, 100 results are returned by default. 
 try {
-    val result : kotlin.Array<OrderSummary> = apiInstance.getOrders(symbol, from, to, status, page)
+    val result : kotlin.Array<OrderSummary> = apiInstance.getOrders(symbol, from, to, status, limit)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling TradingApi#getOrders")
@@ -286,7 +286,7 @@ Name | Type | Description  | Notes
  **from** | **kotlin.Long**| Epoch timestamp in ms | [optional]
  **to** | **kotlin.Long**| Epoch timestamp in ms | [optional]
  **status** | [**OrderStatus**](.md)| Order Status | [optional] [enum: OPEN, REJECTED, CANCELED, FILLED, EXPIRED]
- **page** | **kotlin.Long**| Page number, starting at 0, for paginated responses | [optional]
+ **limit** | **kotlin.Int**| Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  | [optional]
 
 ### Return type
 

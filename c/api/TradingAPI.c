@@ -407,10 +407,10 @@ end:
 
 // Get a list orders
 //
-// Returns live and historic orders, defaulting to live orders. Returns at most 50 results, use pagination to return further results
+// Returns live and historic orders, defaulting to live orders. Returns at most 100 results, use timestamp to paginate for further results
 //
 list_t*
-TradingAPI_getOrders(apiClient_t *apiClient, char * symbol , long from , long to , order_status_e status , long page )
+TradingAPI_getOrders(apiClient_t *apiClient, char * symbol , long from , long to , order_status_e status , int limit )
 {
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
@@ -477,15 +477,15 @@ TradingAPI_getOrders(apiClient_t *apiClient, char * symbol , long from , long to
     }
 
     // query parameters
-    char *keyQuery_page = NULL;
-    long valueQuery_page ;
-    keyValuePair_t *keyPairQuery_page = 0;
-    if (page)
+    char *keyQuery_limit = NULL;
+    int valueQuery_limit ;
+    keyValuePair_t *keyPairQuery_limit = 0;
+    if (limit)
     {
-        keyQuery_page = strdup("page");
-        valueQuery_page = (page);
-        keyPairQuery_page = keyValuePair_create(keyQuery_page, &valueQuery_page);
-        list_addElement(localVarQueryParameters,keyPairQuery_page);
+        keyQuery_limit = strdup("limit");
+        valueQuery_limit = (limit);
+        keyPairQuery_limit = keyValuePair_create(keyQuery_limit, &valueQuery_limit);
+        list_addElement(localVarQueryParameters,keyPairQuery_limit);
     }
     list_addElement(localVarHeaderType,"application/json"); //produces
     apiClient_invoke(apiClient,
@@ -567,13 +567,13 @@ TradingAPI_getOrders(apiClient_t *apiClient, char * symbol , long from , long to
         keyValuePair_free(keyPairQuery_status);
         keyPairQuery_status = NULL;
     }
-    if(keyQuery_page){
-        free(keyQuery_page);
-        keyQuery_page = NULL;
+    if(keyQuery_limit){
+        free(keyQuery_limit);
+        keyQuery_limit = NULL;
     }
-    if(keyPairQuery_page){
-        keyValuePair_free(keyPairQuery_page);
-        keyPairQuery_page = NULL;
+    if(keyPairQuery_limit){
+        keyValuePair_free(keyPairQuery_limit);
+        keyPairQuery_limit = NULL;
     }
     return elementToReturn;
 end:

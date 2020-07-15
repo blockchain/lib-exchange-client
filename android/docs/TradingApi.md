@@ -229,11 +229,11 @@ Name | Type | Description  | Notes
 
 ## getOrders
 
-> List&lt;OrderSummary&gt; getOrders(symbol, from, to, status, page)
+> List&lt;OrderSummary&gt; getOrders(symbol, from, to, status, limit)
 
 Get a list orders
 
-Returns live and historic orders, defaulting to live orders. Returns at most 50 results, use pagination to return further results
+Returns live and historic orders, defaulting to live orders. Returns at most 100 results, use timestamp to paginate for further results
 
 ### Example
 
@@ -246,9 +246,9 @@ String symbol = null; // String | Only return results for this symbol
 Long from = null; // Long | Epoch timestamp in ms
 Long to = null; // Long | Epoch timestamp in ms
 OrderStatus status = null; // OrderStatus | Order Status
-Long page = null; // Long | Page number, starting at 0, for paginated responses
+Integer limit = 100; // Integer | Maximum amount of results to return in a single call. If omitted, 100 results are returned by default. 
 try {
-    List<OrderSummary> result = apiInstance.getOrders(symbol, from, to, status, page);
+    List<OrderSummary> result = apiInstance.getOrders(symbol, from, to, status, limit);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling TradingApi#getOrders");
@@ -265,7 +265,7 @@ Name | Type | Description  | Notes
  **from** | **Long**| Epoch timestamp in ms | [optional] [default to null]
  **to** | **Long**| Epoch timestamp in ms | [optional] [default to null]
  **status** | [**OrderStatus**](.md)| Order Status | [optional] [default to null] [enum: OPEN, REJECTED, CANCELED, FILLED, EXPIRED]
- **page** | **Long**| Page number, starting at 0, for paginated responses | [optional] [default to null]
+ **limit** | **Integer**| Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  | [optional] [default to null]
 
 ### Return type
 

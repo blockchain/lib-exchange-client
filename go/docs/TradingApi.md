@@ -184,7 +184,7 @@ Name | Type | Description  | Notes
 
 Get a list orders
 
-Returns live and historic orders, defaulting to live orders. Returns at most 50 results, use pagination to return further results
+Returns live and historic orders, defaulting to live orders. Returns at most 100 results, use timestamp to paginate for further results
 
 ### Required Parameters
 
@@ -205,7 +205,7 @@ Name | Type | Description  | Notes
  **from** | **optional.Int64**| Epoch timestamp in ms | 
  **to** | **optional.Int64**| Epoch timestamp in ms | 
  **status** | [**optional.Interface of OrderStatus**](.md)| Order Status | 
- **page** | **optional.Int64**| Page number, starting at 0, for paginated responses | 
+ **limit** | **optional.Int32**| Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  | 
 
 ### Return type
 

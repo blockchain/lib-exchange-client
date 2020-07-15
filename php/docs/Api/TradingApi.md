@@ -314,11 +314,11 @@ Name | Type | Description  | Notes
 
 ## getOrders
 
-> \com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\OrderSummary[] getOrders($symbol, $from, $to, $status, $page)
+> \com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\OrderSummary[] getOrders($symbol, $from, $to, $status, $limit)
 
 Get a list orders
 
-Returns live and historic orders, defaulting to live orders. Returns at most 50 results, use pagination to return further results
+Returns live and historic orders, defaulting to live orders. Returns at most 100 results, use timestamp to paginate for further results
 
 ### Example
 
@@ -343,10 +343,10 @@ $symbol = 'symbol_example'; // string | Only return results for this symbol
 $from = 56; // int | Epoch timestamp in ms
 $to = 56; // int | Epoch timestamp in ms
 $status = new \com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\\com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\OrderStatus(); // \com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\OrderStatus | Order Status
-$page = 56; // int | Page number, starting at 0, for paginated responses
+$limit = 100; // int | Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.
 
 try {
-    $result = $apiInstance->getOrders($symbol, $from, $to, $status, $page);
+    $result = $apiInstance->getOrders($symbol, $from, $to, $status, $limit);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling TradingApi->getOrders: ', $e->getMessage(), PHP_EOL;
@@ -363,7 +363,7 @@ Name | Type | Description  | Notes
  **from** | **int**| Epoch timestamp in ms | [optional]
  **to** | **int**| Epoch timestamp in ms | [optional]
  **status** | [**\com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\OrderStatus**](../Model/.md)| Order Status | [optional]
- **page** | **int**| Page number, starting at 0, for paginated responses | [optional]
+ **limit** | **int**| Maximum amount of results to return in a single call. If omitted, 100 results are returned by default. | [optional]
 
 ### Return type
 

@@ -46,9 +46,9 @@ TradingAPI_getOrderById(apiClient_t *apiClient, long orderId );
 
 // Get a list orders
 //
-// Returns live and historic orders, defaulting to live orders. Returns at most 50 results, use pagination to return further results
+// Returns live and historic orders, defaulting to live orders. Returns at most 100 results, use timestamp to paginate for further results
 //
 list_t*
-TradingAPI_getOrders(apiClient_t *apiClient, char * symbol , long from , long to , order_status_e status , long page );
+TradingAPI_getOrders(apiClient_t *apiClient, char * symbol , long from , long to , order_status_e status , int limit );
 
 

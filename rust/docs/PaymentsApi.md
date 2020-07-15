@@ -22,7 +22,7 @@ Method | HTTP request | Description
 > crate::models::WithdrawalInfo create_withdrawal(create_withdrawal_request)
 Request a withdrawal
 
-This call only works if 2FA is enabled on the account.
+Call `GET /whitelist` first to retrieve the ID of the beneficiary. To add a beneficiary to the whitelist, please visit the profile page in the Exchange. This call only works if 2FA is enabled on the account.
 
 ### Parameters
 
