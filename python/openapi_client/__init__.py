@@ -17,9 +17,9 @@ from __future__ import absolute_import
 __version__ = "1.0.0"
 
 # import apis into sdk package
-from com.blockchain.exchange.rest.api.payments_api import PaymentsApi
-from com.blockchain.exchange.rest.api.trading_api import TradingApi
-from com.blockchain.exchange.rest.api.unauthenticated_api import UnauthenticatedApi
+from openapi_client.com.blockchain.exchange.rest.api.payments_api import PaymentsApi
+from openapi_client.com.blockchain.exchange.rest.api.trading_api import TradingApi
+from openapi_client.com.blockchain.exchange.rest.api.unauthenticated_api import UnauthenticatedApi
 
 # import ApiClient
 from openapi_client.api_client import ApiClient
