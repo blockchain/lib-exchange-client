@@ -137,6 +137,31 @@
        res)))
 
 
+(defn-spec get-fills-with-http-info any?
+  "Get a list of filled orders
+  Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results"
+  ([] (get-fills-with-http-info nil))
+  ([{:keys [symbol from to limit]} (s/map-of keyword? any?)]
+   (call-api "/trades" :get
+             {:path-params   {}
+              :header-params {}
+              :query-params  {"symbol" symbol "from" from "to" to "limit" limit }
+              :form-params   {}
+              :content-types []
+              :accepts       ["application/json"]
+              :auth-names    ["ApiKeyAuth"]})))
+
+(defn-spec get-fills (s/coll-of order-summary-spec)
+  "Get a list of filled orders
+  Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results"
+  ([] (get-fills nil))
+  ([optional-params any?]
+   (let [res (:data (get-fills-with-http-info optional-params))]
+     (if (:decode-models *api-context*)
+        (st/decode (s/coll-of order-summary-spec) res st/string-transformer)
+        res))))
+
+
 (defn-spec get-order-by-id-with-http-info any?
   "Get a specific order"
   [orderId int?]

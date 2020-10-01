@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**deleteAllOrders**](TradingApi.md#deleteAllOrders) | **DELETE** /orders | Delete all open orders (of a symbol, if specified)
 [**deleteOrder**](TradingApi.md#deleteOrder) | **DELETE** /orders/{orderId} | Cancel a trade
 [**getFees**](TradingApi.md#getFees) | **GET** /fees | Get current fee level
+[**getFills**](TradingApi.md#getFills) | **GET** /trades | Get a list of filled orders
 [**getOrderById**](TradingApi.md#getOrderById) | **GET** /orders/{orderId} | Get a specific order
 [**getOrders**](TradingApi.md#getOrders) | **GET** /orders | Get a list orders
 
@@ -236,6 +237,75 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**\com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\Fees**](../Model/Fees.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../../README.md#documentation-for-models)
+[[Back to README]](../../README.md)
+
+
+## getFills
+
+> \com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\OrderSummary[] getFills($symbol, $from, $to, $limit)
+
+Get a list of filled orders
+
+Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: ApiKeyAuth
+$config = com.blockchain.exchange.rest\Configuration::getDefaultConfiguration()->setApiKey('X-API-Token', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = com.blockchain.exchange.rest\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-Token', 'Bearer');
+
+
+$apiInstance = new com.blockchain.exchange.rest\Api\TradingApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$symbol = 'symbol_example'; // string | Only return results for this symbol
+$from = 56; // int | Epoch timestamp in ms
+$to = 56; // int | Epoch timestamp in ms
+$limit = 100; // int | Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.
+
+try {
+    $result = $apiInstance->getFills($symbol, $from, $to, $limit);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling TradingApi->getFills: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **symbol** | **string**| Only return results for this symbol | [optional]
+ **from** | **int**| Epoch timestamp in ms | [optional]
+ **to** | **int**| Epoch timestamp in ms | [optional]
+ **limit** | **int**| Maximum amount of results to return in a single call. If omitted, 100 results are returned by default. | [optional]
+
+### Return type
+
+[**\com.blockchain.exchange.rest\com.blockchain.exchange.rest.model\OrderSummary[]**](../Model/OrderSummary.md)
 
 ### Authorization
 

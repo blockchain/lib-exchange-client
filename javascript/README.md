@@ -158,6 +158,7 @@ Class | Method | HTTP request | Description
 *BlockchainComExchangeRestApi.TradingApi* | [**deleteAllOrders**](docs/TradingApi.md#deleteAllOrders) | **DELETE** /orders | Delete all open orders (of a symbol, if specified)
 *BlockchainComExchangeRestApi.TradingApi* | [**deleteOrder**](docs/TradingApi.md#deleteOrder) | **DELETE** /orders/{orderId} | Cancel a trade
 *BlockchainComExchangeRestApi.TradingApi* | [**getFees**](docs/TradingApi.md#getFees) | **GET** /fees | Get current fee level
+*BlockchainComExchangeRestApi.TradingApi* | [**getFills**](docs/TradingApi.md#getFills) | **GET** /trades | Get a list of filled orders
 *BlockchainComExchangeRestApi.TradingApi* | [**getOrderById**](docs/TradingApi.md#getOrderById) | **GET** /orders/{orderId} | Get a specific order
 *BlockchainComExchangeRestApi.TradingApi* | [**getOrders**](docs/TradingApi.md#getOrders) | **GET** /orders | Get a list orders
 *BlockchainComExchangeRestApi.UnauthenticatedApi* | [**getL2OrderBook**](docs/UnauthenticatedApi.md#getL2OrderBook) | **GET** /l2/{symbol} | L2 Order Book

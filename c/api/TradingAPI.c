@@ -14,13 +14,13 @@
 // Functions for enum  for TradingAPI_getOrders
 
 static char* getOrders__ToString(blockchain_com_exchange_rest_api_getOrders_status_e ){
-    char *Array[] =  { "NULL", "OPEN", "REJECTED", "CANCELED", "FILLED", "EXPIRED" };
+    char *Array[] =  { "NULL", "OPEN", "REJECTED", "CANCELED", "FILLED", "PART_FILLED", "EXPIRED" };
     return Array[];
 }
 
 static blockchain_com_exchange_rest_api_getOrders_status_e getOrders__FromString(char* ){
     int stringToReturn = 0;
-    char *Array[] =  { "NULL", "OPEN", "REJECTED", "CANCELED", "FILLED", "EXPIRED" };
+    char *Array[] =  { "NULL", "OPEN", "REJECTED", "CANCELED", "FILLED", "PART_FILLED", "EXPIRED" };
     size_t sizeofArray = sizeof(Array) / sizeof(Array[0]);
     while(stringToReturn < sizeofArray) {
         if(strcmp(, Array[stringToReturn]) == 0) {
@@ -322,6 +322,161 @@ TradingAPI_getFees(apiClient_t *apiClient)
     list_free(localVarHeaderType);
     
     free(localVarPath);
+    return elementToReturn;
+end:
+    return NULL;
+
+}
+
+// Get a list of filled orders
+//
+// Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+//
+list_t*
+TradingAPI_getFills(apiClient_t *apiClient, char * symbol , long from , long to , int limit )
+{
+    list_t    *localVarQueryParameters = list_create();
+    list_t    *localVarHeaderParameters = NULL;
+    list_t    *localVarFormParameters = NULL;
+    list_t *localVarHeaderType = list_create();
+    list_t *localVarContentType = NULL;
+    char      *localVarBodyParameters = NULL;
+
+    // create the path
+    long sizeOfPath = strlen("/trades")+1;
+    char *localVarPath = malloc(sizeOfPath);
+    snprintf(localVarPath, sizeOfPath, "/trades");
+
+
+
+
+    // query parameters
+    char *keyQuery_symbol = NULL;
+    char * valueQuery_symbol = NULL;
+    keyValuePair_t *keyPairQuery_symbol = 0;
+    if (symbol)
+    {
+        keyQuery_symbol = strdup("symbol");
+        valueQuery_symbol = strdup((symbol));
+        keyPairQuery_symbol = keyValuePair_create(keyQuery_symbol, valueQuery_symbol);
+        list_addElement(localVarQueryParameters,keyPairQuery_symbol);
+    }
+
+    // query parameters
+    char *keyQuery_from = NULL;
+    long valueQuery_from ;
+    keyValuePair_t *keyPairQuery_from = 0;
+    if (from)
+    {
+        keyQuery_from = strdup("from");
+        valueQuery_from = (from);
+        keyPairQuery_from = keyValuePair_create(keyQuery_from, &valueQuery_from);
+        list_addElement(localVarQueryParameters,keyPairQuery_from);
+    }
+
+    // query parameters
+    char *keyQuery_to = NULL;
+    long valueQuery_to ;
+    keyValuePair_t *keyPairQuery_to = 0;
+    if (to)
+    {
+        keyQuery_to = strdup("to");
+        valueQuery_to = (to);
+        keyPairQuery_to = keyValuePair_create(keyQuery_to, &valueQuery_to);
+        list_addElement(localVarQueryParameters,keyPairQuery_to);
+    }
+
+    // query parameters
+    char *keyQuery_limit = NULL;
+    int valueQuery_limit ;
+    keyValuePair_t *keyPairQuery_limit = 0;
+    if (limit)
+    {
+        keyQuery_limit = strdup("limit");
+        valueQuery_limit = (limit);
+        keyPairQuery_limit = keyValuePair_create(keyQuery_limit, &valueQuery_limit);
+        list_addElement(localVarQueryParameters,keyPairQuery_limit);
+    }
+    list_addElement(localVarHeaderType,"application/json"); //produces
+    apiClient_invoke(apiClient,
+                    localVarPath,
+                    localVarQueryParameters,
+                    localVarHeaderParameters,
+                    localVarFormParameters,
+                    localVarHeaderType,
+                    localVarContentType,
+                    localVarBodyParameters,
+                    "GET");
+
+    if (apiClient->response_code == 200) {
+        printf("%s\n","Success");
+    }
+    cJSON *TradingAPIlocalVarJSON = cJSON_Parse(apiClient->dataReceived);
+    if(!cJSON_IsArray(TradingAPIlocalVarJSON)) {
+        return 0;//nonprimitive container
+    }
+    list_t *elementToReturn = list_create();
+    cJSON *VarJSON;
+    cJSON_ArrayForEach(VarJSON, TradingAPIlocalVarJSON)
+    {
+        if(!cJSON_IsObject(VarJSON))
+        {
+           // return 0;
+        }
+        char *localVarJSONToChar = cJSON_Print(VarJSON);
+        list_addElement(elementToReturn , localVarJSONToChar);
+    }
+
+    cJSON_Delete( TradingAPIlocalVarJSON);
+    cJSON_Delete( VarJSON);
+    //return type
+    if (apiClient->dataReceived) {
+        free(apiClient->dataReceived);
+        apiClient->dataReceived = NULL;
+        apiClient->dataReceivedLen = 0;
+    }
+    list_free(localVarQueryParameters);
+    
+    
+    list_free(localVarHeaderType);
+    
+    free(localVarPath);
+    if(keyQuery_symbol){
+        free(keyQuery_symbol);
+        keyQuery_symbol = NULL;
+    }
+    if(valueQuery_symbol){
+        free(valueQuery_symbol);
+        valueQuery_symbol = NULL;
+    }
+    if(keyPairQuery_symbol){
+        keyValuePair_free(keyPairQuery_symbol);
+        keyPairQuery_symbol = NULL;
+    }
+    if(keyQuery_from){
+        free(keyQuery_from);
+        keyQuery_from = NULL;
+    }
+    if(keyPairQuery_from){
+        keyValuePair_free(keyPairQuery_from);
+        keyPairQuery_from = NULL;
+    }
+    if(keyQuery_to){
+        free(keyQuery_to);
+        keyQuery_to = NULL;
+    }
+    if(keyPairQuery_to){
+        keyValuePair_free(keyPairQuery_to);
+        keyPairQuery_to = NULL;
+    }
+    if(keyQuery_limit){
+        free(keyQuery_limit);
+        keyQuery_limit = NULL;
+    }
+    if(keyPairQuery_limit){
+        keyValuePair_free(keyPairQuery_limit);
+        keyPairQuery_limit = NULL;
+    }
     return elementToReturn;
 end:
     return NULL;

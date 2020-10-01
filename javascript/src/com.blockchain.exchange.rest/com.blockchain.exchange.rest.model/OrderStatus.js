@@ -48,6 +48,13 @@ export default class OrderStatus {
 
     
         /**
+         * value: "PART_FILLED"
+         * @const
+         */
+        "PART_FILLED" = "PART_FILLED";
+
+    
+        /**
          * value: "EXPIRED"
          * @const
          */

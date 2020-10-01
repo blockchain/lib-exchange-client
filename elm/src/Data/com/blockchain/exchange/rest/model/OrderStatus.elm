@@ -23,6 +23,7 @@ type OrderStatus
     | REJECTED
     | CANCELED
     | FILLED
+    | PARTFILLED
     | EXPIRED
 
 
@@ -44,6 +45,9 @@ decoder =
 
                     "FILLED" ->
                         Decode.succeed FILLED
+
+                    "PART_FILLED" ->
+                        Decode.succeed PARTFILLED
 
                     "EXPIRED" ->
                         Decode.succeed EXPIRED
@@ -69,6 +73,9 @@ encode model =
         FILLED ->
             Encode.string "FILLED"
 
+        PARTFILLED ->
+            Encode.string "PART_FILLED"
+
         EXPIRED ->
             Encode.string "EXPIRED"
 
@@ -89,6 +96,9 @@ toString model =
 
         FILLED ->
             "FILLED"
+
+        PARTFILLED ->
+            "PART_FILLED"
 
         EXPIRED ->
             "EXPIRED"

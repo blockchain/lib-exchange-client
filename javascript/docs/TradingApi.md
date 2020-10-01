@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**deleteAllOrders**](TradingApi.md#deleteAllOrders) | **DELETE** /orders | Delete all open orders (of a symbol, if specified)
 [**deleteOrder**](TradingApi.md#deleteOrder) | **DELETE** /orders/{orderId} | Cancel a trade
 [**getFees**](TradingApi.md#getFees) | **GET** /fees | Get current fee level
+[**getFills**](TradingApi.md#getFills) | **GET** /trades | Get a list of filled orders
 [**getOrderById**](TradingApi.md#getOrderById) | **GET** /orders/{orderId} | Get a specific order
 [**getOrders**](TradingApi.md#getOrders) | **GET** /orders | Get a list orders
 
@@ -196,6 +197,65 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**Fees**](Fees.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## getFills
+
+> [OrderSummary] getFills(opts)
+
+Get a list of filled orders
+
+Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+
+### Example
+
+```javascript
+import BlockchainComExchangeRestApi from 'blockchain_com_exchange_rest_api';
+let defaultClient = BlockchainComExchangeRestApi.ApiClient.instance;
+// Configure API key authorization: ApiKeyAuth
+let ApiKeyAuth = defaultClient.authentications['ApiKeyAuth'];
+ApiKeyAuth.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKeyAuth.apiKeyPrefix = 'Token';
+
+let apiInstance = new BlockchainComExchangeRestApi.TradingApi();
+let opts = {
+  'symbol': "symbol_example", // String | Only return results for this symbol
+  'from': 789, // Number | Epoch timestamp in ms
+  'to': 789, // Number | Epoch timestamp in ms
+  'limit': 100 // Number | Maximum amount of results to return in a single call. If omitted, 100 results are returned by default. 
+};
+apiInstance.getFills(opts, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **symbol** | **String**| Only return results for this symbol | [optional] 
+ **from** | **Number**| Epoch timestamp in ms | [optional] 
+ **to** | **Number**| Epoch timestamp in ms | [optional] 
+ **limit** | **Number**| Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  | [optional] 
+
+### Return type
+
+[**[OrderSummary]**](OrderSummary.md)
 
 ### Authorization
 

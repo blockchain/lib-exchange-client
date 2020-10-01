@@ -11,6 +11,8 @@
 
 * `FILLED` (value: `"FILLED"`)
 
+* `PART_FILLED` (value: `"PART_FILLED"`)
+
 * `EXPIRED` (value: `"EXPIRED"`)
 
 

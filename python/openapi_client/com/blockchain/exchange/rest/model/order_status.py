@@ -32,9 +32,10 @@ class OrderStatus(object):
     REJECTED = "REJECTED"
     CANCELED = "CANCELED"
     FILLED = "FILLED"
+    PART_FILLED = "PART_FILLED"
     EXPIRED = "EXPIRED"
 
-    allowable_values = [OPEN, REJECTED, CANCELED, FILLED, EXPIRED]  # noqa: E501
+    allowable_values = [OPEN, REJECTED, CANCELED, FILLED, PART_FILLED, EXPIRED]  # noqa: E501
 
     """
     Attributes:

@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**delete_all_orders**](TradingApi.md#delete_all_orders) | **DELETE** /orders | Delete all open orders (of a symbol, if specified)
 [**delete_order**](TradingApi.md#delete_order) | **DELETE** /orders/{orderId} | Cancel a trade
 [**get_fees**](TradingApi.md#get_fees) | **GET** /fees | Get current fee level
+[**get_fills**](TradingApi.md#get_fills) | **GET** /trades | Get a list of filled orders
 [**get_order_by_id**](TradingApi.md#get_order_by_id) | **GET** /orders/{orderId} | Get a specific order
 [**get_orders**](TradingApi.md#get_orders) | **GET** /orders | Get a list orders
 
@@ -289,6 +290,89 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**Fees**](Fees.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Success |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_fills**
+> list[OrderSummary] get_fills(symbol=symbol, _from=_from, to=to, limit=limit)
+
+Get a list of filled orders
+
+Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+
+### Example
+
+* Api Key Authentication (ApiKeyAuth):
+```python
+from __future__ import print_function
+import time
+import openapi_client
+from openapi_client.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to https://api.blockchain.com/v3/exchange
+# See configuration.py for a list of all supported configuration parameters.
+configuration = openapi_client.Configuration(
+    host = "https://api.blockchain.com/v3/exchange"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ApiKeyAuth
+configuration = openapi_client.Configuration(
+    host = "https://api.blockchain.com/v3/exchange",
+    api_key = {
+        'X-API-Token': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-API-Token'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with openapi_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = openapi_client.TradingApi(api_client)
+    symbol = 'symbol_example' # str | Only return results for this symbol (optional)
+_from = 56 # int | Epoch timestamp in ms (optional)
+to = 56 # int | Epoch timestamp in ms (optional)
+limit = 100 # int | Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  (optional)
+
+    try:
+        # Get a list of filled orders
+        api_response = api_instance.get_fills(symbol=symbol, _from=_from, to=to, limit=limit)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling TradingApi->get_fills: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **symbol** | **str**| Only return results for this symbol | [optional] 
+ **_from** | **int**| Epoch timestamp in ms | [optional] 
+ **to** | **int**| Epoch timestamp in ms | [optional] 
+ **limit** | **int**| Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  | [optional] 
+
+### Return type
+
+[**list[OrderSummary]**](OrderSummary.md)
 
 ### Authorization
 

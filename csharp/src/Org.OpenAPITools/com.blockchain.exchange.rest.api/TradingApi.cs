@@ -107,6 +107,33 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.api
         /// <returns>ApiResponse of Fees</returns>
         ApiResponse<Fees> GetFeesWithHttpInfo ();
         /// <summary>
+        /// Get a list of filled orders
+        /// </summary>
+        /// <remarks>
+        /// Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+        /// </remarks>
+        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="symbol">Only return results for this symbol (optional)</param>
+        /// <param name="from">Epoch timestamp in ms (optional)</param>
+        /// <param name="to">Epoch timestamp in ms (optional)</param>
+        /// <param name="limit">Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  (optional)</param>
+        /// <returns>List&lt;OrderSummary&gt;</returns>
+        List<OrderSummary> GetFills (string symbol = default(string), long? from = default(long?), long? to = default(long?), int? limit = default(int?));
+
+        /// <summary>
+        /// Get a list of filled orders
+        /// </summary>
+        /// <remarks>
+        /// Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+        /// </remarks>
+        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="symbol">Only return results for this symbol (optional)</param>
+        /// <param name="from">Epoch timestamp in ms (optional)</param>
+        /// <param name="to">Epoch timestamp in ms (optional)</param>
+        /// <param name="limit">Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  (optional)</param>
+        /// <returns>ApiResponse of List&lt;OrderSummary&gt;</returns>
+        ApiResponse<List<OrderSummary>> GetFillsWithHttpInfo (string symbol = default(string), long? from = default(long?), long? to = default(long?), int? limit = default(int?));
+        /// <summary>
         /// Get a specific order
         /// </summary>
         /// <remarks>
@@ -240,6 +267,33 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (Fees)</returns>
         System.Threading.Tasks.Task<ApiResponse<Fees>> GetFeesAsyncWithHttpInfo ();
+        /// <summary>
+        /// Get a list of filled orders
+        /// </summary>
+        /// <remarks>
+        /// Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+        /// </remarks>
+        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="symbol">Only return results for this symbol (optional)</param>
+        /// <param name="from">Epoch timestamp in ms (optional)</param>
+        /// <param name="to">Epoch timestamp in ms (optional)</param>
+        /// <param name="limit">Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  (optional)</param>
+        /// <returns>Task of List&lt;OrderSummary&gt;</returns>
+        System.Threading.Tasks.Task<List<OrderSummary>> GetFillsAsync (string symbol = default(string), long? from = default(long?), long? to = default(long?), int? limit = default(int?));
+
+        /// <summary>
+        /// Get a list of filled orders
+        /// </summary>
+        /// <remarks>
+        /// Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+        /// </remarks>
+        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="symbol">Only return results for this symbol (optional)</param>
+        /// <param name="from">Epoch timestamp in ms (optional)</param>
+        /// <param name="to">Epoch timestamp in ms (optional)</param>
+        /// <param name="limit">Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  (optional)</param>
+        /// <returns>Task of ApiResponse (List&lt;OrderSummary&gt;)</returns>
+        System.Threading.Tasks.Task<ApiResponse<List<OrderSummary>>> GetFillsAsyncWithHttpInfo (string symbol = default(string), long? from = default(long?), long? to = default(long?), int? limit = default(int?));
         /// <summary>
         /// Get a specific order
         /// </summary>
@@ -961,6 +1015,161 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.api
             return new ApiResponse<Fees>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
                 (Fees) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Fees)));
+        }
+
+        /// <summary>
+        /// Get a list of filled orders Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+        /// </summary>
+        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="symbol">Only return results for this symbol (optional)</param>
+        /// <param name="from">Epoch timestamp in ms (optional)</param>
+        /// <param name="to">Epoch timestamp in ms (optional)</param>
+        /// <param name="limit">Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  (optional)</param>
+        /// <returns>List&lt;OrderSummary&gt;</returns>
+        public List<OrderSummary> GetFills (string symbol = default(string), long? from = default(long?), long? to = default(long?), int? limit = default(int?))
+        {
+             ApiResponse<List<OrderSummary>> localVarResponse = GetFillsWithHttpInfo(symbol, from, to, limit);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Get a list of filled orders Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+        /// </summary>
+        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="symbol">Only return results for this symbol (optional)</param>
+        /// <param name="from">Epoch timestamp in ms (optional)</param>
+        /// <param name="to">Epoch timestamp in ms (optional)</param>
+        /// <param name="limit">Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  (optional)</param>
+        /// <returns>ApiResponse of List&lt;OrderSummary&gt;</returns>
+        public ApiResponse<List<OrderSummary>> GetFillsWithHttpInfo (string symbol = default(string), long? from = default(long?), long? to = default(long?), int? limit = default(int?))
+        {
+
+            var localVarPath = "/trades";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (symbol != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "symbol", symbol)); // query parameter
+            if (from != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "from", from)); // query parameter
+            if (to != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "to", to)); // query parameter
+            if (limit != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "limit", limit)); // query parameter
+
+            // authentication (ApiKeyAuth) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Token")))
+            {
+                localVarHeaderParams["X-API-Token"] = this.Configuration.GetApiKeyWithPrefix("X-API-Token");
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetFills", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<OrderSummary>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (List<OrderSummary>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<OrderSummary>)));
+        }
+
+        /// <summary>
+        /// Get a list of filled orders Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+        /// </summary>
+        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="symbol">Only return results for this symbol (optional)</param>
+        /// <param name="from">Epoch timestamp in ms (optional)</param>
+        /// <param name="to">Epoch timestamp in ms (optional)</param>
+        /// <param name="limit">Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  (optional)</param>
+        /// <returns>Task of List&lt;OrderSummary&gt;</returns>
+        public async System.Threading.Tasks.Task<List<OrderSummary>> GetFillsAsync (string symbol = default(string), long? from = default(long?), long? to = default(long?), int? limit = default(int?))
+        {
+             ApiResponse<List<OrderSummary>> localVarResponse = await GetFillsAsyncWithHttpInfo(symbol, from, to, limit);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// Get a list of filled orders Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+        /// </summary>
+        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="symbol">Only return results for this symbol (optional)</param>
+        /// <param name="from">Epoch timestamp in ms (optional)</param>
+        /// <param name="to">Epoch timestamp in ms (optional)</param>
+        /// <param name="limit">Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  (optional)</param>
+        /// <returns>Task of ApiResponse (List&lt;OrderSummary&gt;)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<List<OrderSummary>>> GetFillsAsyncWithHttpInfo (string symbol = default(string), long? from = default(long?), long? to = default(long?), int? limit = default(int?))
+        {
+
+            var localVarPath = "/trades";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (symbol != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "symbol", symbol)); // query parameter
+            if (from != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "from", from)); // query parameter
+            if (to != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "to", to)); // query parameter
+            if (limit != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "limit", limit)); // query parameter
+
+            // authentication (ApiKeyAuth) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Token")))
+            {
+                localVarHeaderParams["X-API-Token"] = this.Configuration.GetApiKeyWithPrefix("X-API-Token");
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetFills", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<OrderSummary>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (List<OrderSummary>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<OrderSummary>)));
         }
 
         /// <summary>

@@ -47,6 +47,7 @@ class OrderStatus
     const REJECTED = 'REJECTED';
     const CANCELED = 'CANCELED';
     const FILLED = 'FILLED';
+    const PART_FILLED = 'PART_FILLED';
     const EXPIRED = 'EXPIRED';
     
     /**
@@ -60,6 +61,7 @@ class OrderStatus
             self::REJECTED,
             self::CANCELED,
             self::FILLED,
+            self::PART_FILLED,
             self::EXPIRED,
         ];
     }

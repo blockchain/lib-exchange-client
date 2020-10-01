@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**DeleteAllOrders**](TradingApi.md#DeleteAllOrders) | **Delete** /orders | Delete all open orders (of a symbol, if specified)
 [**DeleteOrder**](TradingApi.md#DeleteOrder) | **Delete** /orders/{orderId} | Cancel a trade
 [**GetFees**](TradingApi.md#GetFees) | **Get** /fees | Get current fee level
+[**GetFills**](TradingApi.md#GetFills) | **Get** /trades | Get a list of filled orders
 [**GetOrderById**](TradingApi.md#GetOrderById) | **Get** /orders/{orderId} | Get a specific order
 [**GetOrders**](TradingApi.md#GetOrders) | **Get** /orders | Get a list orders
 
@@ -131,6 +132,52 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**Fees**](Fees.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetFills
+
+> []OrderSummary GetFills(ctx, optional)
+
+Get a list of filled orders
+
+Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+
+### Required Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+ **optional** | ***GetFillsOpts** | optional parameters | nil if no parameters
+
+### Optional Parameters
+
+Optional parameters are passed through a pointer to a GetFillsOpts struct
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **symbol** | **optional.String**| Only return results for this symbol | 
+ **from** | **optional.Int64**| Epoch timestamp in ms | 
+ **to** | **optional.Int64**| Epoch timestamp in ms | 
+ **limit** | **optional.Int32**| Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  | 
+
+### Return type
+
+[**[]OrderSummary**](OrderSummary.md)
 
 ### Authorization
 

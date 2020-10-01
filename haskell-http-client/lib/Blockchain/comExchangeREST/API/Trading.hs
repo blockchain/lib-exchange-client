@@ -145,6 +145,47 @@ data GetFees
 instance Produces GetFees MimeJSON
 
 
+-- *** getFills
+
+-- | @GET \/trades@
+-- 
+-- Get a list of filled orders
+-- 
+-- Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+-- 
+-- AuthMethod: 'AuthApiKeyApiKeyAuth'
+-- 
+getFills 
+  :: comExchangeRESTRequest GetFills MimeNoContent [OrderSummary] MimeJSON
+getFills =
+  _mkRequest "GET" ["/trades"]
+    `_hasAuthType` (P.Proxy :: P.Proxy AuthApiKeyApiKeyAuth)
+
+data GetFills  
+
+-- | /Optional Param/ "symbol" - Only return results for this symbol
+instance HasOptionalParam GetFills Symbol2 where
+  applyOptionalParam req (Symbol2 xs) =
+    req `setQuery` toQuery ("symbol", Just xs)
+
+-- | /Optional Param/ "from" - Epoch timestamp in ms
+instance HasOptionalParam GetFills From where
+  applyOptionalParam req (From xs) =
+    req `setQuery` toQuery ("from", Just xs)
+
+-- | /Optional Param/ "to" - Epoch timestamp in ms
+instance HasOptionalParam GetFills To where
+  applyOptionalParam req (To xs) =
+    req `setQuery` toQuery ("to", Just xs)
+
+-- | /Optional Param/ "limit" - Maximum amount of results to return in a single call. If omitted, 100 results are returned by default. 
+instance HasOptionalParam GetFills Limit where
+  applyOptionalParam req (Limit xs) =
+    req `setQuery` toQuery ("limit", Just xs)
+-- | @application/json@
+instance Produces GetFills MimeJSON
+
+
 -- *** getOrderById
 
 -- | @GET \/orders\/{orderId}@

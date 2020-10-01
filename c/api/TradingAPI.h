@@ -11,7 +11,7 @@
 #include "../model/order_summary.h"
 
 // Enum  for TradingAPI_getOrders
-typedef enum  { blockchain_com_exchange_rest_api_getOrders__NULL = 0, blockchain_com_exchange_rest_api_getOrders__OPEN, blockchain_com_exchange_rest_api_getOrders__REJECTED, blockchain_com_exchange_rest_api_getOrders__CANCELED, blockchain_com_exchange_rest_api_getOrders__FILLED, blockchain_com_exchange_rest_api_getOrders__EXPIRED } blockchain_com_exchange_rest_api_getOrders_status_e;
+typedef enum  { blockchain_com_exchange_rest_api_getOrders__NULL = 0, blockchain_com_exchange_rest_api_getOrders__OPEN, blockchain_com_exchange_rest_api_getOrders__REJECTED, blockchain_com_exchange_rest_api_getOrders__CANCELED, blockchain_com_exchange_rest_api_getOrders__FILLED, blockchain_com_exchange_rest_api_getOrders__PART_FILLED, blockchain_com_exchange_rest_api_getOrders__EXPIRED } blockchain_com_exchange_rest_api_getOrders_status_e;
 
 
 // Add an order
@@ -36,6 +36,14 @@ TradingAPI_deleteOrder(apiClient_t *apiClient, long orderId );
 //
 fees_t*
 TradingAPI_getFees(apiClient_t *apiClient);
+
+
+// Get a list of filled orders
+//
+// Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+//
+list_t*
+TradingAPI_getFills(apiClient_t *apiClient, char * symbol , long from , long to , int limit );
 
 
 // Get a specific order

@@ -22,13 +22,13 @@ blockchain_com_exchange_rest_api_order_summary__e ord_typeorder_summary_FromStri
     return 0;
 }
 char* ord_statusorder_summary_ToString(blockchain_com_exchange_rest_api_order_summary__e ord_status) {
-    char* ord_statusArray[] =  { "NULL", "OPEN", "REJECTED", "CANCELED", "FILLED", "EXPIRED" };
+    char* ord_statusArray[] =  { "NULL", "OPEN", "REJECTED", "CANCELED", "FILLED", "PART_FILLED", "EXPIRED" };
 	return ord_statusArray[ord_status];
 }
 
 blockchain_com_exchange_rest_api_order_summary__e ord_statusorder_summary_FromString(char* ord_status){
     int stringToReturn = 0;
-    char *ord_statusArray[] =  { "NULL", "OPEN", "REJECTED", "CANCELED", "FILLED", "EXPIRED" };
+    char *ord_statusArray[] =  { "NULL", "OPEN", "REJECTED", "CANCELED", "FILLED", "PART_FILLED", "EXPIRED" };
     size_t sizeofArray = sizeof(ord_statusArray) / sizeof(ord_statusArray[0]);
     while(stringToReturn < sizeofArray) {
         if(strcmp(ord_status, ord_statusArray[stringToReturn]) == 0) {

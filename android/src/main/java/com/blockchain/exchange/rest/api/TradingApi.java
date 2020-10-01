@@ -541,6 +541,134 @@ public class TradingApi {
     }
   }
   /**
+  * Get a list of filled orders
+  * Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+   * @param symbol Only return results for this symbol
+   * @param from Epoch timestamp in ms
+   * @param to Epoch timestamp in ms
+   * @param limit Maximum amount of results to return in a single call. If omitted, 100 results are returned by default. 
+   * @return List<OrderSummary>
+  */
+  public List<OrderSummary> getFills (String symbol, Long from, Long to, Integer limit) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
+    Object postBody = null;
+
+    // create path and map variables
+    String path = "/trades";
+
+    // query params
+    List<Pair> queryParams = new ArrayList<Pair>();
+    // header params
+    Map<String, String> headerParams = new HashMap<String, String>();
+    // form params
+    Map<String, String> formParams = new HashMap<String, String>();
+    queryParams.addAll(ApiInvoker.parameterToPairs("", "symbol", symbol));
+    queryParams.addAll(ApiInvoker.parameterToPairs("", "from", from));
+    queryParams.addAll(ApiInvoker.parameterToPairs("", "to", to));
+    queryParams.addAll(ApiInvoker.parameterToPairs("", "limit", limit));
+    String[] contentTypes = {
+    };
+    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+
+    if (contentType.startsWith("multipart/form-data")) {
+      // file uploading
+      MultipartEntityBuilder localVarBuilder = MultipartEntityBuilder.create();
+      HttpEntity httpEntity = localVarBuilder.build();
+      postBody = httpEntity;
+    } else {
+      // normal form params
+    }
+
+    String[] authNames = new String[] { "ApiKeyAuth" };
+
+    try {
+      String localVarResponse = apiInvoker.invokeAPI (basePath, path, "GET", queryParams, postBody, headerParams, formParams, contentType, authNames);
+      if (localVarResponse != null) {
+         return (List<OrderSummary>) ApiInvoker.deserialize(localVarResponse, "array", OrderSummary.class);
+      } else {
+         return null;
+      }
+    } catch (ApiException ex) {
+       throw ex;
+    } catch (InterruptedException ex) {
+       throw ex;
+    } catch (ExecutionException ex) {
+      if (ex.getCause() instanceof VolleyError) {
+        VolleyError volleyError = (VolleyError)ex.getCause();
+        if (volleyError.networkResponse != null) {
+          throw new ApiException(volleyError.networkResponse.statusCode, volleyError.getMessage());
+        }
+      }
+      throw ex;
+    } catch (TimeoutException ex) {
+      throw ex;
+    }
+  }
+
+      /**
+   * Get a list of filled orders
+   * Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+   * @param symbol Only return results for this symbol   * @param from Epoch timestamp in ms   * @param to Epoch timestamp in ms   * @param limit Maximum amount of results to return in a single call. If omitted, 100 results are returned by default. 
+  */
+  public void getFills (String symbol, Long from, Long to, Integer limit, final Response.Listener<List<OrderSummary>> responseListener, final Response.ErrorListener errorListener) {
+    Object postBody = null;
+
+
+    // create path and map variables
+    String path = "/trades".replaceAll("\\{format\\}","json");
+
+    // query params
+    List<Pair> queryParams = new ArrayList<Pair>();
+    // header params
+    Map<String, String> headerParams = new HashMap<String, String>();
+    // form params
+    Map<String, String> formParams = new HashMap<String, String>();
+
+    queryParams.addAll(ApiInvoker.parameterToPairs("", "symbol", symbol));
+    queryParams.addAll(ApiInvoker.parameterToPairs("", "from", from));
+    queryParams.addAll(ApiInvoker.parameterToPairs("", "to", to));
+    queryParams.addAll(ApiInvoker.parameterToPairs("", "limit", limit));
+
+
+    String[] contentTypes = {
+      
+    };
+    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+
+    if (contentType.startsWith("multipart/form-data")) {
+      // file uploading
+      MultipartEntityBuilder localVarBuilder = MultipartEntityBuilder.create();
+      
+
+      HttpEntity httpEntity = localVarBuilder.build();
+      postBody = httpEntity;
+    } else {
+      // normal form params
+          }
+
+    String[] authNames = new String[] { "ApiKeyAuth" };
+
+    try {
+      apiInvoker.invokeAPI(basePath, path, "GET", queryParams, postBody, headerParams, formParams, contentType, authNames,
+        new Response.Listener<String>() {
+          @Override
+          public void onResponse(String localVarResponse) {
+            try {
+              responseListener.onResponse((List<OrderSummary>) ApiInvoker.deserialize(localVarResponse,  "array", OrderSummary.class));
+            } catch (ApiException exception) {
+               errorListener.onErrorResponse(new VolleyError(exception));
+            }
+          }
+      }, new Response.ErrorListener() {
+          @Override
+          public void onErrorResponse(VolleyError error) {
+            errorListener.onErrorResponse(error);
+          }
+      });
+    } catch (ApiException ex) {
+      errorListener.onErrorResponse(new VolleyError(ex));
+    }
+  }
+  /**
   * Get a specific order
   * 
    * @param orderId Order ID

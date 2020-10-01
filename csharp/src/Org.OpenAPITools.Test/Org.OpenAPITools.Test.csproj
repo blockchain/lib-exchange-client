@@ -81,7 +81,7 @@ The version of the OpenAPI document: 1.0.0
   <Import Project="$(MsBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
       <ProjectReference Include="..\Org.OpenAPITools\Org.OpenAPITools.csproj">
-          <Project>{1354B386-4BB1-4447-A4B2-C2DBC4C2D5AE}</Project>
+          <Project>{75D5A94F-1EC1-4A1F-9139-B46D991F66ED}</Project>
           <Name>Org.OpenAPITools</Name>
       </ProjectReference>
   </ItemGroup>

@@ -195,6 +195,53 @@ export default class TradingApi {
     }
 
     /**
+     * Callback function to receive the result of the getFills operation.
+     * @callback module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.api/TradingApi~getFillsCallback
+     * @param {String} error Error message, if any.
+     * @param {Array.<module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/OrderSummary>} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Get a list of filled orders
+     * Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.symbol Only return results for this symbol
+     * @param {Number} opts.from Epoch timestamp in ms
+     * @param {Number} opts.to Epoch timestamp in ms
+     * @param {Number} opts.limit Maximum amount of results to return in a single call. If omitted, 100 results are returned by default. 
+     * @param {module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.api/TradingApi~getFillsCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link Array.<module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.model/OrderSummary>}
+     */
+    getFills(opts, callback) {
+      opts = opts || {};
+      let postBody = null;
+
+      let pathParams = {
+      };
+      let queryParams = {
+        'symbol': opts['symbol'],
+        'from': opts['from'],
+        'to': opts['to'],
+        'limit': opts['limit']
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = ['ApiKeyAuth'];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = [OrderSummary];
+      return this.apiClient.callApi(
+        '/trades', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the getOrderById operation.
      * @callback module:com.blockchain.exchange.rest/com.blockchain.exchange.rest.api/TradingApi~getOrderByIdCallback
      * @param {String} error Error message, if any.

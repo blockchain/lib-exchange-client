@@ -379,6 +379,7 @@ export enum OrderStatus {
     REJECTED = 'REJECTED',
     CANCELED = 'CANCELED',
     FILLED = 'FILLED',
+    PART_FILLED = 'PART_FILLED',
     EXPIRED = 'EXPIRED'
 }
 
@@ -1802,6 +1803,64 @@ export const TradingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+         * @summary Get a list of filled orders
+         * @param {string} [symbol] Only return results for this symbol
+         * @param {number} [from] Epoch timestamp in ms
+         * @param {number} [to] Epoch timestamp in ms
+         * @param {number} [limit] Maximum amount of results to return in a single call. If omitted, 100 results are returned by default. 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFills: async (symbol?: string, from?: number, to?: number, limit?: number, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/trades`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+                    ? await configuration.apiKey("X-API-Token")
+                    : await configuration.apiKey;
+                localVarHeaderParameter["X-API-Token"] = localVarApiKeyValue;
+            }
+
+            if (symbol !== undefined) {
+                localVarQueryParameter['symbol'] = symbol;
+            }
+
+            if (from !== undefined) {
+                localVarQueryParameter['from'] = from;
+            }
+
+            if (to !== undefined) {
+                localVarQueryParameter['to'] = to;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Get a specific order
          * @param {number} orderId Order ID
@@ -1973,6 +2032,23 @@ export const TradingApiFp = function(configuration?: Configuration) {
             };
         },
         /**
+         * Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+         * @summary Get a list of filled orders
+         * @param {string} [symbol] Only return results for this symbol
+         * @param {number} [from] Epoch timestamp in ms
+         * @param {number} [to] Epoch timestamp in ms
+         * @param {number} [limit] Maximum amount of results to return in a single call. If omitted, 100 results are returned by default. 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getFills(symbol?: string, from?: number, to?: number, limit?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OrderSummary>>> {
+            const localVarAxiosArgs = await TradingApiAxiosParamCreator(configuration).getFills(symbol, from, to, limit, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
          * 
          * @summary Get a specific order
          * @param {number} orderId Order ID
@@ -2053,6 +2129,19 @@ export const TradingApiFactory = function (configuration?: Configuration, basePa
             return TradingApiFp(configuration).getFees(options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+         * @summary Get a list of filled orders
+         * @param {string} [symbol] Only return results for this symbol
+         * @param {number} [from] Epoch timestamp in ms
+         * @param {number} [to] Epoch timestamp in ms
+         * @param {number} [limit] Maximum amount of results to return in a single call. If omitted, 100 results are returned by default. 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFills(symbol?: string, from?: number, to?: number, limit?: number, options?: any): AxiosPromise<Array<OrderSummary>> {
+            return TradingApiFp(configuration).getFills(symbol, from, to, limit, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Get a specific order
          * @param {number} orderId Order ID
@@ -2131,6 +2220,21 @@ export class TradingApi extends BaseAPI {
      */
     public getFees(options?: any) {
         return TradingApiFp(this.configuration).getFees(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+     * @summary Get a list of filled orders
+     * @param {string} [symbol] Only return results for this symbol
+     * @param {number} [from] Epoch timestamp in ms
+     * @param {number} [to] Epoch timestamp in ms
+     * @param {number} [limit] Maximum amount of results to return in a single call. If omitted, 100 results are returned by default. 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TradingApi
+     */
+    public getFills(symbol?: string, from?: number, to?: number, limit?: number, options?: any) {
+        return TradingApiFp(this.configuration).getFills(symbol, from, to, limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

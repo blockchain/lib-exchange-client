@@ -378,6 +378,61 @@ paths:
       summary: Get a specific order
       tags:
       - trading
+  /trades:
+    get:
+      description: Returns filled orders, including partial fills. Returns at most
+        100 results, use timestamp to paginate for further results
+      operationId: getFills
+      parameters:
+      - description: Only return results for this symbol
+        explode: true
+        in: query
+        name: symbol
+        required: false
+        schema:
+          $ref: '#/components/schemas/symbol'
+        style: form
+      - description: Epoch timestamp in ms
+        explode: true
+        in: query
+        name: from
+        required: false
+        schema:
+          $ref: '#/components/schemas/TimestampEpoch'
+        style: form
+      - description: Epoch timestamp in ms
+        explode: true
+        in: query
+        name: to
+        required: false
+        schema:
+          $ref: '#/components/schemas/TimestampEpoch'
+        style: form
+      - description: 'Maximum amount of results to return in a single call. If omitted,
+          100 results are returned by default. '
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          example: 100
+          format: int32
+          maximum: 1000
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/OrderSummary'
+                type: array
+          description: Success
+      summary: Get a list of filled orders
+      tags:
+      - trading
   /deposits/{currency}:
     post:
       operationId: getDepositAddress
@@ -806,6 +861,7 @@ components:
       - REJECTED
       - CANCELED
       - FILLED
+      - PART_FILLED
       - EXPIRED
       example: FILLED
       type: string

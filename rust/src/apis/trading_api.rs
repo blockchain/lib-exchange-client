@@ -37,6 +37,7 @@ pub trait TradingApi {
     fn delete_all_orders(&self, symbol: Option<&str>) -> Box<dyn Future<Item = (), Error = Error<serde_json::Value>>>;
     fn delete_order(&self, order_id: i64) -> Box<dyn Future<Item = (), Error = Error<serde_json::Value>>>;
     fn get_fees(&self, ) -> Box<dyn Future<Item = crate::models::Fees, Error = Error<serde_json::Value>>>;
+    fn get_fills(&self, symbol: Option<&str>, from: Option<i64>, to: Option<i64>, limit: Option<i32>) -> Box<dyn Future<Item = Vec<crate::models::OrderSummary>, Error = Error<serde_json::Value>>>;
     fn get_order_by_id(&self, order_id: i64) -> Box<dyn Future<Item = crate::models::OrderSummary, Error = Error<serde_json::Value>>>;
     fn get_orders(&self, symbol: Option<&str>, from: Option<i64>, to: Option<i64>, status: Option<crate::models::crate::models::OrderStatus>, limit: Option<i32>) -> Box<dyn Future<Item = Vec<crate::models::OrderSummary>, Error = Error<serde_json::Value>>>;
 }
@@ -93,6 +94,30 @@ impl<C: hyper::client::Connect>TradingApi for TradingApiClient<C> {
                 param_name: "X-API-Token".to_owned(),
             }))
         ;
+
+        req.execute(self.configuration.borrow())
+    }
+
+    fn get_fills(&self, symbol: Option<&str>, from: Option<i64>, to: Option<i64>, limit: Option<i32>) -> Box<dyn Future<Item = Vec<crate::models::OrderSummary>, Error = Error<serde_json::Value>>> {
+        let mut req = __internal_request::Request::new(hyper::Method::Get, "/trades".to_string())
+            .with_auth(__internal_request::Auth::ApiKey(__internal_request::ApiKey{
+                in_header: true,
+                in_query: false,
+                param_name: "X-API-Token".to_owned(),
+            }))
+        ;
+        if let Some(ref s) = symbol {
+            req = req.with_query_param("symbol".to_string(), s.to_string());
+        }
+        if let Some(ref s) = from {
+            req = req.with_query_param("from".to_string(), s.to_string());
+        }
+        if let Some(ref s) = to {
+            req = req.with_query_param("to".to_string(), s.to_string());
+        }
+        if let Some(ref s) = limit {
+            req = req.with_query_param("limit".to_string(), s.to_string());
+        }
 
         req.execute(self.configuration.borrow())
     }

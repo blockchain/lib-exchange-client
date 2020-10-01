@@ -1035,6 +1035,7 @@ data OrderStatus
   | OrderStatus'REJECTED -- ^ @"REJECTED"@
   | OrderStatus'CANCELED -- ^ @"CANCELED"@
   | OrderStatus'FILLED -- ^ @"FILLED"@
+  | OrderStatus'PART_FILLED -- ^ @"PART_FILLED"@
   | OrderStatus'EXPIRED -- ^ @"EXPIRED"@
   deriving (P.Show, P.Eq, P.Typeable, P.Ord, P.Bounded, P.Enum)
 
@@ -1051,6 +1052,7 @@ fromOrderStatus = \case
   OrderStatus'REJECTED -> "REJECTED"
   OrderStatus'CANCELED -> "CANCELED"
   OrderStatus'FILLED -> "FILLED"
+  OrderStatus'PART_FILLED -> "PART_FILLED"
   OrderStatus'EXPIRED -> "EXPIRED"
 
 -- | parse 'OrderStatus' enum
@@ -1060,6 +1062,7 @@ toOrderStatus = \case
   "REJECTED" -> P.Right OrderStatus'REJECTED
   "CANCELED" -> P.Right OrderStatus'CANCELED
   "FILLED" -> P.Right OrderStatus'FILLED
+  "PART_FILLED" -> P.Right OrderStatus'PART_FILLED
   "EXPIRED" -> P.Right OrderStatus'EXPIRED
   s -> P.Left $ "toOrderStatus: enum parse failure: " P.++ P.show s
 

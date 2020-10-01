@@ -303,7 +303,27 @@ paths:
         '200':
           description: "Success"
           # TODO is there any good response we should give?
-
+  /trades:
+    get:
+      summary: "Get a list of filled orders"
+      description: "Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results"
+      operationId: getFills
+      tags:
+        - trading
+      parameters:
+        - $ref: '#/components/parameters/symbolFilter'
+        - $ref: '#/components/parameters/timeFromFilter'
+        - $ref: '#/components/parameters/timeToFilter'
+        - $ref: '#/components/parameters/limitFilter'
+      responses:
+        '200':
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderSummary'
   /deposits/{currency}:
     post:
       summary: "Get a deposit address. Currently only crypto currencies are supported"
@@ -600,6 +620,7 @@ components:
         - "REJECTED"
         - "CANCELED"
         - "FILLED"
+        - "PART_FILLED"
         - "EXPIRED"
     # Basic Order Creation Types
     TimeInForce:

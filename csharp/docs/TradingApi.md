@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**DeleteAllOrders**](TradingApi.md#deleteallorders) | **DELETE** /orders | Delete all open orders (of a symbol, if specified)
 [**DeleteOrder**](TradingApi.md#deleteorder) | **DELETE** /orders/{orderId} | Cancel a trade
 [**GetFees**](TradingApi.md#getfees) | **GET** /fees | Get current fee level
+[**GetFills**](TradingApi.md#getfills) | **GET** /trades | Get a list of filled orders
 [**GetOrderById**](TradingApi.md#getorderbyid) | **GET** /orders/{orderId} | Get a specific order
 [**GetOrders**](TradingApi.md#getorders) | **GET** /orders | Get a list orders
 
@@ -298,6 +299,92 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**Fees**](Fees.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Success |  -  |
+
+[[Back to top]](#)
+[[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetFills
+
+> List&lt;OrderSummary&gt; GetFills (string symbol = null, long? from = null, long? to = null, int? limit = null)
+
+Get a list of filled orders
+
+Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+
+### Example
+
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using Org.OpenAPITools.com.blockchain.exchange.rest.api;
+using Org.OpenAPITools.Client;
+using Org.OpenAPITools.com.blockchain.exchange.rest.model;
+
+namespace Example
+{
+    public class GetFillsExample
+    {
+        public static void Main()
+        {
+            Configuration.Default.BasePath = "https://api.blockchain.com/v3/exchange";
+            // Configure API key authorization: ApiKeyAuth
+            Configuration.Default.AddApiKey("X-API-Token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("X-API-Token", "Bearer");
+
+            var apiInstance = new TradingApi(Configuration.Default);
+            var symbol = symbol_example;  // string | Only return results for this symbol (optional) 
+            var from = 789;  // long? | Epoch timestamp in ms (optional) 
+            var to = 789;  // long? | Epoch timestamp in ms (optional) 
+            var limit = 100;  // int? | Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  (optional) 
+
+            try
+            {
+                // Get a list of filled orders
+                List<OrderSummary> result = apiInstance.GetFills(symbol, from, to, limit);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException e)
+            {
+                Debug.Print("Exception when calling TradingApi.GetFills: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **symbol** | **string**| Only return results for this symbol | [optional] 
+ **from** | **long?**| Epoch timestamp in ms | [optional] 
+ **to** | **long?**| Epoch timestamp in ms | [optional] 
+ **limit** | **int?**| Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  | [optional] 
+
+### Return type
+
+[**List&lt;OrderSummary&gt;**](OrderSummary.md)
 
 ### Authorization
 

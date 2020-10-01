@@ -17,5 +17,6 @@ const (
 	REJECTED OrderStatus = "REJECTED"
 	CANCELED OrderStatus = "CANCELED"
 	FILLED OrderStatus = "FILLED"
+	PART_FILLED OrderStatus = "PART_FILLED"
 	EXPIRED OrderStatus = "EXPIRED"
 )

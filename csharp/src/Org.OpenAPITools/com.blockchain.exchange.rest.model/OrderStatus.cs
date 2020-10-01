@@ -57,10 +57,16 @@ namespace Org.OpenAPITools.com.blockchain.exchange.rest.model
         FILLED = 4,
 
         /// <summary>
+        /// Enum PARTFILLED for value: PART_FILLED
+        /// </summary>
+        [EnumMember(Value = "PART_FILLED")]
+        PARTFILLED = 5,
+
+        /// <summary>
         /// Enum EXPIRED for value: EXPIRED
         /// </summary>
         [EnumMember(Value = "EXPIRED")]
-        EXPIRED = 5
+        EXPIRED = 6
 
     }
 

@@ -10,7 +10,7 @@
 -}
 
 
-module Request.Trading exposing (createOrder, deleteAllOrders, deleteOrder, getFees, getOrderById, getOrders)
+module Request.Trading exposing (createOrder, deleteAllOrders, deleteOrder, getFees, getFills, getOrderById, getOrders)
 
 import Data.OrderStatus as OrderStatus exposing (OrderStatus)
 import Data.BaseOrder as BaseOrder exposing (BaseOrder)
@@ -116,6 +116,31 @@ getFees params =
             (List.filterMap identity [])
         , body = Http.emptyBody
         , expect = Http.expectJson params.onSend Fees.decoder
+        , timeout = Just 30000
+        , tracker = Nothing
+        }
+
+
+{-| Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+-}
+getFills :
+    { onSend : Result Http.Error (List OrderSummary) -> msg
+
+
+
+
+    , symbol : Maybe (String)    , from : Maybe (Int)    , to : Maybe (Int)    , limit : Maybe (Int)
+    }
+    -> Cmd msg
+getFills params =
+    Http.request
+        { method = "GET"
+        , headers = List.filterMap identity []
+        , url = Url.crossOrigin basePath
+            ["trades"]
+            (List.filterMap identity [Maybe.map (Url.string "symbol" << identity) params.symbol, Maybe.map (Url.string "from" << String.fromInt) params.from, Maybe.map (Url.string "to" << String.fromInt) params.to, Maybe.map (Url.string "limit" << String.fromInt) params.limit])
+        , body = Http.emptyBody
+        , expect = Http.expectJson params.onSend (Decode.list OrderSummary.decoder)
         , timeout = Just 30000
         , tracker = Nothing
         }

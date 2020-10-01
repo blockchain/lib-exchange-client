@@ -20,6 +20,8 @@ pub enum OrderStatus {
     CANCELED,
     #[serde(rename = "FILLED")]
     FILLED,
+    #[serde(rename = "PART_FILLED")]
+    PARTFILLED,
     #[serde(rename = "EXPIRED")]
     EXPIRED,
 

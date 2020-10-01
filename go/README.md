@@ -64,6 +64,7 @@ Class | Method | HTTP request | Description
 *TradingApi* | [**DeleteAllOrders**](docs/TradingApi.md#deleteallorders) | **Delete** /orders | Delete all open orders (of a symbol, if specified)
 *TradingApi* | [**DeleteOrder**](docs/TradingApi.md#deleteorder) | **Delete** /orders/{orderId} | Cancel a trade
 *TradingApi* | [**GetFees**](docs/TradingApi.md#getfees) | **Get** /fees | Get current fee level
+*TradingApi* | [**GetFills**](docs/TradingApi.md#getfills) | **Get** /trades | Get a list of filled orders
 *TradingApi* | [**GetOrderById**](docs/TradingApi.md#getorderbyid) | **Get** /orders/{orderId} | Get a specific order
 *TradingApi* | [**GetOrders**](docs/TradingApi.md#getorders) | **Get** /orders | Get a list orders
 *UnauthenticatedApi* | [**GetL2OrderBook**](docs/UnauthenticatedApi.md#getl2orderbook) | **Get** /l2/{symbol} | L2 Order Book

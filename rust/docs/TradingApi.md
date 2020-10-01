@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**delete_all_orders**](TradingApi.md#delete_all_orders) | **Delete** /orders | Delete all open orders (of a symbol, if specified)
 [**delete_order**](TradingApi.md#delete_order) | **Delete** /orders/{orderId} | Cancel a trade
 [**get_fees**](TradingApi.md#get_fees) | **Get** /fees | Get current fee level
+[**get_fills**](TradingApi.md#get_fills) | **Get** /trades | Get a list of filled orders
 [**get_order_by_id**](TradingApi.md#get_order_by_id) | **Get** /orders/{orderId} | Get a specific order
 [**get_orders**](TradingApi.md#get_orders) | **Get** /orders | Get a list orders
 
@@ -109,6 +110,39 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**crate::models::Fees**](Fees.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## get_fills
+
+> Vec<crate::models::OrderSummary> get_fills(symbol, from, to, limit)
+Get a list of filled orders
+
+Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**symbol** | Option<**String**> | Only return results for this symbol |  |
+**from** | Option<**i64**> | Epoch timestamp in ms |  |
+**to** | Option<**i64**> | Epoch timestamp in ms |  |
+**limit** | Option<**i32**> | Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  |  |
+
+### Return type
+
+[**Vec<crate::models::OrderSummary>**](OrderSummary.md)
 
 ### Authorization
 

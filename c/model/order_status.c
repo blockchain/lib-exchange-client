@@ -5,13 +5,13 @@
 
 
 char* order_status_order_status_ToString(blockchain_com_exchange_rest_api_order_status__e order_status) {
-    char *order_statusArray[] =  { "NULL", "OPEN", "REJECTED", "CANCELED", "FILLED", "EXPIRED" };
+    char *order_statusArray[] =  { "NULL", "OPEN", "REJECTED", "CANCELED", "FILLED", "PART_FILLED", "EXPIRED" };
     return order_statusArray[order_status];
 }
 
 blockchain_com_exchange_rest_api_order_status__e order_status_order_status_FromString(char* order_status) {
     int stringToReturn = 0;
-    char *order_statusArray[] =  { "NULL", "OPEN", "REJECTED", "CANCELED", "FILLED", "EXPIRED" };
+    char *order_statusArray[] =  { "NULL", "OPEN", "REJECTED", "CANCELED", "FILLED", "PART_FILLED", "EXPIRED" };
     size_t sizeofArray = sizeof(order_statusArray) / sizeof(order_statusArray[0]);
     while(stringToReturn < sizeofArray) {
         if(strcmp(order_status, order_statusArray[stringToReturn]) == 0) {

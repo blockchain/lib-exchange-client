@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**deleteAllOrders**](TradingApi.md#deleteAllOrders) | **DELETE** /orders | Delete all open orders (of a symbol, if specified)
 [**deleteOrder**](TradingApi.md#deleteOrder) | **DELETE** /orders/{orderId} | Cancel a trade
 [**getFees**](TradingApi.md#getFees) | **GET** /fees | Get current fee level
+[**getFills**](TradingApi.md#getFills) | **GET** /trades | Get a list of filled orders
 [**getOrderById**](TradingApi.md#getOrderById) | **GET** /orders/{orderId} | Get a specific order
 [**getOrders**](TradingApi.md#getOrders) | **GET** /orders | Get a list orders
 
@@ -183,6 +184,58 @@ This endpoint does not need any parameter.
 - **Accept**: application/json
 
 
+## getFills
+
+> List&lt;OrderSummary&gt; getFills(symbol, from, to, limit)
+
+Get a list of filled orders
+
+Returns filled orders, including partial fills. Returns at most 100 results, use timestamp to paginate for further results
+
+### Example
+
+```java
+// Import classes:
+//import com.blockchain.exchange.rest.api.TradingApi;
+
+TradingApi apiInstance = new TradingApi();
+String symbol = null; // String | Only return results for this symbol
+Long from = null; // Long | Epoch timestamp in ms
+Long to = null; // Long | Epoch timestamp in ms
+Integer limit = 100; // Integer | Maximum amount of results to return in a single call. If omitted, 100 results are returned by default. 
+try {
+    List<OrderSummary> result = apiInstance.getFills(symbol, from, to, limit);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling TradingApi#getFills");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **symbol** | **String**| Only return results for this symbol | [optional] [default to null]
+ **from** | **Long**| Epoch timestamp in ms | [optional] [default to null]
+ **to** | **Long**| Epoch timestamp in ms | [optional] [default to null]
+ **limit** | **Integer**| Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  | [optional] [default to null]
+
+### Return type
+
+[**List&lt;OrderSummary&gt;**](OrderSummary.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
 ## getOrderById
 
 > OrderSummary getOrderById(orderId)
@@ -264,7 +317,7 @@ Name | Type | Description  | Notes
  **symbol** | **String**| Only return results for this symbol | [optional] [default to null]
  **from** | **Long**| Epoch timestamp in ms | [optional] [default to null]
  **to** | **Long**| Epoch timestamp in ms | [optional] [default to null]
- **status** | [**OrderStatus**](.md)| Order Status | [optional] [default to null] [enum: OPEN, REJECTED, CANCELED, FILLED, EXPIRED]
+ **status** | [**OrderStatus**](.md)| Order Status | [optional] [default to null] [enum: OPEN, REJECTED, CANCELED, FILLED, PART_FILLED, EXPIRED]
  **limit** | **Integer**| Maximum amount of results to return in a single call. If omitted, 100 results are returned by default.  | [optional] [default to null]
 
 ### Return type
