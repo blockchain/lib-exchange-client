@@ -1,0 +1,70 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {}
+}{
+    "block_height" = 929613;
+    "block_index" = 929613;
+    "double_spend" = 0;
+    fee = 144;
+    hash = ac4009cd8a77460469a74800dcf0683e1a7170bdad53f672ffaa2223192ae334;
+    inputs =     (
+                {
+            index = 0;
+            "prev_out" =             {
+                addr = bc1q2xcc9elv654re47meq3z5d6fw3k7p9cvefycld;
+                n = 1;
+                script = 001451b182e7ecd52a3cd7dbc8222a3749746de0970c;
+                "spending_outpoints" =                 (
+                                        {
+                        n = 0;
+                        "tx_index" = 1860808592352341;
+                    }
+                );
+                spent = 1;
+                "tx_index" = 6774390505530537;
+                type = 0;
+                value = 105393;
+            };
+            script = "";
+            sequence = 4294967293;
+            witness = 02473044022016a6332a294aa29f0c6956120e46fa8f72f0596d46cda9697db4828152ff5b850220304eb28c6fd11229ebb5e7bea2d48549cbfefb39f3db42554f61419319f8038e0121020999960e712e62455eb401b5bf51d39e693f71aa95da31c181fca7e8e92cc420;
+        }
+    );
+    "lock_time" = 929611;
+    out =     (
+                {
+            addr = 1BWaLuV7xMs6JG8aX4N8Viw76cUTgcjBD1;
+            n = 0;
+            script = 76a9147349277b0e14bc3d2c8421b79c1f08c9bb8d5b6488ac;
+            "spending_outpoints" =             (
+            );
+            spent = 0;
+            "tx_index" = 1860808592352341;
+            type = 0;
+            value = 11200;
+        },
+                {
+            addr = bc1qlz4qf0ndsury7wp779zhfkqcmfjwtj8f2glxz3;
+            n = 1;
+            script = 0014f8aa04be6d87064f383ef14574d818da64e5c8e9;
+            "spending_outpoints" =             (
+                                {
+                    n = 0;
+                    "tx_index" = 4679574406063383;
+                }
+            );
+            spent = 1;
+            "tx_index" = 1860808592352341;
+            type = 0;
+            value = 94049;
+        }
+    );
+    "relayed_by" = "0.0.0.0";
+    size = 225;
+    time = 1766778107;
+    "tx_index" = 1860808592352341;
+    ver = 2;
+    "vin_sz" = 1;
+    "vout_sz" = 2;
+    weight = 573;
+}
